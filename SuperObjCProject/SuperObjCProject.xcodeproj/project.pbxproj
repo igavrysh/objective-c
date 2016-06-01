@@ -11,8 +11,10 @@
 		855F13771CFE4558005CEA2C /* IDPCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13711CFE4422005CEA2C /* IDPCreature.m */; };
 		855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */; };
 		855F13791CFE4558005CEA2C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13751CFE4422005CEA2C /* IDPMaleCreature.m */; };
-		855F137C1CFE47AD005CEA2C /* NSString+IDPCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F137B1CFE47AD005CEA2C /* NSString+IDPCreature.m */; };
 		85E0759C1CFEFCE50011FB59 /* IDPRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E0759B1CFEFCE50011FB59 /* IDPRandom.m */; };
+		85E075A01CFF0C6A0011FB59 /* NSString+IDPName.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E0759F1CFF0C6A0011FB59 /* NSString+IDPName.m */; };
+		85E075A51CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075A41CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m */; };
+		85E075A91CFF115C0011FB59 /* IDPCreatureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075A81CFF115C0011FB59 /* IDPCreatureTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,10 +38,14 @@
 		855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDPFemaleCreature.m; sourceTree = "<group>"; };
 		855F13741CFE4422005CEA2C /* IDPMaleCreature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDPMaleCreature.h; sourceTree = "<group>"; };
 		855F13751CFE4422005CEA2C /* IDPMaleCreature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDPMaleCreature.m; sourceTree = "<group>"; };
-		855F137A1CFE47AD005CEA2C /* NSString+IDPCreature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IDPCreature.h"; sourceTree = "<group>"; };
-		855F137B1CFE47AD005CEA2C /* NSString+IDPCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IDPCreature.m"; sourceTree = "<group>"; };
 		85E0759A1CFEFCE50011FB59 /* IDPRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPRandom.h; sourceTree = "<group>"; };
 		85E0759B1CFEFCE50011FB59 /* IDPRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPRandom.m; sourceTree = "<group>"; };
+		85E0759E1CFF0C6A0011FB59 /* NSString+IDPName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IDPName.h"; sourceTree = "<group>"; };
+		85E0759F1CFF0C6A0011FB59 /* NSString+IDPName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IDPName.m"; sourceTree = "<group>"; };
+		85E075A31CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+IDPArrayEnumerator.h"; sourceTree = "<group>"; };
+		85E075A41CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+IDPArrayEnumerator.m"; sourceTree = "<group>"; };
+		85E075A71CFF115C0011FB59 /* IDPCreatureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCreatureTest.h; sourceTree = "<group>"; };
+		85E075A81CFF115C0011FB59 /* IDPCreatureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCreatureTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +103,6 @@
 				855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */,
 				855F13741CFE4422005CEA2C /* IDPMaleCreature.h */,
 				855F13751CFE4422005CEA2C /* IDPMaleCreature.m */,
-				855F137A1CFE47AD005CEA2C /* NSString+IDPCreature.h */,
-				855F137B1CFE47AD005CEA2C /* NSString+IDPCreature.m */,
 			);
 			path = IDPCreature;
 			sourceTree = "<group>";
@@ -106,6 +110,7 @@
 		855F13761CFE4422005CEA2C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				85E075A61CFF11470011FB59 /* IDPCreatureTest */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -113,6 +118,8 @@
 		85E075981CFEFCA60011FB59 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				85E075A21CFF0EB90011FB59 /* NSArray+IDPArrayEnumerator */,
+				85E0759D1CFF0BD90011FB59 /* NSString+IDPName */,
 				85E075991CFEFCD00011FB59 /* IDPRandom */,
 			);
 			path = Shared;
@@ -125,6 +132,33 @@
 				85E0759B1CFEFCE50011FB59 /* IDPRandom.m */,
 			);
 			path = IDPRandom;
+			sourceTree = "<group>";
+		};
+		85E0759D1CFF0BD90011FB59 /* NSString+IDPName */ = {
+			isa = PBXGroup;
+			children = (
+				85E0759E1CFF0C6A0011FB59 /* NSString+IDPName.h */,
+				85E0759F1CFF0C6A0011FB59 /* NSString+IDPName.m */,
+			);
+			path = "NSString+IDPName";
+			sourceTree = "<group>";
+		};
+		85E075A21CFF0EB90011FB59 /* NSArray+IDPArrayEnumerator */ = {
+			isa = PBXGroup;
+			children = (
+				85E075A31CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.h */,
+				85E075A41CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m */,
+			);
+			path = "NSArray+IDPArrayEnumerator";
+			sourceTree = "<group>";
+		};
+		85E075A61CFF11470011FB59 /* IDPCreatureTest */ = {
+			isa = PBXGroup;
+			children = (
+				85E075A71CFF115C0011FB59 /* IDPCreatureTest.h */,
+				85E075A81CFF115C0011FB59 /* IDPCreatureTest.m */,
+			);
+			path = IDPCreatureTest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,10 +218,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				855F13771CFE4558005CEA2C /* IDPCreature.m in Sources */,
-				855F137C1CFE47AD005CEA2C /* NSString+IDPCreature.m in Sources */,
 				85E0759C1CFEFCE50011FB59 /* IDPRandom.m in Sources */,
+				85E075A01CFF0C6A0011FB59 /* NSString+IDPName.m in Sources */,
 				855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */,
+				85E075A91CFF115C0011FB59 /* IDPCreatureTest.m in Sources */,
 				855F13791CFE4558005CEA2C /* IDPMaleCreature.m in Sources */,
+				85E075A51CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m in Sources */,
 				855F135A1CFE4360005CEA2C /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,6 +314,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -286,6 +323,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

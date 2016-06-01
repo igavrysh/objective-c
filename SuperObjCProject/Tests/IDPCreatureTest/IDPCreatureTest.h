@@ -10,4 +10,10 @@
 
 @interface IDPCreatureTest : NSObject
 
++ (void)creaturesPerformGenderSpecificOperation;
+
++ (void)creaturesSayHi;
+
++ (void)creaturesChildrendSayHi;
+
 @end
