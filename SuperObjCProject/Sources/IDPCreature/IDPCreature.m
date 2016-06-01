@@ -10,6 +10,7 @@
 
 #import "IDPRandom.h"
 #import "NSString+IDPName.h"
+#import "NSObject+IDPObject.h"
 
 @interface IDPCreature ()
 
@@ -34,7 +35,7 @@
 + (id)creatureWithRandomNameAndGender {
     Class creatureClass  = [IDPRandom uint8LimitedTo:2] ? [IDPMaleCreature class] : [IDPFemaleCreature class];
     
-    IDPCreature *creature = [[[creatureClass alloc] init] autorelease];
+    IDPCreature *creature = [creatureClass object];
     
     creature.name = [NSString randomName];
     
@@ -68,7 +69,7 @@
         self.name = name;
         self.weight = weight;
         self.age = age;
-        self.mutableChildren = [[[NSMutableArray alloc] init] autorelease];
+        self.mutableChildren = [NSMutableArray object];
     }
     
     return self;

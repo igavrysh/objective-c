@@ -15,6 +15,7 @@
 		85E075A01CFF0C6A0011FB59 /* NSString+IDPName.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E0759F1CFF0C6A0011FB59 /* NSString+IDPName.m */; };
 		85E075A51CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075A41CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m */; };
 		85E075A91CFF115C0011FB59 /* IDPCreatureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075A81CFF115C0011FB59 /* IDPCreatureTest.m */; };
+		85E075AD1CFF26900011FB59 /* NSObject+IDPObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075AC1CFF26900011FB59 /* NSObject+IDPObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -46,6 +47,8 @@
 		85E075A41CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+IDPArrayEnumerator.m"; sourceTree = "<group>"; };
 		85E075A71CFF115C0011FB59 /* IDPCreatureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCreatureTest.h; sourceTree = "<group>"; };
 		85E075A81CFF115C0011FB59 /* IDPCreatureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCreatureTest.m; sourceTree = "<group>"; };
+		85E075AB1CFF26900011FB59 /* NSObject+IDPObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+IDPObject.h"; sourceTree = "<group>"; };
+		85E075AC1CFF26900011FB59 /* NSObject+IDPObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+IDPObject.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,7 @@
 		85E075981CFEFCA60011FB59 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				85E075AA1CFF266E0011FB59 /* NSObject+IDPObject */,
 				85E075A21CFF0EB90011FB59 /* NSArray+IDPArrayEnumerator */,
 				85E0759D1CFF0BD90011FB59 /* NSString+IDPName */,
 				85E075991CFEFCD00011FB59 /* IDPRandom */,
@@ -159,6 +163,15 @@
 				85E075A81CFF115C0011FB59 /* IDPCreatureTest.m */,
 			);
 			path = IDPCreatureTest;
+			sourceTree = "<group>";
+		};
+		85E075AA1CFF266E0011FB59 /* NSObject+IDPObject */ = {
+			isa = PBXGroup;
+			children = (
+				85E075AB1CFF26900011FB59 /* NSObject+IDPObject.h */,
+				85E075AC1CFF26900011FB59 /* NSObject+IDPObject.m */,
+			);
+			path = "NSObject+IDPObject";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,6 +232,7 @@
 			files = (
 				855F13771CFE4558005CEA2C /* IDPCreature.m in Sources */,
 				85E0759C1CFEFCE50011FB59 /* IDPRandom.m in Sources */,
+				85E075AD1CFF26900011FB59 /* NSObject+IDPObject.m in Sources */,
 				85E075A01CFF0C6A0011FB59 /* NSString+IDPName.m in Sources */,
 				855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */,
 				85E075A91CFF115C0011FB59 /* IDPCreatureTest.m in Sources */,
