@@ -2,16 +2,39 @@
 //  IDPRandom.h
 //  SuperObjCProject
 //
-//  Created by Ievgen on 6/1/16.
+//  Created by Ievgen on 6/2/16.
 //  Copyright © 2016 1mlndollarsasset. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface IDPRandom : NSObject
+typedef struct {
+    float minValue;
+    float maxValue;
+} IDPFloatRange;
 
-+ (float)positiveFloatFrom:(float)lowerBound to:(float)upperBound;
+typedef struct {
+    NSInteger minValue;
+    NSInteger maxValue;
+} IDPIntRange;
 
-+ (UInt8)uint8LimitedTo:(UInt8)upperBound;
+extern
+IDPFloatRange IDPFloatRangeCreate(float value1, float value2);
 
-@end
+extern
+IDPIntRange IDPIntRangeCreate(NSInteger value1, NSInteger value2);
+
+extern
+float IDPRandomFloatWithinRange(IDPFloatRange range);
+
+extern
+float IDPRandomFloatWithMinAndMaxValue(float value1, float value2);
+
+extern
+NSInteger IDPRandomIntWithinRange(IDPIntRange range);
+
+extern
+NSInteger IDPRandomIntWithMinAndMaxValue(NSInteger value1, NSInteger value2);
+
+extern
+NSUInteger IDPRandomUIntWithMaxValue(NSUInteger limit);

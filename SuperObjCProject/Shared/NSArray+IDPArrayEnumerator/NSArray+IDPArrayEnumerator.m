@@ -11,6 +11,10 @@
 @implementation NSArray (IDPArrayEnumerator)
 
 - (void)performBlockWithEachObject:(void (^)(id object))block {
+    if (!block) {
+        return;
+    }
+    
     [self enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
         block(object);
     }];

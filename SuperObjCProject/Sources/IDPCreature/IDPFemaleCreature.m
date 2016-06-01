@@ -39,9 +39,9 @@
 }
 
 - (IDPCreature *)giveBithToChildWithName:(NSString *)name {
-    IDPCreature *creature = [IDPCreature creatureWithRandomNameAndGender];
+    IDPCreature *creature = [IDPCreature creature];
     
-    creature.weight = [IDPRandom positiveFloatFrom:0.1 to:4];
+    creature.weight = IDPRandomFloatWithMinAndMaxValue(0.1, 4);
     creature.age = 0;
     creature.name = name;
     
@@ -49,7 +49,5 @@
     
     return creature;
 }
-
-
 
 @end

@@ -23,7 +23,7 @@
     NSMutableArray *creatures = [[NSMutableArray alloc] init];
     
     for (uint64_t index = 0; index < count; index++) {
-        IDPCreature *creature = [IDPCreature creatureWithRandomNameAndGender];
+        IDPCreature *creature = [IDPCreature creature];
         [creatures addObject:creature];
     }
     

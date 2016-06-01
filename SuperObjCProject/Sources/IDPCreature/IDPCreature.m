@@ -7,13 +7,13 @@
 //
 
 #import "IDPCreature.h"
-
+#import "IDPFemaleCreature.h"
+#import "IDPMaleCreature.h"
 #import "IDPRandom.h"
 #import "NSString+IDPName.h"
 #import "NSObject+IDPObject.h"
 
 @interface IDPCreature ()
-
 @property (nonatomic, retain) NSMutableArray *mutableChildren;
 
 @end
@@ -26,14 +26,7 @@
 #pragma mark Class Methods
 
 + (id)creature {
-    return [[[self alloc] init] autorelease];
-}
-
-@class IDPMaleCreature;
-@class IDPFemaleCreature;
-
-+ (id)creatureWithRandomNameAndGender {
-    Class creatureClass  = [IDPRandom uint8LimitedTo:2] ? [IDPMaleCreature class] : [IDPFemaleCreature class];
+    Class creatureClass  = IDPRandomUIntWithMaxValue(1) ? [IDPMaleCreature class] : [IDPFemaleCreature class];
     
     IDPCreature *creature = [creatureClass object];
     
@@ -46,7 +39,7 @@
 #pragma mark Initializtions and Deallocations
 
 - (void)dealloc {
-    self.name  = nil;
+    self.name = nil;
     self.mutableChildren = nil;
     
     [super dealloc];
@@ -58,12 +51,11 @@
 
 - (id)initWithRandomAttributes {
     return [self initWithName:[NSString randomName]
-                       weight:[IDPRandom positiveFloatFrom:0.1 to:200]
-                          age:[IDPRandom uint8LimitedTo:122]];
+                       weight:IDPRandomFloatWithMinAndMaxValue(0.1, 200)
+                          age:IDPRandomUIntWithMaxValue(122)];
 }
 
-- (id)initWithName:(NSString *)name weight:(float)weight age:(UInt8)age
-{
+- (id)initWithName:(NSString *)name weight:(float)weight age:(UInt8)age {
     self = [super init];
     if (self) {
         self.name = name;
@@ -93,22 +85,22 @@
     }];
 }
 
+- (void)printMessage:(NSString *)message {
+    NSLog(@"Creature %@(%@) says - %@!", self.name, self, message);
+}
+
 - (void)performGenderSpecificOperation {
 }
 
 - (void)addChild:(IDPCreature *)child {
-    [self.mutableChildren addObject:child];
+    NSMutableArray *children = self.mutableChildren;
+    if (![children containsObject:child]) {
+        [children addObject:child];
+    }
 }
 
 - (void)removeChild:(IDPCreature *)child {
     [self.mutableChildren removeObject:child];
-}
-
-#pragma mark -
-#pragma mark Private Methods
-
-- (void)printMessage:(NSString *)message {
-    NSLog(@"Creature %@(%@) says - %@!", self.name, self, message);
 }
 
 @end
