@@ -8,40 +8,26 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-    IDPCreatureGenderMale,
-    IDPCreatureGenderFemale,
-    IDPCreatureGenderUndefined
-} IDPCreatureGender;
+@interface IDPCreature : NSObject
 
-@interface IDPCreature : NSObject {
-    NSString *_name;
-    
-    double _weight;
-    
-    uint8_t _age;
-    
-    @protected
-    NSMutableArray *_children;
-}
-
-@property (nonatomic, assign) IDPCreatureGender gender;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, assign) double weight;
-@property (nonatomic, assign) uint8_t age;
-@property (nonatomic, copy, readonly) NSArray *allChildren;
+@property (nonatomic, assign) float weight;
+@property (nonatomic, assign) UInt8 age;
+@property (nonatomic, copy, readonly) NSArray *children;
 
 + (id)creature;
-+ (NSString *)randomName;
 
++ (id)creatureWithRandomNameAndGender;
+
+- (id)init;
 - (id)initWithRandomAttributes;
+- (id)initWithName:(NSString *)name weight:(float)weight age:(uint8_t)age;
 
 - (void)sayHi;
 
 - (void)performGenderSpecificOperation;
 
 - (void)addChild:(IDPCreature *)child;
-
 - (void)removeChild:(IDPCreature *)child;
 
 @end

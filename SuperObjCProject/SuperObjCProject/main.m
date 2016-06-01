@@ -20,15 +20,8 @@ int main(int argc, const char * argv[]) {
         NSMutableArray *creatures = [[NSMutableArray alloc] init];
         
         for (uint64_t index = 0; index < count; index++) {
-            IDPCreature *creature = nil;
-            
-            if (IDPCreatureGenderFemale == arc4random() % 2) {
-                creature = [[IDPFemaleCreature alloc] initWithRandomAttributes];
-            } else {
-                creature = [[IDPMaleCreature alloc] initWithRandomAttributes];
-            }
-            
-            [creature release];
+            IDPCreature *creature = [IDPCreature creatureWithRandomNameAndGender];
+            [creatures addObject:creature];
         }
         
         for (IDPCreature *creature in creatures) {
@@ -36,14 +29,14 @@ int main(int argc, const char * argv[]) {
         }
         
         NSLog(@"--- All creatures are saying hi! ---");
-        [creatures enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [(IDPCreature *)obj sayHi];
+        [creatures enumerateObjectsUsingBlock:^(IDPCreature *creature, NSUInteger idx, BOOL *stop) {
+            [creature sayHi];
         }];
         
         NSLog(@"--- All children are saying hi! ---");
-        [creatures enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [((IDPCreature *)obj).allChildren enumerateObjectsUsingBlock:^(id  _Nonnull obj2, NSUInteger idx, BOOL * _Nonnull stop) {
-                [(IDPCreature *)obj2 sayHi];
+        [creatures enumerateObjectsUsingBlock:^(IDPCreature *creature, NSUInteger idx, BOOL *stop) {
+            [creature.children enumerateObjectsUsingBlock:^(IDPCreature *creature, NSUInteger idx, BOOL *stop) {
+                [creature sayHi];
             }];
         }];
         

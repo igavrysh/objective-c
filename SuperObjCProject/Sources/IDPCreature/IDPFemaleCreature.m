@@ -5,14 +5,16 @@
 //  Created by Ievgen on 5/31/16.
 //  Copyright © 2016 Ievgen Gavrysh. All rights reserved.
 //
-
 #import "IDPFemaleCreature.h"
+
+#import "IDPRandom.h"
+#import "NSString+IDPCreature.h"
 
 @interface IDPFemaleCreature ()
 
-- (IDPCreature *)giveBithToChildWithName:(NSString *)name;
-
 - (IDPCreature *)giveBithToChildWithRandomName;
+
+- (IDPCreature *)giveBithToChildWithName:(NSString *)name;
 
 @end
 
@@ -32,17 +34,22 @@
 #pragma mark -
 #pragma mark Private Methods
 
-- (IDPCreature *)giveBithToChildWithName:(NSString *)name {
-    IDPCreatureGender gender = arc4random() % 2;
-    double weight = 2 + arc4random() % 200 / 100.0;
-    
-    [self printCreatureMessage:[NSString stringWithFormat:@"I gave a birth to %@!!!", name]];
-    
-    return [[[IDPCreature alloc] initWithName:name gender:gender weight:weight age:0 children:nil] autorelease];
+- (IDPCreature *)giveBithToChildWithRandomName {
+    return [self giveBithToChildWithName:[NSString randomName]];
 }
 
-- (IDPCreature *)giveBithToChildWithRandomName {
-    return [self giveBithToChildWithName:[IDPCreature randomName]];
+- (IDPCreature *)giveBithToChildWithName:(NSString *)name {
+    IDPCreature *creature = [IDPCreature creatureWithRandomNameAndGender];
+    
+    creature.weight = [IDPRandom positiveFloatFrom:0.1 to:4];
+    creature.age = 0;
+    creature.name = name;
+    
+    [self printMessage:[NSString stringWithFormat:@"I gave a birth to %@!!!", creature.name]];
+    
+    return creature;
 }
+
+
 
 @end

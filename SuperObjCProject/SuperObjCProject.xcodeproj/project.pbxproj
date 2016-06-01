@@ -11,6 +11,8 @@
 		855F13771CFE4558005CEA2C /* IDPCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13711CFE4422005CEA2C /* IDPCreature.m */; };
 		855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */; };
 		855F13791CFE4558005CEA2C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13751CFE4422005CEA2C /* IDPMaleCreature.m */; };
+		855F137C1CFE47AD005CEA2C /* NSString+IDPCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F137B1CFE47AD005CEA2C /* NSString+IDPCreature.m */; };
+		85E0759C1CFEFCE50011FB59 /* IDPRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E0759B1CFEFCE50011FB59 /* IDPRandom.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +36,10 @@
 		855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDPFemaleCreature.m; sourceTree = "<group>"; };
 		855F13741CFE4422005CEA2C /* IDPMaleCreature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDPMaleCreature.h; sourceTree = "<group>"; };
 		855F13751CFE4422005CEA2C /* IDPMaleCreature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDPMaleCreature.m; sourceTree = "<group>"; };
+		855F137A1CFE47AD005CEA2C /* NSString+IDPCreature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IDPCreature.h"; sourceTree = "<group>"; };
+		855F137B1CFE47AD005CEA2C /* NSString+IDPCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IDPCreature.m"; sourceTree = "<group>"; };
+		85E0759A1CFEFCE50011FB59 /* IDPRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPRandom.h; sourceTree = "<group>"; };
+		85E0759B1CFEFCE50011FB59 /* IDPRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPRandom.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +56,7 @@
 		855F134D1CFE4360005CEA2C = {
 			isa = PBXGroup;
 			children = (
+				85E075981CFEFCA60011FB59 /* Shared */,
 				855F136E1CFE4422005CEA2C /* Sources */,
 				855F13761CFE4422005CEA2C /* Tests */,
 				855F13581CFE4360005CEA2C /* SuperObjCProject */,
@@ -90,6 +97,8 @@
 				855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */,
 				855F13741CFE4422005CEA2C /* IDPMaleCreature.h */,
 				855F13751CFE4422005CEA2C /* IDPMaleCreature.m */,
+				855F137A1CFE47AD005CEA2C /* NSString+IDPCreature.h */,
+				855F137B1CFE47AD005CEA2C /* NSString+IDPCreature.m */,
 			);
 			path = IDPCreature;
 			sourceTree = "<group>";
@@ -99,6 +108,23 @@
 			children = (
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		85E075981CFEFCA60011FB59 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				85E075991CFEFCD00011FB59 /* IDPRandom */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		85E075991CFEFCD00011FB59 /* IDPRandom */ = {
+			isa = PBXGroup;
+			children = (
+				85E0759A1CFEFCE50011FB59 /* IDPRandom.h */,
+				85E0759B1CFEFCE50011FB59 /* IDPRandom.m */,
+			);
+			path = IDPRandom;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,6 +184,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				855F13771CFE4558005CEA2C /* IDPCreature.m in Sources */,
+				855F137C1CFE47AD005CEA2C /* NSString+IDPCreature.m in Sources */,
+				85E0759C1CFEFCE50011FB59 /* IDPRandom.m in Sources */,
 				855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */,
 				855F13791CFE4558005CEA2C /* IDPMaleCreature.m in Sources */,
 				855F135A1CFE4360005CEA2C /* main.m in Sources */,
@@ -281,6 +309,7 @@
 				855F135F1CFE4360005CEA2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

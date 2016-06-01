@@ -8,6 +8,12 @@
 
 #import "IDPMaleCreature.h"
 
+@interface IDPMaleCreature ()
+
+- (void)goToWar;
+
+@end
+
 @implementation IDPMaleCreature
 
 #pragma mark -
@@ -17,10 +23,12 @@
     [self goToWar];
 }
 
+
+#pragma mark -
+#pragma mark Privte Methods
+
 - (void)goToWar {
-    if (IDPCreatureGenderMale == self.gender) {
-        [self printCreatureMessage:@"I am going to war!"];
-    }
+    [self printMessage:@"I am going to war!"];
 }
 
 

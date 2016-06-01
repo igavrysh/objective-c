@@ -10,6 +10,4 @@
 
 @interface IDPMaleCreature : IDPCreature
 
-- (void)goToWar;
-
 @end
