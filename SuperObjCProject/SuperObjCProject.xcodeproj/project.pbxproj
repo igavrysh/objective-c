@@ -10,6 +10,10 @@
 		3EA0F1F01CFF4E6700E3DAD7 /* IDPCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0F1EF1CFF4E6700E3DAD7 /* IDPCar.m */; };
 		3EA0F1F31CFF4E7900E3DAD7 /* IDPRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0F1F21CFF4E7900E3DAD7 /* IDPRoom.m */; };
 		3EA0F1FB1CFF509100E3DAD7 /* IDPWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3EA0F1FA1CFF509100E3DAD7 /* IDPWorker.m */; };
+		8534EE711CFF9C5D0057D3B2 /* IDPAccountant.m in Sources */ = {isa = PBXBuildFile; fileRef = 8534EE701CFF9C5D0057D3B2 /* IDPAccountant.m */; };
+		8534EE741CFF9C6A0057D3B2 /* IDPDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 8534EE731CFF9C6A0057D3B2 /* IDPDirector.m */; };
+		8534EE771CFF9C7C0057D3B2 /* IDPCarwasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8534EE761CFF9C7C0057D3B2 /* IDPCarwasher.m */; };
+		8534EE7A1CFF9E3F0057D3B2 /* IDPCarwash.m in Sources */ = {isa = PBXBuildFile; fileRef = 8534EE791CFF9E3F0057D3B2 /* IDPCarwash.m */; };
 		855F135A1CFE4360005CEA2C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13591CFE4360005CEA2C /* main.m */; };
 		855F13771CFE4558005CEA2C /* IDPCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13711CFE4422005CEA2C /* IDPCreature.m */; };
 		855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */; };
@@ -41,6 +45,14 @@
 		3EA0F1F21CFF4E7900E3DAD7 /* IDPRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPRoom.m; sourceTree = "<group>"; };
 		3EA0F1F91CFF509100E3DAD7 /* IDPWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPWorker.h; sourceTree = "<group>"; };
 		3EA0F1FA1CFF509100E3DAD7 /* IDPWorker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPWorker.m; sourceTree = "<group>"; };
+		8534EE6F1CFF9C5D0057D3B2 /* IDPAccountant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPAccountant.h; sourceTree = "<group>"; };
+		8534EE701CFF9C5D0057D3B2 /* IDPAccountant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPAccountant.m; sourceTree = "<group>"; };
+		8534EE721CFF9C6A0057D3B2 /* IDPDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPDirector.h; sourceTree = "<group>"; };
+		8534EE731CFF9C6A0057D3B2 /* IDPDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPDirector.m; sourceTree = "<group>"; };
+		8534EE751CFF9C7C0057D3B2 /* IDPCarwasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwasher.h; sourceTree = "<group>"; };
+		8534EE761CFF9C7C0057D3B2 /* IDPCarwasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwasher.m; sourceTree = "<group>"; };
+		8534EE781CFF9E3F0057D3B2 /* IDPCarwash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwash.h; sourceTree = "<group>"; };
+		8534EE791CFF9E3F0057D3B2 /* IDPCarwash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwash.m; sourceTree = "<group>"; };
 		855F13561CFE4360005CEA2C /* SuperObjCProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SuperObjCProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		855F13591CFE4360005CEA2C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		855F13701CFE4422005CEA2C /* IDPCreature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDPCreature.h; sourceTree = "<group>"; };
@@ -101,6 +113,33 @@
 			path = IDPWorker;
 			sourceTree = "<group>";
 		};
+		8534EE6C1CFF9B200057D3B2 /* IDPAccountant */ = {
+			isa = PBXGroup;
+			children = (
+				8534EE6F1CFF9C5D0057D3B2 /* IDPAccountant.h */,
+				8534EE701CFF9C5D0057D3B2 /* IDPAccountant.m */,
+			);
+			path = IDPAccountant;
+			sourceTree = "<group>";
+		};
+		8534EE6D1CFF9B3A0057D3B2 /* IDPDirector */ = {
+			isa = PBXGroup;
+			children = (
+				8534EE721CFF9C6A0057D3B2 /* IDPDirector.h */,
+				8534EE731CFF9C6A0057D3B2 /* IDPDirector.m */,
+			);
+			path = IDPDirector;
+			sourceTree = "<group>";
+		};
+		8534EE6E1CFF9BAC0057D3B2 /* IDPCarwasher */ = {
+			isa = PBXGroup;
+			children = (
+				8534EE751CFF9C7C0057D3B2 /* IDPCarwasher.h */,
+				8534EE761CFF9C7C0057D3B2 /* IDPCarwasher.m */,
+			);
+			path = IDPCarwasher;
+			sourceTree = "<group>";
+		};
 		855F134D1CFE4360005CEA2C = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +170,9 @@
 		855F136E1CFE4422005CEA2C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				8534EE6E1CFF9BAC0057D3B2 /* IDPCarwasher */,
+				8534EE6D1CFF9B3A0057D3B2 /* IDPDirector */,
+				8534EE6C1CFF9B200057D3B2 /* IDPAccountant */,
 				3EA0F1F81CFF508000E3DAD7 /* IDPWorker */,
 				3EA0F1EC1CFF4E4E00E3DAD7 /* IDPCar */,
 				3EA0F1ED1CFF4E4E00E3DAD7 /* IDPRoom */,
@@ -230,6 +272,8 @@
 		85E075AE1CFF2B6C0011FB59 /* IDPCarwash */ = {
 			isa = PBXGroup;
 			children = (
+				8534EE781CFF9E3F0057D3B2 /* IDPCarwash.h */,
+				8534EE791CFF9E3F0057D3B2 /* IDPCarwash.m */,
 			);
 			path = IDPCarwash;
 			sourceTree = "<group>";
@@ -291,12 +335,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				855F13771CFE4558005CEA2C /* IDPCreature.m in Sources */,
+				8534EE741CFF9C6A0057D3B2 /* IDPDirector.m in Sources */,
 				85E0759C1CFEFCE50011FB59 /* IDPRandom.m in Sources */,
 				85E075AD1CFF26900011FB59 /* NSObject+IDPObject.m in Sources */,
+				8534EE711CFF9C5D0057D3B2 /* IDPAccountant.m in Sources */,
 				85E075A01CFF0C6A0011FB59 /* NSString+IDPName.m in Sources */,
+				8534EE771CFF9C7C0057D3B2 /* IDPCarwasher.m in Sources */,
 				855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */,
 				3EA0F1F01CFF4E6700E3DAD7 /* IDPCar.m in Sources */,
 				85E075A91CFF115C0011FB59 /* IDPCreatureTest.m in Sources */,
+				8534EE7A1CFF9E3F0057D3B2 /* IDPCarwash.m in Sources */,
 				855F13791CFE4558005CEA2C /* IDPMaleCreature.m in Sources */,
 				3EA0F1FB1CFF509100E3DAD7 /* IDPWorker.m in Sources */,
 				85CA46FE1CFF45B7007B7988 /* IDPBuilding.m in Sources */,

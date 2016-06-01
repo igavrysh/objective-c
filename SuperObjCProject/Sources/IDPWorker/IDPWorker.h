@@ -10,6 +10,7 @@
 
 @interface IDPWorker : IDPCreature
 @property (nonatomic, assign) float salary;
-
+@property (nonatomic, assign) float capital;
+@property (nonatomic, assign) NSUInteger experience;
 
 @end
