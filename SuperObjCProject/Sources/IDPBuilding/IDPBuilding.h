@@ -10,4 +10,6 @@
 
 @interface IDPBuilding : NSObject
 
+@property (nonatomic, retain) NSArray *rooms;
+
 @end
