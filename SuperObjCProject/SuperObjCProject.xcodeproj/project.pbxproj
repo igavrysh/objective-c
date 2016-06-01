@@ -11,6 +11,7 @@
 		855F13771CFE4558005CEA2C /* IDPCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13711CFE4422005CEA2C /* IDPCreature.m */; };
 		855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */; };
 		855F13791CFE4558005CEA2C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13751CFE4422005CEA2C /* IDPMaleCreature.m */; };
+		85CA46FE1CFF45B7007B7988 /* IDPBuilding.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CA46FD1CFF45B7007B7988 /* IDPBuilding.m */; };
 		85E0759C1CFEFCE50011FB59 /* IDPRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E0759B1CFEFCE50011FB59 /* IDPRandom.m */; };
 		85E075A01CFF0C6A0011FB59 /* NSString+IDPName.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E0759F1CFF0C6A0011FB59 /* NSString+IDPName.m */; };
 		85E075A51CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075A41CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m */; };
@@ -39,6 +40,8 @@
 		855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDPFemaleCreature.m; sourceTree = "<group>"; };
 		855F13741CFE4422005CEA2C /* IDPMaleCreature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDPMaleCreature.h; sourceTree = "<group>"; };
 		855F13751CFE4422005CEA2C /* IDPMaleCreature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDPMaleCreature.m; sourceTree = "<group>"; };
+		85CA46FC1CFF45B7007B7988 /* IDPBuilding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPBuilding.h; sourceTree = "<group>"; };
+		85CA46FD1CFF45B7007B7988 /* IDPBuilding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPBuilding.m; sourceTree = "<group>"; };
 		85E0759A1CFEFCE50011FB59 /* IDPRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPRandom.h; sourceTree = "<group>"; };
 		85E0759B1CFEFCE50011FB59 /* IDPRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPRandom.m; sourceTree = "<group>"; };
 		85E0759E1CFF0C6A0011FB59 /* NSString+IDPName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IDPName.h"; sourceTree = "<group>"; };
@@ -92,6 +95,8 @@
 		855F136E1CFE4422005CEA2C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				85CA46FB1CFF458E007B7988 /* IDPBuilding */,
+				85E075AE1CFF2B6C0011FB59 /* IDPCarwash */,
 				855F136F1CFE4422005CEA2C /* IDPCreature */,
 			);
 			path = Sources;
@@ -116,6 +121,15 @@
 				85E075A61CFF11470011FB59 /* IDPCreatureTest */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		85CA46FB1CFF458E007B7988 /* IDPBuilding */ = {
+			isa = PBXGroup;
+			children = (
+				85CA46FC1CFF45B7007B7988 /* IDPBuilding.h */,
+				85CA46FD1CFF45B7007B7988 /* IDPBuilding.m */,
+			);
+			path = IDPBuilding;
 			sourceTree = "<group>";
 		};
 		85E075981CFEFCA60011FB59 /* Shared */ = {
@@ -172,6 +186,13 @@
 				85E075AC1CFF26900011FB59 /* NSObject+IDPObject.m */,
 			);
 			path = "NSObject+IDPObject";
+			sourceTree = "<group>";
+		};
+		85E075AE1CFF2B6C0011FB59 /* IDPCarwash */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = IDPCarwash;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,6 +258,7 @@
 				855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */,
 				85E075A91CFF115C0011FB59 /* IDPCreatureTest.m in Sources */,
 				855F13791CFE4558005CEA2C /* IDPMaleCreature.m in Sources */,
+				85CA46FE1CFF45B7007B7988 /* IDPBuilding.m in Sources */,
 				85E075A51CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m in Sources */,
 				855F135A1CFE4360005CEA2C /* main.m in Sources */,
 			);
