@@ -9,7 +9,7 @@
 #import "IDPCreature.h"
 
 #import "IDPRandom.h"
-#import "NSString+IDPCreature.h"
+#import "NSString+IDPName.h"
 
 @interface IDPCreature ()
 
@@ -107,7 +107,7 @@
 #pragma mark Private Methods
 
 - (void)printMessage:(NSString *)message {
-    NSLog(@"Creature %@(%@) says %@!", self.name, self, message);
+    NSLog(@"Creature %@(%@) says - %@!", self.name, self, message);
 }
 
 @end

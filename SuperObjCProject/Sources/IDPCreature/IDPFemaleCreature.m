@@ -8,7 +8,7 @@
 #import "IDPFemaleCreature.h"
 
 #import "IDPRandom.h"
-#import "NSString+IDPCreature.h"
+#import "NSString+IDPName.h"
 
 @interface IDPFemaleCreature ()
 
