@@ -12,6 +12,7 @@
 #import "IDPRandom.h"
 #import "NSString+IDPName.h"
 #import "NSObject+IDPObject.h"
+#import "NSArray+IDPArrayEnumerator.h"
 
 @interface IDPCreature ()
 @property (nonatomic, retain) NSMutableArray *mutableChildren;
@@ -80,7 +81,7 @@
 - (void)sayHi {
     [self printMessage:@"Hi"];
     
-    [self.mutableChildren enumerateObjectsUsingBlock:^(IDPCreature *creature, NSUInteger idx, BOOL *stop) {
+    [self.mutableChildren performBlockWithEachObject:^(IDPCreature *creature) {
         [creature sayHi];
     }];
 }
