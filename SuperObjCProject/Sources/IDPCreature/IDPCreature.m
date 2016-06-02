@@ -7,9 +7,12 @@
 //
 
 #import "IDPCreature.h"
+
 #import "IDPFemaleCreature.h"
 #import "IDPMaleCreature.h"
+
 #import "IDPRandom.h"
+
 #import "NSString+IDPName.h"
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
@@ -27,11 +30,7 @@
 #pragma mark Class Methods
 
 + (id)creature {
-    Class creatureClass  = IDPRandomUIntWithMaxValue(1) ? [IDPMaleCreature class] : [IDPFemaleCreature class];
-    
-    IDPCreature *creature = [creatureClass object];
-    
-    creature.name = [NSString randomName];
+    IDPCreature *creature = IDPRandomBool() ? [IDPMaleCreature object] : [IDPFemaleCreature object];
     
     return creature;
 }
@@ -47,16 +46,12 @@
 }
 
 - (id)init {
-    return [self initWithName:nil weight:0 age:0];
-}
-
-- (id)initWithRandomAttributes {
     return [self initWithName:[NSString randomName]
                        weight:IDPRandomFloatWithMinAndMaxValue(0.1, 200)
                           age:IDPRandomUIntWithMaxValue(122)];
 }
 
-- (id)initWithName:(NSString *)name weight:(float)weight age:(UInt8)age {
+- (id)initWithName:(NSString *)name weight:(float)weight age:(IDPAge)age {
     self = [super init];
     if (self) {
         self.name = name;

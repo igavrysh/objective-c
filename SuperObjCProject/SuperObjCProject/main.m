@@ -12,11 +12,9 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        [IDPCreatureTest creaturesPerformGenderSpecificOperation];
+        IDPCreatureTest *test = [[IDPCreatureTest new] autorelease];
         
-        [IDPCreatureTest creaturesSayHi];
-        
-        [IDPCreatureTest creaturesChildrendSayHi];
+        [test execute];
     }
     
     return 0;

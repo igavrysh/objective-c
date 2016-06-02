@@ -8,13 +8,14 @@
 #import "IDPFemaleCreature.h"
 
 #import "IDPRandom.h"
+
 #import "NSString+IDPName.h"
 
 @interface IDPFemaleCreature ()
 
-- (IDPCreature *)giveBithToChildWithRandomName;
+- (IDPCreature *)giveBirthToChildWithRandomName;
 
-- (IDPCreature *)giveBithToChildWithName:(NSString *)name;
+- (IDPCreature *)giveBirthToChildWithName:(NSString *)name;
 
 @end
 
@@ -28,17 +29,17 @@
 }
 
 - (void)giveBirthAndAddToChildren {
-    [self addChild:[self giveBithToChildWithRandomName]];
+    [self addChild:[self giveBirthToChildWithRandomName]];
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
-- (IDPCreature *)giveBithToChildWithRandomName {
-    return [self giveBithToChildWithName:[NSString randomName]];
+- (IDPCreature *)giveBirthToChildWithRandomName {
+    return [self giveBirthToChildWithName:[NSString randomName]];
 }
 
-- (IDPCreature *)giveBithToChildWithName:(NSString *)name {
+- (IDPCreature *)giveBirthToChildWithName:(NSString *)name {
     IDPCreature *creature = [IDPCreature creature];
     
     creature.weight = IDPRandomFloatWithMinAndMaxValue(0.1, 4);

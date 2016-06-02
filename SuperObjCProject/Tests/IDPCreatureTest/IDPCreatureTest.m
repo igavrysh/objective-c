@@ -8,32 +8,47 @@
 
 #import "IDPCreatureTest.h"
 
-#import "NSArray+IDPArrayEnumerator.h"
 #import "IDPCreature.h"
+
+#import "NSArray+IDPArrayEnumerator.h"
+#import "NSObject+IDPObject.h"
 
 @interface IDPCreatureTest ()
 
-+ (NSMutableArray *)createCreatureArrayWithCount:(UInt8) count;
++ (NSMutableArray *)creaturesWithCount:(NSUInteger) count;
+
+- (void)creaturesPerformGenderSpecificOperation;
+
+- (void)creaturesSayHi;
+
+- (void)creaturesChildrendSayHi;
 
 @end
 
 @implementation IDPCreatureTest
 
-+ (NSArray *)createCreatureArrayWithCount:(UInt8) count {
-    NSMutableArray *creatures = [[NSMutableArray alloc] init];
+#pragma mark -
+#pragma mark Public Methods
+
+- (void)execute {
+    [self creaturesPerformGenderSpecificOperation];
     
-    for (uint64_t index = 0; index < count; index++) {
-        IDPCreature *creature = [IDPCreature creature];
-        [creatures addObject:creature];
-    }
+    [self creaturesSayHi];
     
-    return creatures;
+    [self creaturesChildrendSayHi];
 }
 
-+ (void)creaturesPerformGenderSpecificOperation {
-    UInt8 count = 10;
+#pragma mark -
+#pragma mark Private Methods
+
++ (NSArray *)creaturesWithCount:(NSUInteger)count {
+    return [NSArray objectsOfClass:[IDPCreature class] createdWith:@selector(creature) count:count];
+}
+
+- (void)creaturesPerformGenderSpecificOperation {
+    NSUInteger count = 10;
     
-    NSArray *creatures = [IDPCreatureTest createCreatureArrayWithCount: count];
+    NSArray *creatures = [IDPCreatureTest creaturesWithCount: count];
     
     for (IDPCreature *creature in creatures) {
         [creature performGenderSpecificOperation];
@@ -42,12 +57,12 @@
     [creatures release];
 }
 
-+ (void)creaturesSayHi {
-    UInt8 count = 10;
-    
-    NSArray *creatures = [IDPCreatureTest createCreatureArrayWithCount: count];
-    
+- (void)creaturesSayHi {
     NSLog(@"--- All creatures are saying hi! ---");
+    NSUInteger count = 10;
+    
+    NSArray *creatures = [IDPCreatureTest creaturesWithCount: count];
+    
     [creatures performBlockWithEachObject:^(IDPCreature *creature) {
         [creature sayHi];
     }];
@@ -55,12 +70,12 @@
     [creatures release];
 }
 
-+ (void)creaturesChildrendSayHi {
+- (void)creaturesChildrendSayHi {
     NSLog(@"--- All children are saying hi! ---");
     
-    UInt8 count = 10;
+    NSUInteger count = 10;
     
-    NSArray *creatures = [IDPCreatureTest createCreatureArrayWithCount: count];
+    NSArray *creatures = [IDPCreatureTest creaturesWithCount: count];
     
     for (IDPCreature *creature in creatures) {
         [creature performGenderSpecificOperation];

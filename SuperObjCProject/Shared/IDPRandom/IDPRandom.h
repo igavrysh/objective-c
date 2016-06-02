@@ -18,23 +18,50 @@ typedef struct {
     NSInteger maxValue;
 } IDPIntRange;
 
-extern
-IDPFloatRange IDPFloatRangeCreate(float value1, float value2);
+static inline
+IDPFloatRange IDPFloatRangeCreate(float value1, float value2) {
+    IDPFloatRange range;
+    range.minValue = MIN(value1, value2);
+    range.maxValue = MAX(value1, value2);
+    
+    return range;
+}
 
-extern
-IDPIntRange IDPIntRangeCreate(NSInteger value1, NSInteger value2);
+static inline
+IDPIntRange IDPIntRangeCreate(NSInteger value1, NSInteger value2) {
+    IDPIntRange range;
+    range.minValue = MIN(value1, value2);
+    range.maxValue = MAX(value1, value2);
+    
+    return range;
+}
 
-extern
-float IDPRandomFloatWithinRange(IDPFloatRange range);
+static inline
+float IDPRandomFloatWithinRange(IDPFloatRange range) {
+    return range.minValue + arc4random() / (float)UINT32_MAX * (range.maxValue - range.minValue);
+}
 
-extern
-float IDPRandomFloatWithMinAndMaxValue(float value1, float value2);
+static inline
+float IDPRandomFloatWithMinAndMaxValue(float value1, float value2) {
+    return IDPRandomFloatWithinRange(IDPFloatRangeCreate(value1, value2));
+}
 
-extern
-NSInteger IDPRandomIntWithinRange(IDPIntRange range);
+static inline
+NSInteger IDPRandomIntWithinRange(IDPIntRange range) {
+    return range.minValue + arc4random_uniform(range.maxValue - range.minValue);
+}
 
-extern
-NSInteger IDPRandomIntWithMinAndMaxValue(NSInteger value1, NSInteger value2);
+static inline
+NSInteger IDPRandomIntWithMinAndMaxValue(NSInteger value1, NSInteger value2) {
+    return IDPRandomIntWithinRange(IDPIntRangeCreate(value1, value2));
+}
 
-extern
-NSUInteger IDPRandomUIntWithMaxValue(NSUInteger limit);
+static inline
+NSUInteger IDPRandomUIntWithMaxValue(NSUInteger value) {
+    return IDPRandomIntWithinRange(IDPIntRangeCreate(0, value));
+}
+
+static inline
+BOOL IDPRandomBool() {
+    return arc4random_uniform(1);
+}
