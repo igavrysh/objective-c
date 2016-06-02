@@ -14,12 +14,12 @@
 		8534EE741CFF9C6A0057D3B2 /* IDPDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 8534EE731CFF9C6A0057D3B2 /* IDPDirector.m */; };
 		8534EE771CFF9C7C0057D3B2 /* IDPCarwasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 8534EE761CFF9C7C0057D3B2 /* IDPCarwasher.m */; };
 		8534EE7A1CFF9E3F0057D3B2 /* IDPCarwash.m in Sources */ = {isa = PBXBuildFile; fileRef = 8534EE791CFF9E3F0057D3B2 /* IDPCarwash.m */; };
+		8534EE6B1CFF917B0057D3B2 /* IDPRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 8534EE6A1CFF917B0057D3B2 /* IDPRandom.m */; };
 		855F135A1CFE4360005CEA2C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13591CFE4360005CEA2C /* main.m */; };
 		855F13771CFE4558005CEA2C /* IDPCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13711CFE4422005CEA2C /* IDPCreature.m */; };
 		855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */; };
 		855F13791CFE4558005CEA2C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 855F13751CFE4422005CEA2C /* IDPMaleCreature.m */; };
 		85CA46FE1CFF45B7007B7988 /* IDPBuilding.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CA46FD1CFF45B7007B7988 /* IDPBuilding.m */; };
-		85E0759C1CFEFCE50011FB59 /* IDPRandom.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E0759B1CFEFCE50011FB59 /* IDPRandom.m */; };
 		85E075A01CFF0C6A0011FB59 /* NSString+IDPName.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E0759F1CFF0C6A0011FB59 /* NSString+IDPName.m */; };
 		85E075A51CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075A41CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m */; };
 		85E075A91CFF115C0011FB59 /* IDPCreatureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075A81CFF115C0011FB59 /* IDPCreatureTest.m */; };
@@ -53,6 +53,8 @@
 		8534EE761CFF9C7C0057D3B2 /* IDPCarwasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwasher.m; sourceTree = "<group>"; };
 		8534EE781CFF9E3F0057D3B2 /* IDPCarwash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwash.h; sourceTree = "<group>"; };
 		8534EE791CFF9E3F0057D3B2 /* IDPCarwash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwash.m; sourceTree = "<group>"; };
+		8534EE691CFF917B0057D3B2 /* IDPRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPRandom.h; sourceTree = "<group>"; };
+		8534EE6A1CFF917B0057D3B2 /* IDPRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPRandom.m; sourceTree = "<group>"; };
 		855F13561CFE4360005CEA2C /* SuperObjCProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SuperObjCProject; sourceTree = BUILT_PRODUCTS_DIR; };
 		855F13591CFE4360005CEA2C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		855F13701CFE4422005CEA2C /* IDPCreature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDPCreature.h; sourceTree = "<group>"; };
@@ -63,8 +65,6 @@
 		855F13751CFE4422005CEA2C /* IDPMaleCreature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDPMaleCreature.m; sourceTree = "<group>"; };
 		85CA46FC1CFF45B7007B7988 /* IDPBuilding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPBuilding.h; sourceTree = "<group>"; };
 		85CA46FD1CFF45B7007B7988 /* IDPBuilding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPBuilding.m; sourceTree = "<group>"; };
-		85E0759A1CFEFCE50011FB59 /* IDPRandom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPRandom.h; sourceTree = "<group>"; };
-		85E0759B1CFEFCE50011FB59 /* IDPRandom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPRandom.m; sourceTree = "<group>"; };
 		85E0759E1CFF0C6A0011FB59 /* NSString+IDPName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IDPName.h"; sourceTree = "<group>"; };
 		85E0759F1CFF0C6A0011FB59 /* NSString+IDPName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IDPName.m"; sourceTree = "<group>"; };
 		85E075A31CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+IDPArrayEnumerator.h"; sourceTree = "<group>"; };
@@ -227,8 +227,8 @@
 		85E075991CFEFCD00011FB59 /* IDPRandom */ = {
 			isa = PBXGroup;
 			children = (
-				85E0759A1CFEFCE50011FB59 /* IDPRandom.h */,
-				85E0759B1CFEFCE50011FB59 /* IDPRandom.m */,
+				8534EE691CFF917B0057D3B2 /* IDPRandom.h */,
+				8534EE6A1CFF917B0057D3B2 /* IDPRandom.m */,
 			);
 			path = IDPRandom;
 			sourceTree = "<group>";
@@ -336,9 +336,10 @@
 			files = (
 				855F13771CFE4558005CEA2C /* IDPCreature.m in Sources */,
 				8534EE741CFF9C6A0057D3B2 /* IDPDirector.m in Sources */,
-				85E0759C1CFEFCE50011FB59 /* IDPRandom.m in Sources */,
 				85E075AD1CFF26900011FB59 /* NSObject+IDPObject.m in Sources */,
 				8534EE711CFF9C5D0057D3B2 /* IDPAccountant.m in Sources */,
+				85E075AD1CFF26900011FB59 /* NSObject+IDPObject.m in Sources */,
+				8534EE6B1CFF917B0057D3B2 /* IDPRandom.m in Sources */,
 				85E075A01CFF0C6A0011FB59 /* NSString+IDPName.m in Sources */,
 				8534EE771CFF9C7C0057D3B2 /* IDPCarwasher.m in Sources */,
 				855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */,

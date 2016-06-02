@@ -23,13 +23,11 @@
     [self goToWar];
 }
 
-
 #pragma mark -
 #pragma mark Privte Methods
 
 - (void)goToWar {
     [self printMessage:@"I am going to war!"];
 }
-
 
 @end

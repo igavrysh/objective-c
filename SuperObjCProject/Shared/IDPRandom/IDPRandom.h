@@ -2,16 +2,66 @@
 //  IDPRandom.h
 //  SuperObjCProject
 //
-//  Created by Ievgen on 6/1/16.
+//  Created by Ievgen on 6/2/16.
 //  Copyright © 2016 1mlndollarsasset. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface IDPRandom : NSObject
+typedef struct {
+    float minValue;
+    float maxValue;
+} IDPFloatRange;
 
-+ (float)positiveFloatFrom:(float)lowerBound to:(float)upperBound;
+typedef struct {
+    NSInteger minValue;
+    NSInteger maxValue;
+} IDPIntRange;
 
-+ (UInt8)uint8LimitedTo:(UInt8)upperBound;
+static inline
+IDPFloatRange IDPFloatRangeCreate(float value1, float value2) {
+    IDPFloatRange range;
+    range.minValue = MIN(value1, value2);
+    range.maxValue = MAX(value1, value2);
+    
+    return range;
+}
 
-@end
+static inline
+IDPIntRange IDPIntRangeCreate(NSInteger value1, NSInteger value2) {
+    IDPIntRange range;
+    range.minValue = MIN(value1, value2);
+    range.maxValue = MAX(value1, value2);
+    
+    return range;
+}
+
+static inline
+float IDPRandomFloatWithinRange(IDPFloatRange range) {
+    return range.minValue + arc4random() / (float)UINT32_MAX * (range.maxValue - range.minValue);
+}
+
+static inline
+float IDPRandomFloatWithMinAndMaxValue(float value1, float value2) {
+    return IDPRandomFloatWithinRange(IDPFloatRangeCreate(value1, value2));
+}
+
+static inline
+NSInteger IDPRandomIntWithinRange(IDPIntRange range) {
+    return range.minValue + arc4random_uniform(range.maxValue - range.minValue);
+}
+
+static inline
+NSInteger IDPRandomIntWithMinAndMaxValue(NSInteger value1, NSInteger value2) {
+    return IDPRandomIntWithinRange(IDPIntRangeCreate(value1, value2));
+}
+
+static inline
+NSUInteger IDPRandomUIntWithMaxValue(NSUInteger value) {
+    return IDPRandomIntWithinRange(IDPIntRangeCreate(0, value));
+}
+
+static inline
+BOOL IDPRandomBool() {
+    return arc4random_uniform(1);
+}

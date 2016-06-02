@@ -8,41 +8,67 @@
 
 #import "NSString+IDPName.h"
 
-static NSString *kIDPFirstNames[] = {
-    @"Tran", @"Lenore", @"Bud", @"Fredda", @"Katrice",
-    @"Clyde", @"Hildegard", @"Vernell", @"Nellie", @"Rupert",
-    @"Billie", @"Tamica", @"Crystle", @"Kandi", @"Caridad",
-    @"Vanetta", @"Taylor", @"Pinkie", @"Ben", @"Rosanna",
-    @"Eufemia", @"Britteny", @"Ramon", @"Jacque", @"Telma",
-    @"Colton", @"Monte", @"Pam", @"Tracy", @"Tresa",
-    @"Willard", @"Mireille", @"Roma", @"Elise", @"Trang",
-    @"Ty", @"Pierre", @"Floyd", @"Savanna", @"Arvilla",
-    @"Whitney", @"Denver", @"Norbert", @"Meghan", @"Tandra",
-    @"Jenise", @"Brent", @"Elenor", @"Sha", @"Jessie"
-};
+@interface NSString (NSStringPrivate)
 
-static NSString *kIDPLastNames[] = {
++ (NSArray *)lastNames;
++ (NSArray *)firstNames;
+
+@end
+
+@implementation NSString (NSStringPrivate)
+
++ (NSArray *)lastNames {
+    static id result = nil;
     
-    @"Farrah", @"Laviolette", @"Heal", @"Sechrest", @"Roots",
-    @"Homan", @"Starns", @"Oldham", @"Yocum", @"Mancia",
-    @"Prill", @"Lush", @"Piedra", @"Castenada", @"Warnock",
-    @"Vanderlinden", @"Simms", @"Gilroy", @"Brann", @"Bodden",
-    @"Lenz", @"Gildersleeve", @"Wimbish", @"Bello", @"Beachy",
-    @"Jurado", @"William", @"Beaupre", @"Dyal", @"Doiron",
-    @"Plourde", @"Bator", @"Krause", @"Odriscoll", @"Corby",
-    @"Waltman", @"Michaud", @"Kobayashi", @"Sherrick", @"Woolfolk",
-    @"Holladay", @"Hornback", @"Moler", @"Bowles", @"Libbey",
-    @"Spano", @"Folson", @"Arguelles", @"Burke", @"Rook"
-};
+    if (!result) {
+        result = @[@"Farrah", @"Laviolette", @"Heal", @"Sechrest", @"Roots",
+                   @"Homan", @"Starns", @"Oldham", @"Yocum", @"Mancia",
+                   @"Prill", @"Lush", @"Piedra", @"Castenada", @"Warnock",
+                   @"Vanderlinden", @"Simms", @"Gilroy", @"Brann", @"Bodden",
+                   @"Lenz", @"Gildersleeve", @"Wimbish", @"Bello", @"Beachy",
+                   @"Jurado", @"William", @"Beaupre", @"Dyal", @"Doiron",
+                   @"Plourde", @"Bator", @"Krause", @"Odriscoll", @"Corby",
+                   @"Waltman", @"Michaud", @"Kobayashi", @"Sherrick", @"Woolfolk",
+                   @"Holladay", @"Hornback", @"Moler", @"Bowles", @"Libbey",
+                   @"Spano", @"Folson", @"Arguelles", @"Burke", @"Rook"];
+        
+        [result retain];
+    }
+    
+    return result;
+}
 
-static int kIDPNamesCount = 50;
++ (NSArray *)firstNames {
+    static id result = nil;
+    
+    if (!result) {
+        result = @[@"Tran", @"Lenore", @"Bud", @"Fredda", @"Katrice",
+                   @"Clyde", @"Hildegard", @"Vernell", @"Nellie", @"Rupert",
+                   @"Billie", @"Tamica", @"Crystle", @"Kandi", @"Caridad",
+                   @"Vanetta", @"Taylor", @"Pinkie", @"Ben", @"Rosanna",
+                   @"Eufemia", @"Britteny", @"Ramon", @"Jacque", @"Telma",
+                   @"Colton", @"Monte", @"Pam", @"Tracy", @"Tresa",
+                   @"Willard", @"Mireille", @"Roma", @"Elise", @"Trang",
+                   @"Ty", @"Pierre", @"Floyd", @"Savanna", @"Arvilla",
+                   @"Whitney", @"Denver", @"Norbert", @"Meghan", @"Tandra",
+                   @"Jenise", @"Brent", @"Elenor", @"Sha", @"Jessie"];
+        
+        [result retain];
+    }
+    
+    return result;
+}
+
+@end
 
 @implementation NSString (IDPName)
 
 + (NSString *)randomName {
     return [NSString stringWithFormat:@"%@ %@",
-            kIDPFirstNames[arc4random_uniform(kIDPNamesCount)],
-            kIDPLastNames[arc4random_uniform(kIDPNamesCount)]];
+            [[NSString firstNames] objectAtIndex:arc4random_uniform([[NSString firstNames] count])],
+            [[NSString lastNames] objectAtIndex:arc4random_uniform([[NSString lastNames] count])]];
 }
 
 @end
+
+
