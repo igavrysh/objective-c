@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface IDPCar : NSObject
-@property (nonatomic, assign) float cash;
-@property (nonatomic, assign) BOOL isDirty;
+@property (nonatomic, assign)                   float   cash;
+@property (nonatomic, assign, getter = isDirty) BOOL    dirty;
 
+- (id)init;
+
+- (float)payForServiceWithPrice:(float)price;
 
 @end

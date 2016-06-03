@@ -8,8 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+#import "IDPAccountant.h"
+#import "IDPDirector.h"
+
 @interface IDPRoom : NSObject
-@property (nonatomic, assign) NSUInteger capacity;
-@property (nonatomic, retain) NSArray *workers;
+
+- (void)addWorker:(IDPWorker *)worker;
+
+- (IDPAccountant *)findAccountant;
+- (IDPDirector *)findDirector;
 
 @end

@@ -10,4 +10,19 @@
 
 @implementation IDPCarwasher
 
+- (id)init {
+    self = [super init];
+    if (self) {
+    }
+    
+    return self;
+}
+
+- (void)cleanCar:(IDPCar *)car {
+    
+    car.dirty = FALSE;
+    
+    self.cash += [car payForServiceWithPrice:10];
+}
+
 @end

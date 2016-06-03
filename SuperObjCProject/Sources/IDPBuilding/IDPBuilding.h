@@ -8,7 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+#import "IDPAccountant.h"
+#import "IDPDirector.h"
+#import "IDPRoom.h"
+
 @interface IDPBuilding : NSObject
-@property (nonatomic, retain) NSArray *rooms;
+
+- (void)addRoom:(IDPRoom *)room;
+- (void)removeRoom:(IDPRoom *)room;
+
+- (IDPAccountant *)findAccountant;
+- (IDPDirector *)findDirector;
 
 @end

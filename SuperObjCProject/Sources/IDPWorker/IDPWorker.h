@@ -13,4 +13,8 @@
 @property (nonatomic, assign) float capital;
 @property (nonatomic, assign) NSUInteger experience;
 
+
+- (void)receiveCashFromWorker:(IDPWorker *)worker;
+- (float)giveAllCash;
+
 @end
