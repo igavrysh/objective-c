@@ -31,6 +31,10 @@ static const NSUInteger kIDPCarwashTestCarsCount = 25;
         [self.carwash addCarToQueue:[IDPCar object]];
     }
     
+    while (!self.carwash.isEmptyQueue) {
+        IDPCar *car = [self.carwash operate];
+    }
+    
     self.carwash = nil;
 }
 

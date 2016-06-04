@@ -11,6 +11,7 @@
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 
+#import "IDPRandom.h"
 #import "IDPCar.h"
 #import "IDPRoom.h"
 #import "IDPBuilding.h"
@@ -37,6 +38,10 @@ static const float      kIDPCarwashPrice = 4.99;
 
 - (IDPCar *)getCarFromQueue;
 
+- (IDPCarwasher *)getRandomWasher;
+
+- (IDPAccountant *)getRandomAccountant;
+
 - (void)addCarwasher:(IDPCarwasher *)washer;
 - (void)removeCarwasher:(IDPCarwasher *)washer;
 - (void)removeAllCarwashers;
@@ -51,9 +56,12 @@ static const float      kIDPCarwashPrice = 4.99;
 - (BOOL)addWorkerToBuildings:(IDPWorker *)worker;
 - (void)removeWorkerFromBuildings:(IDPWorker *)worker;
 - (IDPBuilding *)getBuildingForWorker:(IDPWorker *)worker;
+
 @end
 
 @implementation IDPCarwash
+
+@dynamic emptyQueue;
 
 #pragma mark -
 #pragma mark Initializtions and Deallocations
@@ -106,6 +114,10 @@ static const float      kIDPCarwashPrice = 4.99;
 #pragma mark -
 #pragma mark Accessors Methods
 
+- (BOOL)isEmptyQueue {
+    return [self.carsQueue count] == 0;
+}
+
 #pragma mark -
 #pragma mark Public Methods
 
@@ -118,7 +130,27 @@ static const float      kIDPCarwashPrice = 4.99;
 }
 
 - (IDPCar *)operate {
-    return nil;
+    if ([self.carsQueue count] == 0) {
+        return nil;
+    }
+    
+    IDPCar *car = [self getCarFromQueue];
+    
+    if (!car) {
+        return nil;
+    }
+    
+    IDPCarwasher *washer = [self getRandomWasher];
+    
+    [washer cleanCar:car forPrice:kIDPCarwashPrice];
+    
+    IDPAccountant *accountant = [self getRandomAccountant];
+    
+    [accountant receiveCashFromWorker:washer];
+    
+    [self.director receiveCashFromWorker:accountant];
+    
+    return car;
 }
 
 #pragma mark -
@@ -134,6 +166,22 @@ static const float      kIDPCarwashPrice = 4.99;
     [self.carsQueue removeObjectAtIndex:0];
     
     return car;
+}
+
+- (IDPCarwasher *)getRandomWasher {
+    if ([self.washers count] == 0) {
+        return nil;
+    }
+    
+    return [self.washers objectAtIndex:IDPRandomUIntWithMaxValue([self.washers count] - 1)];
+}
+
+- (IDPAccountant *)getRandomAccountant {
+    if ([self.accountants count] == 0) {
+        return nil;
+    }
+    
+     return [self.accountants objectAtIndex:IDPRandomUIntWithMaxValue([self.accountants count] - 1)];
 }
 
 - (void)addCarwasher:(IDPCarwasher *)washer {

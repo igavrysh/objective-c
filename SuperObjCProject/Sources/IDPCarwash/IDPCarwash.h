@@ -42,6 +42,7 @@
 @class IDPCar;
 
 @interface IDPCarwash : NSObject
+@property (nonatomic, assign, readonly, getter=isEmptyQueue) BOOL emptyQueue;
 
 - (void)addCarToQueue:(IDPCar *)car;
 
