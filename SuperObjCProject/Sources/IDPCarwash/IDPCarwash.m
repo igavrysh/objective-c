@@ -9,6 +9,7 @@
 #import "IDPCarwash.h"
 
 #import "NSObject+IDPObject.h"
+#import "NSArray+IDPArrayEnumerator.h"
 
 #import "IDPCar.h"
 #import "IDPRoom.h"
@@ -17,6 +18,10 @@
 #import "IDPAccountant.h"
 #import "IDPDirector.h"
 #import "IDPCarwashRoom.h"
+
+static const NSUInteger kIDPProdRoomCapacity = 10;
+static const NSUInteger kIDPAdminRoomCapacity = 3;
+static const float      kIDPCarwashPrice = 4.99;
 
 @interface IDPCarwash ()
 @property (nonatomic, retain) IDPBuilding *prodBuilding;
@@ -43,7 +48,7 @@
 - (void)addDirector:(IDPDirector *)director;
 - (void)removeDirector;
 
-- (void)addWorkerToBuildings:(IDPWorker *)worker;
+- (BOOL)addWorkerToBuildings:(IDPWorker *)worker;
 - (void)removeWorkerFromBuildings:(IDPWorker *)worker;
 - (IDPBuilding *)getBuildingForWorker:(IDPWorker *)worker;
 @end
@@ -74,6 +79,8 @@
     self = [super init];
     if (self) {
         self.carsQueue = [NSMutableArray new];
+        self.accountants = [NSMutableArray new];
+        self.washers = [NSMutableArray new];
         
         [self initCarwashStructure];
     }
@@ -83,13 +90,17 @@
 
 - (void)initCarwashStructure {
     self.adminBuilding = [IDPBuilding new];
-    [self.adminBuilding addRoom:[IDPRoom new]];
-    [self addDirector:[IDPDirector new]];
-    [self addAccountant:[IDPAccountant new]];
+    [self.adminBuilding addRoom:[IDPRoom newWithInitBlock:^IDPRoom *(IDPRoom *room) {
+        return [room initWithCapacity:kIDPAdminRoomCapacity];
+    }]];
+    [self addDirector:[IDPDirector object]];
+    [self addAccountant:[IDPAccountant object]];
     
     self.prodBuilding = [IDPBuilding new];
-    [self.prodBuilding addRoom:[IDPCarwashRoom new]];
-    [self addCarwasher:[IDPCarwasher new]];
+    [self.prodBuilding addRoom:[IDPCarwashRoom newWithInitBlock:^IDPCarwashRoom *(IDPCarwashRoom *carwashRoom) {
+        return [carwashRoom initWithCapacity:kIDPProdRoomCapacity];
+    }]];
+    [self addCarwasher:[IDPCarwasher object]];
 }
 
 #pragma mark -
@@ -130,8 +141,9 @@
         return;
     }
     
-    [self addWorkerToBuildings:washer];
-    [self.washers addObject:washer];
+    if ([self addWorkerToBuildings:washer]) {
+        [self.washers addObject:washer];
+    }
 }
 
 - (void)removeCarwasher:(IDPCarwasher *)washer
@@ -152,12 +164,12 @@
         return;
     }
     
-    [self addWorkerToBuildings:accountant];
-    [self.accountants addObject:accountant];
+    if ([self addWorkerToBuildings:accountant]) {
+        [self.accountants addObject:accountant];
+    }
 }
 
 - (void)removeAccountant:(IDPCarwasher *)accountant {
-    [self removeWorkerFromBuildings:accountant];
     [self.washers removeObject:accountant];
 }
 
@@ -169,12 +181,13 @@
 }
 
 - (void)addDirector:(IDPDirector *)director {
-    if (director) {
+    if (self.director) {
         return;
     }
     
-    [self addWorkerToBuildings:director];
-    self.director = director;
+    if ([self addWorkerToBuildings:director]) {
+        self.director = director;
+    }
 }
 
 - (void)removeDirector {
@@ -182,20 +195,20 @@
     self.director = nil;
 }
 
-- (void)addWorkerToBuildings:(IDPWorker *)worker {
+- (BOOL)addWorkerToBuildings:(IDPWorker *)worker {
     IDPBuilding *building = [self getBuildingForWorker:worker];
     
-    if (nil == building) {
-        return;
+    if (!building) {
+        return NO;
     }
     
-    [building addWorkerToFirstNonFilledRoom:worker];
+    return [building addWorkerToFirstNonFilledRoom:worker];
 }
 
 - (void)removeWorkerFromBuildings:(IDPWorker *)worker {
     IDPBuilding *building = [self getBuildingForWorker:worker];
     
-    if (nil == building) {
+    if (!building) {
         return;
     }
     

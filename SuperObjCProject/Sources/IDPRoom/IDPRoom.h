@@ -15,7 +15,10 @@
 @property (nonatomic, copy, readonly) NSArray *workers;
 @property (nonatomic, assign, readonly, getter=isFilled) BOOL filled;
 
-- (void)addWorker:(IDPWorker *)worker;
+- (id)init;
+- (id)initWithCapacity:(NSUInteger)capacity;
+
+- (BOOL)addWorker:(IDPWorker *)worker;
 - (void)removeWorker:(IDPWorker *)worker;
 
 @end

@@ -57,19 +57,21 @@
     [self.mutableRooms removeObject:room];
 }
 
-- (void)addWorker:(IDPWorker *)worker toRoom:(IDPRoom *)room {
+- (BOOL)addWorker:(IDPWorker *)worker toRoom:(IDPRoom *)room {
     if ([self.rooms containsObject:room]) {
-        [room addWorker:worker];
+        return [room addWorker:worker];
     }
+    return NO;
 }
 
-- (void)addWorkerToFirstNonFilledRoom:(IDPWorker *)worker {
+- (BOOL)addWorkerToFirstNonFilledRoom:(IDPWorker *)worker {
     for (IDPRoom *room in self.rooms) {
         if (!room.isFilled) {
-            [room addWorker:worker];
-            return;
+            return [room addWorker:worker];
         }
     }
+    
+    return NO;
 }
 
 - (void)removeWorker:(IDPWorker *)worker {

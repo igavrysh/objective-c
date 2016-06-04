@@ -20,8 +20,8 @@
 - (void)addRoom:(IDPRoom *)room;
 - (void)removeRoom:(IDPRoom *)room;
 
-- (void)addWorkerToFirstNonFilledRoom:(IDPWorker *)worker;
-- (void)addWorker:(IDPWorker *)worker toRoom:(IDPRoom *)room;
+- (BOOL)addWorkerToFirstNonFilledRoom:(IDPWorker *)worker;
+- (BOOL)addWorker:(IDPWorker *)worker toRoom:(IDPRoom *)room;
 - (void)removeWorker:(IDPWorker *)worker;
 
 @end

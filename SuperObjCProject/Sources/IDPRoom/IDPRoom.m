@@ -34,9 +34,14 @@
 }
 
 - (id)init {
+    return [self initWithCapacity:10];
+}
+
+- (id)initWithCapacity:(NSUInteger)capacity {
     self = [super init];
     if (self) {
         self.mutableWorkers = [NSMutableArray new];
+        self.capacity = capacity;
     }
     
     return self;
@@ -64,12 +69,14 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)addWorker:(IDPWorker *)worker {
+- (BOOL)addWorker:(IDPWorker *)worker {
     if (nil == worker || self.capacity <= self.workersCount) {
-        return;
+        return NO;
     }
     
     [self.mutableWorkers addObject:worker];
+    
+    return YES;
 }
 
 - (void)removeWorker:(IDPWorker *)worker {
