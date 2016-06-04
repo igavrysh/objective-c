@@ -12,10 +12,10 @@
 #import "IDPDirector.h"
 
 @interface IDPRoom : NSObject
+@property (nonatomic, copy, readonly) NSArray *workers;
+@property (nonatomic, assign, readonly, getter=isFilled) BOOL filled;
 
 - (void)addWorker:(IDPWorker *)worker;
-
-- (IDPAccountant *)findAccountant;
-- (IDPDirector *)findDirector;
+- (void)removeWorker:(IDPWorker *)worker;
 
 @end

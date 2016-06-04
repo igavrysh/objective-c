@@ -11,23 +11,32 @@
 #import "IDPBuilding.h"
 
 @interface IDPRoom ()
-@property (nonatomic)           IDPBuilding     *building;
-@property (nonatomic, retain)   NSMutableArray  *workers;
-@property (nonatomic, assign)   NSUInteger      capacity;
-
-- (IDPWorker *)findWorkerOfClass:(Class) class;
+@property (nonatomic)                       IDPBuilding     *building;
+@property (nonatomic, retain)               NSMutableArray  *mutableWorkers;
+@property (nonatomic, assign, readonly)     NSUInteger      workersCount;
+@property (nonatomic, assign)               NSUInteger      capacity;
 
 @end
 
 @implementation IDPRoom
 
+@dynamic workers;
+@dynamic workersCount;
+@dynamic filled;
+
 #pragma mark -
 #pragma mark Initializtions and Deallocations
+
+- (void)dealloc {
+    self.mutableWorkers = nil;
+    
+    [super dealloc];
+}
 
 - (id)init {
     self = [super init];
     if (self) {
-        self.workers = [NSMutableArray new];
+        self.mutableWorkers = [NSMutableArray new];
     }
     
     return self;
@@ -40,36 +49,37 @@
     _building = building;
 }
 
+- (NSUInteger)workersCount {
+    return [self.mutableWorkers count];
+}
+
+- (BOOL)isFilled {
+    return self.capacity <= self.workersCount;
+}
+
+- (NSArray *)workers {
+    return [[self.mutableWorkers copy] autorelease];
+}
+
 #pragma mark -
 #pragma mark Public Methods
 
 - (void)addWorker:(IDPWorker *)worker {
-    if (self.capacity >= [self.workers count]) {
+    if (nil == worker || self.capacity <= self.workersCount) {
         return;
     }
     
-    [self.workers addObject:worker];
+    [self.mutableWorkers addObject:worker];
 }
 
-- (IDPAccountant *)findAccountant {
-    return (IDPAccountant *)[self findWorkerOfClass:[IDPAccountant class]];
-}
-
-- (IDPDirector *)findDirector {
-    return (IDPDirector *)[self findWorkerOfClass:[IDPDirector class]];
+- (void)removeWorker:(IDPWorker *)worker {
+    if ([self.mutableWorkers containsObject:worker]) {
+        [self.mutableWorkers removeObject:worker];
+    }
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
-- (IDPWorker *)findWorkerOfClass:(Class) class {
-    for (IDPWorker *worker in self.workers) {
-        if ([worker isKindOfClass:class]) {
-            return worker;
-        }
-    }
-    
-    return nil;
-}
 
 @end

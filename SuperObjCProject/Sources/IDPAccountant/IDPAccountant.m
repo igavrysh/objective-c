@@ -10,9 +10,5 @@
 
 @implementation IDPAccountant
 
-- (float)priceForCarwashService {
-    return 10;
-}
-
 
 @end

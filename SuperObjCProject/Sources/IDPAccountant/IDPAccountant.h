@@ -10,7 +10,5 @@
 
 @interface IDPAccountant : IDPWorker
 
-- (float)priceForCarwashService;
-
 
 @end

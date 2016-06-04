@@ -15,6 +15,6 @@
 
 - (id)init;
 
-- (void)cleanCar:(IDPCar *)car;
+- (void)cleanCar:(IDPCar *)car forPrice:(float) price;
 
 @end

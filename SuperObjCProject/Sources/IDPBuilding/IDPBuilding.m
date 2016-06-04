@@ -9,19 +9,27 @@
 #import "IDPBuilding.h"
 
 @interface IDPBuilding ()
-@property (nonatomic, retain) NSMutableArray *rooms;
+@property (nonatomic, retain) NSMutableArray *mutableRooms;
 
 @end
 
 @implementation IDPBuilding
 
+@dynamic rooms;
+
 #pragma mark -
 #pragma mark Initializtions and Deallocations
+
+- (void)dealloc {
+    self.mutableRooms = nil;
+    
+    [super dealloc];
+}
 
 - (id)init {
     self = [super init];
     if (self) {
-        self.rooms = [NSMutableArray new];
+        self.mutableRooms = [NSMutableArray new];
     }
     
     return self;
@@ -30,29 +38,44 @@
 #pragma mark -
 #pragma mark Accessors Methods
 
+- (NSArray *)rooms {
+    return [[self.mutableRooms copy] autorelease];
+}
 
 #pragma mark -
 #pragma mark Public Methods
 
 - (void)addRoom:(IDPRoom *)room {
-    if (room == nil) {
+    if (nil == room) {
         return;
     }
     
-    [self.rooms addObject:room];
+    [self.mutableRooms addObject:room];
 }
 
 - (void)removeRoom:(IDPRoom *)room {
-    [self.rooms removeObject:room];
+    [self.mutableRooms removeObject:room];
 }
 
-- (IDPAccountant *)findAccountant {
-    // TODO
-    return nil;
+- (void)addWorker:(IDPWorker *)worker toRoom:(IDPRoom *)room {
+    if ([self.rooms containsObject:room]) {
+        [room addWorker:worker];
+    }
 }
-- (IDPDirector *)findDirector {
-    // TODO
-    return nil;
+
+- (void)addWorkerToFirstNonFilledRoom:(IDPWorker *)worker {
+    for (IDPRoom *room in self.rooms) {
+        if (!room.isFilled) {
+            [room addWorker:worker];
+            return;
+        }
+    }
+}
+
+- (void)removeWorker:(IDPWorker *)worker {
+    for (IDPRoom *room in self.rooms) {
+        [room removeWorker:worker];
+    }
 }
 
 #pragma mark -

@@ -18,11 +18,11 @@
     return self;
 }
 
-- (void)cleanCar:(IDPCar *)car {
+- (void)cleanCar:(IDPCar *)car forPrice:(float)price {
     
-    car.dirty = FALSE;
+    car.dirty = NO;
     
-    self.cash += [car payForServiceWithPrice:10];
+    self.cash += [car payForServiceWithPrice:price];
 }
 
 @end

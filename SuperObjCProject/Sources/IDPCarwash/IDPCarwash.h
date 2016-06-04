@@ -39,14 +39,12 @@
 
 #include "IDPBuilding.h"
 
+@class IDPCar;
+
 @interface IDPCarwash : NSObject
-@property (nonatomic, nonatomic) IDPBuilding *productionBuilding;
-@property (nonatomic, nonatomic) IDPBuilding *administrativeBuilding;
 
-@property (nonatomic, retain) NSMutableArray *carsQueue;
+- (void)addCarToQueue:(IDPCar *)car;
 
-- (NSArray *)operate;
-
-- (void)addCarToQueue;
+- (IDPCar *)operate;
 
 @end

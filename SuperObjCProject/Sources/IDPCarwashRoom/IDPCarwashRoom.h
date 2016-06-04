@@ -11,10 +11,11 @@
 #import "IDPCar.h"
 
 @interface IDPCarwashRoom : IDPRoom
-@property (nonatomic, retain) NSMutableArray *cars;
+@property (nonatomic, copy, readonly) NSArray *cars;
 
 - (id)init;
 
 - (void)addCar:(IDPCar *)car;
+- (void)removeCar:(IDPCar *)car;
 
 @end
