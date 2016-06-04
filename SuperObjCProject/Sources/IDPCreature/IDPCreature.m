@@ -29,10 +29,8 @@
 #pragma mark -
 #pragma mark Class Methods
 
-+ (id)creature {
-    IDPCreature *creature = IDPRandomBool() ? [IDPMaleCreature object] : [IDPFemaleCreature object];
-    
-    return creature;
++ (id)creature {    
+    return IDPRandomBool() ? [IDPMaleCreature object] : [IDPFemaleCreature object];
 }
 
 #pragma mark -

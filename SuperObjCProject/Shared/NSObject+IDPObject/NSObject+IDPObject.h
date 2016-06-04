@@ -12,4 +12,6 @@
 
 + (id)object;
 
++ (NSArray *)objectsWithCount:(NSUInteger)count;
+
 @end
