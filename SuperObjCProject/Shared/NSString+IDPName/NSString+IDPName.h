@@ -12,4 +12,6 @@
 
 + (NSString *)randomName;
 
++ (NSString *)randomStringWithLength:(NSUInteger)length alphabet:(NSString *)alphabet;
+
 @end

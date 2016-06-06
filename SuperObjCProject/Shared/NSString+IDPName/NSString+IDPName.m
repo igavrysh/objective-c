@@ -61,12 +61,29 @@
 
 @end
 
+
 @implementation NSString (IDPName)
+
+#pragma mark -
+#pragma mark Class Methods
 
 + (NSString *)randomName {
     return [NSString stringWithFormat:@"%@ %@",
             [[NSString firstNames] objectAtIndex:arc4random_uniform([[NSString firstNames] count])],
             [[NSString lastNames] objectAtIndex:arc4random_uniform([[NSString lastNames] count])]];
+}
+
+
++ (NSString *)randomStringWithLength:(NSUInteger)length alphabet:(NSString *)alphabet {
+    NSMutableString *result = [NSMutableString stringWithCapacity:length];
+    NSUInteger alphabetLength = [alphabet length];
+    
+    for (NSUInteger index = 0; index < length; index++) {
+        unichar resultChar = [alphabet characterAtIndex:arc4random_uniform((u_int32_t)alphabetLength)];
+        [result appendFormat:@"%c", resultChar];
+    }
+    
+    return [self stringWithString:result];
 }
 
 @end
