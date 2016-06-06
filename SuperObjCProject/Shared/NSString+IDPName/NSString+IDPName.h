@@ -12,6 +12,10 @@
 
 + (NSString *)randomName;
 
++ (id)arabicNumbers;
+
++ (NSString *)alphabetWithUnicodeRange:(NSRange)range;
+
 + (NSString *)randomStringWithLength:(NSUInteger)length alphabet:(NSString *)alphabet;
 
 @end

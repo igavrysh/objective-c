@@ -7,6 +7,7 @@
 //
 
 #import "NSString+IDPName.h"
+#import "NSObject+IDPObject.h"
 
 @interface NSString (NSStringPrivate)
 
@@ -73,6 +74,18 @@
             [[NSString lastNames] objectAtIndex:arc4random_uniform([[NSString lastNames] count])]];
 }
 
+
++ (NSString *)arabicNumbers {
+    return [NSString alphabetWithUnicodeRange:NSMakeRange((NSUInteger)'0', (NSUInteger)'9')];
+}
+
++ (NSString *)alphabetWithUnicodeRange:(NSRange)range {
+    NSMutableString *result = [NSMutableString object];
+    for (unichar index = range.location; index < NSMaxRange(range); index++) {
+        [result appendFormat:@"%c", index];
+    }
+    return [[result copy] autorelease];
+}
 
 + (NSString *)randomStringWithLength:(NSUInteger)length alphabet:(NSString *)alphabet {
     NSMutableString *result = [NSMutableString stringWithCapacity:length];
