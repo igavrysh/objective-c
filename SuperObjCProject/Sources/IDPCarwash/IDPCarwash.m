@@ -141,11 +141,9 @@ static const float      kIDPCarwashPrice = 4.99;
     }
     
     IDPCarwasher *washer = [self getRandomWasher];
-    
     [washer cleanCar:car forPrice:kIDPCarwashPrice];
     
     IDPAccountant *accountant = [self getRandomAccountant];
-    
     [accountant receiveCashFromWorker:washer];
     
     [self.director receiveCashFromWorker:accountant];
