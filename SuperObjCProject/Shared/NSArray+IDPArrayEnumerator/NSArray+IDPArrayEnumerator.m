@@ -12,19 +12,15 @@
 
 @implementation NSArray (IDPArrayEnumerator)
 
-+ (NSArray *)objectsOfClass:(Class)objClass createdWith:(SEL)selector count:(NSUInteger)count
-{
++ (NSArray *)objectsWithCount:(NSUInteger)count block:(id(^)())block {
     NSMutableArray *array = [NSMutableArray object];
     
-    if ([objClass respondsToSelector:selector]) {
-        for (NSUInteger index = 0; index < count; index++) {
-            [array addObject:[objClass performSelector:selector]];
-        }
+    for (NSUInteger index = 0; index < count; index++) {
+        [array addObject:block()];
     }
-    
-    return [array copy];
-}
 
+    return [[array copy] autorelease];
+}
 
 - (void)performBlockWithEachObject:(void (^)(id object))block {
     if (!block) {

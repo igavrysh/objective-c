@@ -16,4 +16,6 @@
 
 + (id)newWithInitBlock:(id (^)(id object)) block;
 
++ (NSArray *)objectsWithCount:(NSUInteger)count;
+
 @end

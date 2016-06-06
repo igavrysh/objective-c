@@ -65,8 +65,8 @@
 
 + (NSString *)randomName {
     return [NSString stringWithFormat:@"%@ %@",
-            [[NSString firstNames] objectAtIndex:arc4random_uniform([[NSString firstNames] count])],
-            [[NSString lastNames] objectAtIndex:arc4random_uniform([[NSString lastNames] count])]];
+            [[NSString firstNames] objectAtIndex:arc4random_uniform((UInt32)[[NSString firstNames] count])],
+            [[NSString lastNames] objectAtIndex:arc4random_uniform((UInt32)[[NSString lastNames] count])]];
 }
 
 @end

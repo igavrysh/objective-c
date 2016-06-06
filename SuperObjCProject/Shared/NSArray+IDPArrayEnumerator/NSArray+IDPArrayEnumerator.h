@@ -10,7 +10,7 @@
 
 @interface NSArray (IDPArrayEnumerator)
 
-+ (NSArray *)objectsOfClass:(Class)objClass createdWith:(SEL)selector count:(NSUInteger)count;
++ (NSArray *)objectsWithCount:(NSUInteger)count block:(id(^)())block;
 
 - (void)performBlockWithEachObject:(void (^)(id object))block;
 

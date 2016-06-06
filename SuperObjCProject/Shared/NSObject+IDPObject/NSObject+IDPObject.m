@@ -8,6 +8,8 @@
 
 #import "NSObject+IDPObject.h"
 
+#import "NSArray+IDPArrayEnumerator.h"
+
 @implementation NSObject (IDPObject)
 
 + (id)object  {
@@ -23,6 +25,12 @@
 
 + (id)objectWithInitBlock:(id (^)(id object)) block {
     return [[self newWithInitBlock:block] autorelease];
+}
+
++ (NSArray *)objectsWithCount:(NSUInteger)count {
+    return [NSArray objectsWithCount:count block:^id{
+        return [self object];
+    }];
 }
 
 @end
