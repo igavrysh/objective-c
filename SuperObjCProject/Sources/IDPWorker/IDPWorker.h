@@ -18,5 +18,7 @@
 - (id)init;
 - (id)initWithSalaray:(float)salary capital:(float)capital experience:(NSUInteger)experience;
 
+- (void)doJob;
+- (void)processObject:(id<IDPCashOperating>) object;
 
 @end

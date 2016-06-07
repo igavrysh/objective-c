@@ -10,5 +10,8 @@
 
 @implementation IDPAccountant
 
+- (void)doJob {
+    NSLog(@"Cash is calculated");
+}
 
 @end

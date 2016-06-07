@@ -41,6 +41,15 @@
 #pragma mark -
 #pragma mark Public Methods
 
+- (void)doJob {
+    
+}
+
+- (void)processObject:(id<IDPCashOperating>) object {
+    [self doJob];
+    [self receiveCashFromCashOperatingObject:object];
+}
+
 - (void)receiveCashFromCashOperatingObject:(id<IDPCashOperating>)object {
     object.cash = object.cash + [object giveAllCash];
 }
@@ -51,5 +60,9 @@
     
     return cashToGive;
 }
+
+
+
+
 
 @end

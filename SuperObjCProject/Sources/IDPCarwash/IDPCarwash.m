@@ -142,14 +142,13 @@ static const float      kIDPCarwashPrice = 4.99;
     }
     
     IDPCarwasher *washer = [self freeWasher];
-    [washer cleanCar:car];
-    [washer receiveCashFromCashOperatingObject:car];
+    [washer processObject:car];
     
     IDPAccountant *accountant = [self freeAccountant];
-    [accountant receiveCashFromCashOperatingObject:washer];
+    [accountant processObject:washer];
     
     IDPDirector *director = [self freeDirector];
-    [director receiveCashFromCashOperatingObject:accountant];
+    [director processObject:accountant];
     
     return car;
 }

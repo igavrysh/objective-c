@@ -10,4 +10,8 @@
 
 @implementation IDPDirector
 
+- (void)doJob {
+    NSLog(@"Profit is made");
+}
+
 @end

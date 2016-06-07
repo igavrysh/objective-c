@@ -22,4 +22,13 @@
     car.dirty = NO;
 }
 
+- (void)doJob {
+    NSLog(@"Car is washed");
+}
+
+- (void)processObject:(IDPCar *)car {
+    [self cleanCar:car];
+    [super receiveCashFromCashOperatingObject:car];
+}
+
 @end
