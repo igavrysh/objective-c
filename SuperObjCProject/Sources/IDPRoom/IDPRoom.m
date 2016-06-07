@@ -10,11 +10,11 @@
 
 #import "IDPBuilding.h"
 
+static const NSUInteger kIDPRoomDefaultCapacity = 10;
+
 @interface IDPRoom ()
-@property (nonatomic)                       IDPBuilding     *building;
-@property (nonatomic, retain)               NSMutableArray  *mutableWorkers;
-@property (nonatomic, assign, readonly)     NSUInteger      workersCount;
-@property (nonatomic, assign)               NSUInteger      capacity;
+@property (nonatomic, retain)   NSMutableArray  *mutableWorkers;
+@property (nonatomic, assign)   NSUInteger      capacity;
 
 @end
 
@@ -23,6 +23,17 @@
 @dynamic workers;
 @dynamic workersCount;
 @dynamic filled;
+
+#pragma mark -
+#pragma mark Class Methods
+
++ (id)room {
+    return [self roomWithCapacity:kIDPRoomDefaultCapacity];
+}
+
++ (id)roomWithCapacity:(NSUInteger)capacity {
+    return [[[self alloc] initWithCapacity:capacity] autorelease];
+}
 
 #pragma mark -
 #pragma mark Initializtions and Deallocations
@@ -34,7 +45,7 @@
 }
 
 - (id)init {
-    return [self initWithCapacity:10];
+    return [self initWithCapacity:kIDPRoomDefaultCapacity];
 }
 
 - (id)initWithCapacity:(NSUInteger)capacity {
@@ -49,10 +60,6 @@
 
 #pragma mark -
 #pragma mark Accessors Methods
-
-- (void)setBuilding:(IDPBuilding *)building {
-    _building = building;
-}
 
 - (NSUInteger)workersCount {
     return [self.mutableWorkers count];

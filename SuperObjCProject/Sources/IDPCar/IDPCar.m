@@ -7,8 +7,11 @@
 //
 
 #import "IDPCar.h"
+#import "IDPRandom.h"
 
 @implementation IDPCar
+
+@synthesize cash = _cash;
 
 #pragma mark -
 #pragma mark Initializtions and Deallocations
@@ -16,7 +19,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        self.cash = arc4random_uniform(10000);
+        self.cash = IDPRandomUIntWithMaxValue(10000);
         self.dirty = TRUE;
     }
     
@@ -26,14 +29,15 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (float)payForServiceWithPrice:(float)price {
-    float ownCash = self.cash;
-    
-    float payment = ownCash - price < 0 ? ownCash : price;
+- (void)receiveCashFromCashOperatingObject:(id<IDPCashOperating>)object {
+    return;
+}
 
-    self.cash -= payment;
+- (float)giveAllCash {
+    float cashToGive = self.cash;
+    self.cash = 0;
     
-    return payment;
+    return cashToGive;
 }
 
 @end

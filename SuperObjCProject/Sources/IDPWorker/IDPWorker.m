@@ -11,11 +11,12 @@
 #import "IDPRandom.h"
 
 @interface IDPWorker ()
-@property (nonatomic, assign) float cash;
 
 @end
 
 @implementation IDPWorker
+
+@synthesize cash = _cash;
 
 #pragma mark -
 #pragma mark Initializtions and Deallocations
@@ -29,7 +30,6 @@
 - (id)initWithSalaray:(float)salary capital:(float)capital experience:(NSUInteger)experience {
     self = [super init];
     if (self) {
-        self.cash = 0;
         self.salary = salary;
         self.capital = capital;
         self.experience = experience;
@@ -41,8 +41,8 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)receiveCashFromWorker:(IDPWorker *)worker {
-    self.cash = self.cash + [worker giveAllCash];
+- (void)receiveCashFromCashOperatingObject:(id<IDPCashOperating>)object {
+    object.cash = object.cash + [object giveAllCash];
 }
 
 - (float)giveAllCash {

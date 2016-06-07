@@ -11,10 +11,9 @@
 #import "IDPCar.h"
 
 @interface IDPCarwasher : IDPWorker
-@property (nonatomic, assign) float cash;
 
 - (id)init;
 
-- (void)cleanCar:(IDPCar *)car forPrice:(float) price;
+- (void)cleanCar:(IDPCar *)car;
 
 @end

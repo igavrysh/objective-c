@@ -8,12 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-#import "IDPAccountant.h"
-#import "IDPDirector.h"
+@class IDPWorker;
+@class IDPBuilding;
 
 @interface IDPRoom : NSObject
-@property (nonatomic, copy, readonly) NSArray *workers;
+@property (nonatomic, copy, readonly)   NSArray         *workers;
+@property (nonatomic, readonly)         NSUInteger      workersCount;
 @property (nonatomic, assign, readonly, getter=isFilled) BOOL filled;
+@property (nonatomic, assign)           IDPBuilding     *building;
+
++ (id)room;
++ (id)roomWithCapacity:(NSUInteger)capacity;
 
 - (id)init;
 - (id)initWithCapacity:(NSUInteger)capacity;

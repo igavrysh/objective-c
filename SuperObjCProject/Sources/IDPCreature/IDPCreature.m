@@ -13,7 +13,7 @@
 
 #import "IDPRandom.h"
 
-#import "NSString+IDPName.h"
+#import "NSString+IDPExtensions.h"
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 

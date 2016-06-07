@@ -11,6 +11,10 @@
 @interface IDPBuilding ()
 @property (nonatomic, retain) NSMutableArray *mutableRooms;
 
+- (BOOL)addWorkerToFirstNonFilledRoom:(IDPWorker *)worker;
+
+- (BOOL)addWorker:(IDPWorker *)worker toRoom:(IDPRoom *)room;
+
 @end
 
 @implementation IDPBuilding
@@ -57,12 +61,19 @@
     [self.mutableRooms removeObject:room];
 }
 
-- (BOOL)addWorker:(IDPWorker *)worker toRoom:(IDPRoom *)room {
-    if ([self.rooms containsObject:room]) {
-        return [room addWorker:worker];
-    }
-    return NO;
+- (BOOL)addWorker:(IDPWorker *)worker; {
+    return [self addWorkerToFirstNonFilledRoom:worker];
 }
+
+
+- (void)removeWorker:(IDPWorker *)worker {
+    for (IDPRoom *room in self.rooms) {
+        [room removeWorker:worker];
+    }
+}
+
+#pragma mark -
+#pragma mark Private Methods
 
 - (BOOL)addWorkerToFirstNonFilledRoom:(IDPWorker *)worker {
     for (IDPRoom *room in self.rooms) {
@@ -74,14 +85,12 @@
     return NO;
 }
 
-- (void)removeWorker:(IDPWorker *)worker {
-    for (IDPRoom *room in self.rooms) {
-        [room removeWorker:worker];
+- (BOOL)addWorker:(IDPWorker *)worker toRoom:(IDPRoom *)room {
+    if ([self.rooms containsObject:room]) {
+        return [room addWorker:worker];
     }
+    
+    return NO;
 }
-
-#pragma mark -
-#pragma mark Private Methods
-
 
 @end

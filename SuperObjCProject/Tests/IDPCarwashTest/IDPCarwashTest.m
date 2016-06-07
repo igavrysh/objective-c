@@ -8,10 +8,10 @@
 
 #import "IDPCarwashTest.h"
 
-#import "NSObject+IDPObject.h"
-
 #import "IDPCarwash.h"
 #import "IDPCar.h"
+
+#import "NSObject+IDPObject.h"
 
 static const NSUInteger kIDPCarwashTestCarsCount = 25;
 @interface IDPCarwashTest ()
@@ -28,7 +28,7 @@ static const NSUInteger kIDPCarwashTestCarsCount = 25;
     self.carwash = [IDPCarwash new];
     
     for (NSUInteger index = 0; index < kIDPCarwashTestCarsCount; index++) {
-        [self.carwash addCarToQueue:[IDPCar object]];
+        [self.carwash addCar:[IDPCar object]];
     }
     
     while (!self.carwash.isEmptyQueue) {

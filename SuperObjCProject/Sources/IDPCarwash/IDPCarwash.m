@@ -8,9 +8,6 @@
 
 #import "IDPCarwash.h"
 
-#import "NSObject+IDPObject.h"
-#import "NSArray+IDPArrayEnumerator.h"
-
 #import "IDPRandom.h"
 #import "IDPCar.h"
 #import "IDPRoom.h"
@@ -20,43 +17,45 @@
 #import "IDPDirector.h"
 #import "IDPCarwashRoom.h"
 
+#import "NSObject+IDPObject.h"
+#import "NSArray+IDPArrayEnumerator.h"
+
 static const NSUInteger kIDPProdRoomCapacity = 10;
 static const NSUInteger kIDPAdminRoomCapacity = 3;
 static const float      kIDPCarwashPrice = 4.99;
 
 @interface IDPCarwash ()
-@property (nonatomic, retain) IDPBuilding *prodBuilding;
-@property (nonatomic, retain) IDPBuilding *adminBuilding;
+@property (nonatomic, retain) IDPBuilding *productionBuilding;
+@property (nonatomic, retain) IDPBuilding *administrativeBuilding;
 
 @property (nonatomic, retain) NSMutableArray *washers;
 @property (nonatomic, retain) NSMutableArray *accountants;
-@property (nonatomic, retain) IDPDirector *director;
+@property (nonatomic, retain) NSMutableArray *directors;
 
-@property (nonatomic, retain) NSMutableArray *carsQueue;
+@property (nonatomic, retain) NSMutableArray *cars;
 
 - (void)initCarwashStructure;
 
-- (IDPCar *)getCarFromQueue;
+- (IDPCar *)nextCar;
 
-- (IDPCarwasher *)getRandomWasher;
-
-- (IDPAccountant *)getRandomAccountant;
+- (IDPCarwasher *)freeWasher;
+- (IDPAccountant *)freeAccountant;
+- (IDPDirector *)freeDirector;
 
 - (void)addCarwasher:(IDPCarwasher *)washer;
 - (void)removeCarwasher:(IDPCarwasher *)washer;
-- (void)removeAllCarwashers;
+- (void)removeCarwashers;
 
 - (void)addAccountant:(IDPAccountant *)accountant;
 - (void)removeAccountant:(IDPCarwasher *)accountant;
-- (void)removeAllAccountants;
+- (void)removeAccountants;
 
 - (void)addDirector:(IDPDirector *)director;
 - (void)removeDirector;
 
-- (BOOL)addWorkerToBuildings:(IDPWorker *)worker;
-- (void)removeWorkerFromBuildings:(IDPWorker *)worker;
-- (IDPBuilding *)getBuildingForWorker:(IDPWorker *)worker;
-
+- (BOOL)addWorker:(IDPWorker *)worker toArray:(NSMutableArray *)array building:(IDPBuilding *)building;
+- (void)removeWorker:(IDPWorker *)worker;
+- (void)removeWorkersInArray:(NSMutableArray *)workers;
 @end
 
 @implementation IDPCarwash
@@ -67,18 +66,18 @@ static const float      kIDPCarwashPrice = 4.99;
 #pragma mark Initializtions and Deallocations
 
 - (void) dealloc {
-    [self removeAllCarwashers];
-    [self removeAllAccountants];
+    [self removeCarwashers];
+    [self removeAccountants];
     [self removeDirector];
     
     self.washers = nil;
     self.accountants = nil;
-    self.director = nil;
+    self.directors = nil;
     
-    self.prodBuilding = nil;
-    self.adminBuilding = nil;
+    self.productionBuilding = nil;
+    self.administrativeBuilding = nil;
     
-    self.carsQueue = nil;
+    self.cars = nil;
     
     [super dealloc];
 }
@@ -86,9 +85,10 @@ static const float      kIDPCarwashPrice = 4.99;
 - (id)init {
     self = [super init];
     if (self) {
-        self.carsQueue = [NSMutableArray new];
+        self.cars = [NSMutableArray new];
         self.accountants = [NSMutableArray new];
         self.washers = [NSMutableArray new];
+        self.directors = [NSMutableArray new];
         
         [self initCarwashStructure];
     }
@@ -97,17 +97,18 @@ static const float      kIDPCarwashPrice = 4.99;
 }
 
 - (void)initCarwashStructure {
-    self.adminBuilding = [IDPBuilding new];
-    [self.adminBuilding addRoom:[IDPRoom newWithInitBlock:^IDPRoom *(IDPRoom *room) {
-        return [room initWithCapacity:kIDPAdminRoomCapacity];
-    }]];
+    // Why I cannot use here new?
+    IDPBuilding *administrativeBuilding = [IDPBuilding object];
+    [administrativeBuilding addRoom:[IDPRoom roomWithCapacity:kIDPAdminRoomCapacity]];
+    self.administrativeBuilding = administrativeBuilding;
+    
     [self addDirector:[IDPDirector object]];
     [self addAccountant:[IDPAccountant object]];
     
-    self.prodBuilding = [IDPBuilding new];
-    [self.prodBuilding addRoom:[IDPCarwashRoom newWithInitBlock:^IDPCarwashRoom *(IDPCarwashRoom *carwashRoom) {
-        return [carwashRoom initWithCapacity:kIDPProdRoomCapacity];
-    }]];
+    IDPBuilding *productionBuilding = [IDPBuilding object];
+    [productionBuilding addRoom:[IDPCarwashRoom roomWithCapacity:kIDPProdRoomCapacity]];
+    self.productionBuilding = productionBuilding;
+    
     [self addCarwasher:[IDPCarwasher object]];
 }
 
@@ -115,38 +116,40 @@ static const float      kIDPCarwashPrice = 4.99;
 #pragma mark Accessors Methods
 
 - (BOOL)isEmptyQueue {
-    return [self.carsQueue count] == 0;
+    return [self.cars count] == 0;
 }
 
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)addCarToQueue:(IDPCar *)car {
+- (void)addCar:(IDPCar *)car {
     if (!car) {
         return;
     }
     
-    [self.carsQueue addObject:car];
+    [self.cars addObject:car];
 }
 
 - (IDPCar *)operate {
-    if ([self.carsQueue count] == 0) {
+    if ([self.cars count] == 0) {
         return nil;
     }
     
-    IDPCar *car = [self getCarFromQueue];
+    IDPCar *car = [self nextCar];
     
     if (!car) {
         return nil;
     }
     
-    IDPCarwasher *washer = [self getRandomWasher];
-    [washer cleanCar:car forPrice:kIDPCarwashPrice];
+    IDPCarwasher *washer = [self freeWasher];
+    [washer cleanCar:car];
+    [washer receiveCashFromCashOperatingObject:car];
     
-    IDPAccountant *accountant = [self getRandomAccountant];
-    [accountant receiveCashFromWorker:washer];
+    IDPAccountant *accountant = [self freeAccountant];
+    [accountant receiveCashFromCashOperatingObject:washer];
     
-    [self.director receiveCashFromWorker:accountant];
+    IDPDirector *director = [self freeDirector];
+    [director receiveCashFromCashOperatingObject:accountant];
     
     return car;
 }
@@ -154,120 +157,95 @@ static const float      kIDPCarwashPrice = 4.99;
 #pragma mark -
 #pragma mark Private Methods
 
-- (IDPCar *)getCarFromQueue {
-    if (0 == [self.carsQueue count]) {
+- (IDPCar *)nextCar {
+    if (0 == [self.cars count]) {
         return nil;
     }
     
-    IDPCar *car = [self.carsQueue objectAtIndex:0];
+    IDPCar *car = [[self.cars[0] retain] autorelease];
     
-    [self.carsQueue removeObjectAtIndex:0];
+    [self.cars removeObjectAtIndex:0];
     
     return car;
 }
 
-- (IDPCarwasher *)getRandomWasher {
-    if ([self.washers count] == 0) {
-        return nil;
-    }
-    
-    return [self.washers objectAtIndex:IDPRandomUIntWithMaxValue([self.washers count] - 1)];
+- (IDPCarwasher *)freeWasher {
+    return [self.washers objectAtRandomIndex];
 }
 
-- (IDPAccountant *)getRandomAccountant {
-    if ([self.accountants count] == 0) {
-        return nil;
-    }
-    
-     return [self.accountants objectAtIndex:IDPRandomUIntWithMaxValue([self.accountants count] - 1)];
+- (IDPAccountant *)freeAccountant {
+    return [self.accountants objectAtRandomIndex];
+}
+
+- (IDPDirector *)freeDirector {
+    return self.directors[0];
 }
 
 - (void)addCarwasher:(IDPCarwasher *)washer {
-    if (!washer) {
-        return;
-    }
-    
-    if ([self addWorkerToBuildings:washer]) {
-        [self.washers addObject:washer];
-    }
+    [self addWorker:washer toArray:self.washers building:self.productionBuilding];
 }
 
-- (void)removeCarwasher:(IDPCarwasher *)washer
-{
-    [self removeWorkerFromBuildings:washer];
-    [self.washers removeObject:washer];
+- (void)removeCarwasher:(IDPCarwasher *)washer {
+    [self removeWorker:washer];
 }
 
-- (void)removeAllCarwashers {
-    for (IDPCarwasher *washer in self.washers) {
-        [self removeWorkerFromBuildings:washer];
-        [self.washers removeObject:washer];
-    }
+- (void)removeCarwashers {
+    [self removeWorkersInArray:self.washers];
 }
 
 - (void)addAccountant:(IDPAccountant *)accountant {
-    if (!accountant) {
-        return;
-    }
-    
-    if ([self addWorkerToBuildings:accountant]) {
-        [self.accountants addObject:accountant];
-    }
+    [self addWorker:accountant toArray:self.accountants building:self.administrativeBuilding];
 }
 
 - (void)removeAccountant:(IDPCarwasher *)accountant {
-    [self.washers removeObject:accountant];
+    [self removeWorker:accountant];
 }
 
-- (void)removeAllAccountants {
-    for (IDPAccountant *accountant in self.accountants) {
-        [self removeWorkerFromBuildings:accountant];
-        [self.accountants removeObject:accountant];
-    }
+- (void)removeAccountants {
+    [self removeWorkersInArray:self.accountants];
 }
 
 - (void)addDirector:(IDPDirector *)director {
-    if (self.director) {
+    if ([self.directors count]) {
         return;
     }
     
-    if ([self addWorkerToBuildings:director]) {
-        self.director = director;
-    }
+    [self addWorker:director toArray:self.directors building:self.administrativeBuilding];
 }
 
 - (void)removeDirector {
-    [self removeWorkerFromBuildings:self.director];
-    self.director = nil;
-}
-
-- (BOOL)addWorkerToBuildings:(IDPWorker *)worker {
-    IDPBuilding *building = [self getBuildingForWorker:worker];
-    
-    if (!building) {
-        return NO;
-    }
-    
-    return [building addWorkerToFirstNonFilledRoom:worker];
-}
-
-- (void)removeWorkerFromBuildings:(IDPWorker *)worker {
-    IDPBuilding *building = [self getBuildingForWorker:worker];
-    
-    if (!building) {
+    if (![self.directors count]) {
         return;
     }
     
-    [building removeWorker:worker];
+    [self removeWorker:self.directors[0]];
 }
 
-- (IDPBuilding *)getBuildingForWorker:(IDPWorker *)worker {
-    if ([worker isKindOfClass:[IDPAccountant class]]
-        || [worker isKindOfClass:[IDPDirector class]] ) {
-        return self.adminBuilding;
+- (BOOL)addWorker:(IDPWorker *)worker toArray:(NSMutableArray *)array building:(IDPBuilding *)building {
+    if ([building addWorker:worker]) {
+        [array addObject:worker];
     }
     
-    return self.prodBuilding;
+    return NO;
+}
+
+- (void)removeWorker:(IDPWorker *)worker {
+    if (!worker) {
+        return;
+    }
+    
+    [self.productionBuilding removeWorker:worker];
+    [self.administrativeBuilding removeWorker:worker];
+    
+    [self.directors removeObject:worker];
+    [self.washers removeObject:worker];
+    [self.accountants removeObject:worker];
+}
+
+- (void)removeWorkersInArray:(NSMutableArray *)workers {
+    for (IDPWorker *worker in workers) {
+        [self removeWorker:worker];
+    }
 }
 
 @end
