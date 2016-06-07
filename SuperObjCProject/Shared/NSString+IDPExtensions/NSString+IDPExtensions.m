@@ -1,12 +1,12 @@
 //
-//  NSString+IDPName.m
+//  NSString+IDPExtensions.h
 //  SuperObjCProject
 //
 //  Created by Ievgen on 6/1/16.
 //  Copyright © 2016 1mlndollarsasset. All rights reserved.
 //
 
-#import "NSString+IDPName.h"
+#import "NSString+IDPExtensions.h"
 
 @interface NSString (NSStringPrivate)
 
@@ -61,7 +61,7 @@
 
 @end
 
-@implementation NSString (IDPName)
+@implementation NSString (IDPExtensions)
 
 + (NSString *)randomName {
     return [NSString stringWithFormat:@"%@ %@",

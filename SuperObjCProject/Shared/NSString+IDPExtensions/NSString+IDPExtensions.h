@@ -1,5 +1,5 @@
 //
-//  NSString+IDPName.h
+//  NSString+IDPExtensions.h
 //  SuperObjCProject
 //
 //  Created by Ievgen on 6/1/16.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSString (IDPName)
+@interface NSString (IDPExtensions)
 
 + (NSString *)randomName;
 
