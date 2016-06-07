@@ -8,9 +8,14 @@
 
 #import "NSArray+IDPArrayEnumerator.h"
 
+#import "IDPRandom.h"
+
 #import "NSObject+IDPObject.h"
 
 @implementation NSArray (IDPArrayEnumerator)
+
+#pragma mark -
+#pragma mark Class Methods
 
 + (NSArray *)objectsWithCount:(NSUInteger)count block:(id(^)())block {
     NSMutableArray *array = [NSMutableArray object];
@@ -22,6 +27,9 @@
     return [[array copy] autorelease];
 }
 
+#pragma mark -
+#pragma mark Public Methods
+
 - (void)performBlockWithEachObject:(void (^)(id object))block {
     if (!block) {
         return;
@@ -30,6 +38,15 @@
     [self enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
         block(object);
     }];
+}
+
+- (id)objectAtRandomIndex {
+    NSUInteger count = [self count];
+    if (count == 0) {
+        return nil;
+    }
+    
+    return [self objectAtIndex:IDPRandomUIntWithMaxValue(count - 1)];
 }
 
 @end
