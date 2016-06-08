@@ -8,10 +8,23 @@
 
 #import "IDPDirector.h"
 
+#import "IDPAccountant.h"
+
 @implementation IDPDirector
 
+#pragma mark -
+#pragma mark Public Methods
+
+- (void)processObject:(IDPAccountant *)accountant {
+    [self doJob];
+    [super receiveCashFromCashOperatingObject:accountant];
+}
+
+#pragma mark -
+#pragma mark Private Methods
+
 - (void)doJob {
-    NSLog(@"Profit is made");
+    [self printMessage:@"Profit is made"];
 }
 
 @end

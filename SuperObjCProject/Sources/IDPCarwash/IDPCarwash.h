@@ -33,8 +33,6 @@
  7. Директор получает прибыль
  */
 
-
-
 #import <Foundation/Foundation.h>
 
 #include "IDPBuilding.h"
@@ -44,8 +42,6 @@
 @interface IDPCarwash : NSObject
 @property (nonatomic, assign, readonly, getter=isEmptyQueue) BOOL emptyQueue;
 
-- (void)addCar:(IDPCar *)car;
-
-- (IDPCar *)operate;
+- (IDPCar *)operate:(IDPCar *)car;
 
 @end

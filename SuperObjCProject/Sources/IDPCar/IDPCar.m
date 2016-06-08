@@ -18,10 +18,9 @@
 
 - (id)init {
     self = [super init];
-    if (self) {
-        self.cash = IDPRandomUIntWithMaxValue(10000);
-        self.dirty = TRUE;
-    }
+    
+    self.cash = IDPRandomUIntWithMaxValue(10000);
+    self.dirty = TRUE;
     
     return self;
 }
@@ -29,13 +28,18 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)receiveCashFromCashOperatingObject:(id<IDPCashOperating>)object {
+- (void)receiveCashFromCashOperatingObject:(id<IDPCashowner>)object {
     return;
 }
 
 - (float)giveAllCash {
-    float cashToGive = self.cash;
-    self.cash = 0;
+    return [self giveCash:self.cash];
+}
+
+- (float)giveCash:(float)cash {
+    float cashOwned = self.cash;
+    float cashToGive = cashOwned > cash ? cash : cashOwned;
+    self.cash = cashOwned - cashToGive;
     
     return cashToGive;
 }

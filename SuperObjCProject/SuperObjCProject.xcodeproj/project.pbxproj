@@ -26,6 +26,7 @@
 		85E075A51CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075A41CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.m */; };
 		85E075A91CFF115C0011FB59 /* IDPCreatureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075A81CFF115C0011FB59 /* IDPCreatureTest.m */; };
 		85E075AD1CFF26900011FB59 /* NSObject+IDPObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E075AC1CFF26900011FB59 /* NSObject+IDPObject.m */; };
+		85FAE8391D08C02B00B37FAE /* IDPQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 85FAE8381D08C02B00B37FAE /* IDPQueue.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,9 +70,9 @@
 		85BF8C5C1D00ECB9008509E4 /* IDPCarwashRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwashRoom.m; sourceTree = "<group>"; };
 		85CA46FC1CFF45B7007B7988 /* IDPBuilding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPBuilding.h; sourceTree = "<group>"; };
 		85CA46FD1CFF45B7007B7988 /* IDPBuilding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPBuilding.m; sourceTree = "<group>"; };
+		85CE688E1D087535004F29EA /* IDPCashowner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDPCashowner.h; sourceTree = "<group>"; };
 		85D098011D03215C00CC6CAE /* IDPCarwashTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwashTest.h; sourceTree = "<group>"; };
 		85D098021D03215C00CC6CAE /* IDPCarwashTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwashTest.m; sourceTree = "<group>"; };
-		85DC6D081D062234001D7014 /* IDPCashOperating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCashOperating.h; sourceTree = "<group>"; };
 		85DC6D0A1D064213001D7014 /* NSString+IDPExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+IDPExtensions.h"; sourceTree = "<group>"; };
 		85DC6D0B1D064213001D7014 /* NSString+IDPExtensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+IDPExtensions.m"; sourceTree = "<group>"; };
 		85E075A31CFF0ED70011FB59 /* NSArray+IDPArrayEnumerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+IDPArrayEnumerator.h"; sourceTree = "<group>"; };
@@ -80,6 +81,8 @@
 		85E075A81CFF115C0011FB59 /* IDPCreatureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCreatureTest.m; sourceTree = "<group>"; };
 		85E075AB1CFF26900011FB59 /* NSObject+IDPObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+IDPObject.h"; sourceTree = "<group>"; };
 		85E075AC1CFF26900011FB59 /* NSObject+IDPObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+IDPObject.m"; sourceTree = "<group>"; };
+		85FAE8371D08C02B00B37FAE /* IDPQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPQueue.h; sourceTree = "<group>"; };
+		85FAE8381D08C02B00B37FAE /* IDPQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPQueue.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,10 +180,10 @@
 		855F136E1CFE4422005CEA2C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				85DC6D061D062208001D7014 /* IDPCashOperating */,
+				85CE688D1D087535004F29EA /* IDPCashowner */,
 				8534EE6E1CFF9BAC0057D3B2 /* IDPCarwasher */,
-				8534EE6D1CFF9B3A0057D3B2 /* IDPDirector */,
 				8534EE6C1CFF9B200057D3B2 /* IDPAccountant */,
+				8534EE6D1CFF9B3A0057D3B2 /* IDPDirector */,
 				3EA0F1F81CFF508000E3DAD7 /* IDPWorker */,
 				3EA0F1EC1CFF4E4E00E3DAD7 /* IDPCar */,
 				85BF8C5A1D00ECA4008509E4 /* IDPCarwashRoom */,
@@ -232,6 +235,14 @@
 			path = IDPBuilding;
 			sourceTree = "<group>";
 		};
+		85CE688D1D087535004F29EA /* IDPCashowner */ = {
+			isa = PBXGroup;
+			children = (
+				85CE688E1D087535004F29EA /* IDPCashowner.h */,
+			);
+			path = IDPCashowner;
+			sourceTree = "<group>";
+		};
 		85D098001D03214700CC6CAE /* IDPCarwashTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,14 +250,6 @@
 				85D098021D03215C00CC6CAE /* IDPCarwashTest.m */,
 			);
 			path = IDPCarwashTest;
-			sourceTree = "<group>";
-		};
-		85DC6D061D062208001D7014 /* IDPCashOperating */ = {
-			isa = PBXGroup;
-			children = (
-				85DC6D081D062234001D7014 /* IDPCashOperating.h */,
-			);
-			path = IDPCashOperating;
 			sourceTree = "<group>";
 		};
 		85DC6D091D064213001D7014 /* NSString+IDPExtensions */ = {
@@ -261,6 +264,7 @@
 		85E075981CFEFCA60011FB59 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				85FAE8361D08C01700B37FAE /* IDPQueue */,
 				85DC6D091D064213001D7014 /* NSString+IDPExtensions */,
 				85E075AA1CFF266E0011FB59 /* NSObject+IDPObject */,
 				85E075A21CFF0EB90011FB59 /* NSArray+IDPArrayEnumerator */,
@@ -312,6 +316,15 @@
 				8534EE791CFF9E3F0057D3B2 /* IDPCarwash.m */,
 			);
 			path = IDPCarwash;
+			sourceTree = "<group>";
+		};
+		85FAE8361D08C01700B37FAE /* IDPQueue */ = {
+			isa = PBXGroup;
+			children = (
+				85FAE8371D08C02B00B37FAE /* IDPQueue.h */,
+				85FAE8381D08C02B00B37FAE /* IDPQueue.m */,
+			);
+			path = IDPQueue;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,6 +390,7 @@
 				8534EE711CFF9C5D0057D3B2 /* IDPAccountant.m in Sources */,
 				85E075AD1CFF26900011FB59 /* NSObject+IDPObject.m in Sources */,
 				8534EE6B1CFF917B0057D3B2 /* IDPRandom.m in Sources */,
+				85FAE8391D08C02B00B37FAE /* IDPQueue.m in Sources */,
 				8534EE771CFF9C7C0057D3B2 /* IDPCarwasher.m in Sources */,
 				855F13781CFE4558005CEA2C /* IDPFemaleCreature.m in Sources */,
 				85D098031D03215C00CC6CAE /* IDPCarwashTest.m in Sources */,

@@ -8,27 +8,32 @@
 
 #import "IDPCarwasher.h"
 
+@interface IDPCarwasher ()
+
+- (void)cleanCar:(IDPCar *)car;
+
+@end
+
 @implementation IDPCarwasher
 
-- (id)init {
-    self = [super init];
-    if (self) {
-    }
-    
-    return self;
+#pragma mark -
+#pragma mark Public Methods
+
+- (void)processObject:(IDPCar *)car {
+    [self doJob];
+    [self cleanCar:car];
+    [super receiveCashFromCashOperatingObject:car];
 }
+
+#pragma mark -
+#pragma mark Private Methods
 
 - (void)cleanCar:(IDPCar *)car {
     car.dirty = NO;
 }
 
 - (void)doJob {
-    NSLog(@"Car is washed");
-}
-
-- (void)processObject:(IDPCar *)car {
-    [self cleanCar:car];
-    [super receiveCashFromCashOperatingObject:car];
+    [self printMessage:@"Car is washed"];
 }
 
 @end

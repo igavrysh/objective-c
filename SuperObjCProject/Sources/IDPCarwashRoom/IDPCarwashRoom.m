@@ -13,7 +13,6 @@
 
 @end
 
-
 @implementation IDPCarwashRoom
 
 @dynamic cars;
@@ -29,9 +28,8 @@
 
 - (id)init {
     self = [super init];
-    if (self) {
-        self.mutableCars = [[NSMutableArray alloc] init];
-    }
+    
+    self.mutableCars = [[NSMutableArray alloc] init];
     
     return self;
 }

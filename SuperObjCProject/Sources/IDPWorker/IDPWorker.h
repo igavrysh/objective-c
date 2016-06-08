@@ -8,17 +8,15 @@
 
 #import "IDPCreature.h"
 
-#import "IDPCashOperating.h"
+#import "IDPCashowner.h"
 
-@interface IDPWorker : IDPCreature <IDPCashOperating>
+@interface IDPWorker : IDPCreature <IDPCashowner>
 @property (nonatomic, assign) float salary;
 @property (nonatomic, assign) float capital;
 @property (nonatomic, assign) NSUInteger experience;
 
 - (id)init;
-- (id)initWithSalaray:(float)salary capital:(float)capital experience:(NSUInteger)experience;
 
-- (void)doJob;
-- (void)processObject:(id<IDPCashOperating>) object;
+- (void)processObject:(id<IDPCashowner>) object;
 
 @end

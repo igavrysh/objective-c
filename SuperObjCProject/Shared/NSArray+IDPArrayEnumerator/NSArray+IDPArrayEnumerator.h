@@ -14,6 +14,6 @@
 
 - (void)performBlockWithEachObject:(void (^)(id object))block;
 
-- (id)objectAtRandomIndex;
+- (id)randomObject;
 
 @end

@@ -48,7 +48,7 @@ float IDPRandomFloatWithMinAndMaxValue(float value1, float value2) {
 
 static inline
 NSInteger IDPRandomIntWithinRange(IDPIntRange range) {
-    return range.minValue + arc4random_uniform((UInt32)(range.maxValue - range.minValue));
+    return range.minValue + arc4random_uniform((UInt32)(range.maxValue - range.minValue + 1));
 }
 
 static inline

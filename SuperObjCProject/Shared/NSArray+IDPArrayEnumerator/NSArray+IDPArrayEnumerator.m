@@ -40,7 +40,7 @@
     }];
 }
 
-- (id)objectAtRandomIndex {
+- (id)randomObject {
     NSUInteger count = [self count];
     if (count == 0) {
         return nil;

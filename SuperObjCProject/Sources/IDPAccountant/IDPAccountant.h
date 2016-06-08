@@ -10,5 +10,4 @@
 
 @interface IDPAccountant : IDPWorker
 
-
 @end

@@ -11,6 +11,8 @@
 #import "IDPCreatureTest.h"
 #import "IDPCarwashTest.h"
 
+#import "IDPRandom.h"
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         /*

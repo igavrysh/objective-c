@@ -8,12 +8,12 @@
 
 #import "IDPBuilding.h"
 
+#import "NSArray+IDPArrayEnumerator.h"
+
 @interface IDPBuilding ()
 @property (nonatomic, retain) NSMutableArray *mutableRooms;
 
-- (BOOL)addWorkerToFirstNonFilledRoom:(IDPWorker *)worker;
-
-- (BOOL)addWorker:(IDPWorker *)worker toRoom:(IDPRoom *)room;
+- (IDPRoom *)roomForExtraWorker;
 
 @end
 
@@ -25,6 +25,10 @@
 #pragma mark Initializtions and Deallocations
 
 - (void)dealloc {
+    [self.mutableRooms performBlockWithEachObject:^(IDPRoom *room) {
+        room.building = nil;
+    }];
+    
     self.mutableRooms = nil;
     
     [super dealloc];
@@ -32,9 +36,8 @@
 
 - (id)init {
     self = [super init];
-    if (self) {
-        self.mutableRooms = [NSMutableArray new];
-    }
+    
+    self.mutableRooms = [NSMutableArray new];
     
     return self;
 }
@@ -61,10 +64,14 @@
     [self.mutableRooms removeObject:room];
 }
 
-- (BOOL)addWorker:(IDPWorker *)worker; {
-    return [self addWorkerToFirstNonFilledRoom:worker];
+- (BOOL)addWorker:(IDPWorker *)worker {
+    IDPRoom *room = [self roomForExtraWorker];
+    if (room) {
+        return [room addWorker:worker];
+    }
+    
+    return NO;
 }
-
 
 - (void)removeWorker:(IDPWorker *)worker {
     for (IDPRoom *room in self.rooms) {
@@ -75,22 +82,14 @@
 #pragma mark -
 #pragma mark Private Methods
 
-- (BOOL)addWorkerToFirstNonFilledRoom:(IDPWorker *)worker {
+- (IDPRoom *)roomForExtraWorker {
     for (IDPRoom *room in self.rooms) {
-        if (!room.isFilled) {
-            return [room addWorker:worker];
+        if (!room.isFull) {
+            return room;
         }
     }
     
-    return NO;
-}
-
-- (BOOL)addWorker:(IDPWorker *)worker toRoom:(IDPRoom *)room {
-    if ([self.rooms containsObject:room]) {
-        return [room addWorker:worker];
-    }
-    
-    return NO;
+    return nil;
 }
 
 @end

@@ -22,18 +22,11 @@
 #pragma mark Initializtions and Deallocations
 
 - (id)init {
-    return [self initWithSalaray:IDPRandomFloatWithMinAndMaxValue(0, 100)
-                         capital:IDPRandomFloatWithMinAndMaxValue(0, 100000)
-                      experience:IDPRandomUIntWithMaxValue(10)];
-}
-
-- (id)initWithSalaray:(float)salary capital:(float)capital experience:(NSUInteger)experience {
     self = [super init];
-    if (self) {
-        self.salary = salary;
-        self.capital = capital;
-        self.experience = experience;
-    }
+    
+    self.salary = IDPRandomFloatWithMinAndMaxValue(0, 100);
+    self.capital = IDPRandomFloatWithMinAndMaxValue(0, 100000);
+    self.experience = IDPRandomUIntWithMaxValue(10);
     
     return self;
 }
@@ -41,28 +34,24 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)doJob {
-    
-}
-
-- (void)processObject:(id<IDPCashOperating>) object {
-    [self doJob];
+- (void)processObject:(id<IDPCashowner>) object {
     [self receiveCashFromCashOperatingObject:object];
 }
 
-- (void)receiveCashFromCashOperatingObject:(id<IDPCashOperating>)object {
+- (void)receiveCashFromCashOperatingObject:(id<IDPCashowner>)object {
     object.cash = object.cash + [object giveAllCash];
 }
 
 - (float)giveAllCash {
-    float cashToGive = self.cash;
-    self.cash = 0;
+    return [self giveCash:self.cash];
+}
+
+- (float)giveCash:(float)cash {
+    float cashOwned = self.cash;
+    float cashToGive = cashOwned > cash ? cash : cashOwned;
+    self.cash = cashOwned - cashToGive;
     
     return cashToGive;
 }
-
-
-
-
 
 @end

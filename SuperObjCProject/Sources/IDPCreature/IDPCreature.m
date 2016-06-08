@@ -51,12 +51,11 @@
 
 - (id)initWithName:(NSString *)name weight:(float)weight age:(IDPAge)age {
     self = [super init];
-    if (self) {
-        self.name = name;
-        self.weight = weight;
-        self.age = age;
-        self.mutableChildren = [NSMutableArray object];
-    }
+    
+    self.name = name;
+    self.weight = weight;
+    self.age = age;
+    self.mutableChildren = [NSMutableArray object];
     
     return self;
 }

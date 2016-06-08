@@ -22,7 +22,7 @@ static const NSUInteger kIDPRoomDefaultCapacity = 10;
 
 @dynamic workers;
 @dynamic workersCount;
-@dynamic filled;
+@dynamic full;
 
 #pragma mark -
 #pragma mark Class Methods
@@ -50,10 +50,9 @@ static const NSUInteger kIDPRoomDefaultCapacity = 10;
 
 - (id)initWithCapacity:(NSUInteger)capacity {
     self = [super init];
-    if (self) {
-        self.mutableWorkers = [NSMutableArray new];
-        self.capacity = capacity;
-    }
+    
+    self.mutableWorkers = [NSMutableArray new];
+    self.capacity = capacity;
     
     return self;
 }
@@ -65,7 +64,7 @@ static const NSUInteger kIDPRoomDefaultCapacity = 10;
     return [self.mutableWorkers count];
 }
 
-- (BOOL)isFilled {
+- (BOOL)isFull {
     return self.capacity <= self.workersCount;
 }
 
@@ -87,13 +86,7 @@ static const NSUInteger kIDPRoomDefaultCapacity = 10;
 }
 
 - (void)removeWorker:(IDPWorker *)worker {
-    if ([self.mutableWorkers containsObject:worker]) {
-        [self.mutableWorkers removeObject:worker];
-    }
+    [self.mutableWorkers removeObject:worker];
 }
-
-#pragma mark -
-#pragma mark Private Methods
-
 
 @end

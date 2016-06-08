@@ -9,6 +9,7 @@
 #import "IDPCarwash.h"
 
 #import "IDPRandom.h"
+#import "IDPQueue.h"
 #import "IDPCar.h"
 #import "IDPRoom.h"
 #import "IDPBuilding.h"
@@ -22,7 +23,7 @@
 
 static const NSUInteger kIDPProdRoomCapacity = 10;
 static const NSUInteger kIDPAdminRoomCapacity = 3;
-static const float      kIDPCarwashPrice = 4.99;
+//static const float      kIDPCarwashPrice = 4.99;
 
 @interface IDPCarwash ()
 @property (nonatomic, retain) IDPBuilding *productionBuilding;
@@ -32,10 +33,11 @@ static const float      kIDPCarwashPrice = 4.99;
 @property (nonatomic, retain) NSMutableArray *accountants;
 @property (nonatomic, retain) NSMutableArray *directors;
 
-@property (nonatomic, retain) NSMutableArray *cars;
+@property (nonatomic, retain) IDPQueue *cars;
 
 - (void)initCarwashStructure;
 
+- (void)addCar:(IDPCar *)car;
 - (IDPCar *)nextCar;
 
 - (IDPCarwasher *)freeWasher;
@@ -84,20 +86,18 @@ static const float      kIDPCarwashPrice = 4.99;
 
 - (id)init {
     self = [super init];
-    if (self) {
-        self.cars = [NSMutableArray new];
-        self.accountants = [NSMutableArray new];
-        self.washers = [NSMutableArray new];
-        self.directors = [NSMutableArray new];
-        
-        [self initCarwashStructure];
-    }
+    
+    self.cars = [IDPQueue new];
+    self.accountants = [NSMutableArray new];
+    self.washers = [NSMutableArray new];
+    self.directors = [NSMutableArray new];
+    
+    [self initCarwashStructure];
     
     return self;
 }
 
 - (void)initCarwashStructure {
-    // Why I cannot use here new?
     IDPBuilding *administrativeBuilding = [IDPBuilding object];
     [administrativeBuilding addRoom:[IDPRoom roomWithCapacity:kIDPAdminRoomCapacity]];
     self.administrativeBuilding = administrativeBuilding;
@@ -116,33 +116,23 @@ static const float      kIDPCarwashPrice = 4.99;
 #pragma mark Accessors Methods
 
 - (BOOL)isEmptyQueue {
-    return [self.cars count] == 0;
+    return self.cars.count == 0;
 }
 
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)addCar:(IDPCar *)car {
-    if (!car) {
-        return;
-    }
+- (IDPCar *)operate:(IDPCar *)car {
+    [self addCar:car];
     
-    [self.cars addObject:car];
-}
-
-- (IDPCar *)operate {
-    if ([self.cars count] == 0) {
-        return nil;
-    }
+    IDPCar *currentCar = [self nextCar];
     
-    IDPCar *car = [self nextCar];
-    
-    if (!car) {
+    if (!currentCar) {
         return nil;
     }
     
     IDPCarwasher *washer = [self freeWasher];
-    [washer processObject:car];
+    [washer processObject:currentCar];
     
     IDPAccountant *accountant = [self freeAccountant];
     [accountant processObject:washer];
@@ -150,30 +140,26 @@ static const float      kIDPCarwashPrice = 4.99;
     IDPDirector *director = [self freeDirector];
     [director processObject:accountant];
     
-    return car;
+    return currentCar;
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
 - (IDPCar *)nextCar {
-    if (0 == [self.cars count]) {
-        return nil;
-    }
-    
-    IDPCar *car = [[self.cars[0] retain] autorelease];
-    
-    [self.cars removeObjectAtIndex:0];
-    
-    return car;
+    return [self.cars dequeue];
+}
+
+- (void)addCar:(IDPCar *)car {
+    [self.cars enqueue:car];
 }
 
 - (IDPCarwasher *)freeWasher {
-    return [self.washers objectAtRandomIndex];
+    return [self.washers randomObject];
 }
 
 - (IDPAccountant *)freeAccountant {
-    return [self.accountants objectAtRandomIndex];
+    return [self.accountants randomObject];
 }
 
 - (IDPDirector *)freeDirector {

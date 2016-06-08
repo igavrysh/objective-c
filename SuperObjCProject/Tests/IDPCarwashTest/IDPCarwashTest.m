@@ -14,6 +14,7 @@
 #import "NSObject+IDPObject.h"
 
 static const NSUInteger kIDPCarwashTestCarsCount = 25;
+
 @interface IDPCarwashTest ()
 @property (nonatomic, retain) IDPCarwash *carwash;
 
@@ -28,11 +29,8 @@ static const NSUInteger kIDPCarwashTestCarsCount = 25;
     self.carwash = [IDPCarwash new];
     
     for (NSUInteger index = 0; index < kIDPCarwashTestCarsCount; index++) {
-        [self.carwash addCar:[IDPCar object]];
-    }
-    
-    while (!self.carwash.isEmptyQueue) {
-        IDPCar *car = [self.carwash operate];
+        IDPCar *car = [self.carwash operate:[IDPCar object]];
+        NSLog(@"%@ is processed", car);
     }
     
     self.carwash = nil;

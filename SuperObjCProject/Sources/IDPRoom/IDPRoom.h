@@ -14,8 +14,8 @@
 @interface IDPRoom : NSObject
 @property (nonatomic, copy, readonly)   NSArray         *workers;
 @property (nonatomic, readonly)         NSUInteger      workersCount;
-@property (nonatomic, assign, readonly, getter=isFilled) BOOL filled;
 @property (nonatomic, assign)           IDPBuilding     *building;
+@property (nonatomic, readonly, getter=isFull) BOOL full;
 
 + (id)room;
 + (id)roomWithCapacity:(NSUInteger)capacity;

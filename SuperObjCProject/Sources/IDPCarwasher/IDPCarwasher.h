@@ -12,8 +12,4 @@
 
 @interface IDPCarwasher : IDPWorker
 
-- (id)init;
-
-- (void)cleanCar:(IDPCar *)car;
-
 @end
