@@ -12,4 +12,10 @@
 
 + (id)object;
 
++ (id)objectWithInitBlock:(id (^)(id object)) block;
+
++ (id)newWithInitBlock:(id (^)(id object)) block;
+
++ (NSArray *)objectsWithCount:(NSUInteger)count;
+
 @end

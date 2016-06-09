@@ -9,12 +9,19 @@
 #import <Foundation/Foundation.h>
 
 #import "IDPCreatureTest.h"
+#import "IDPCarwashTest.h"
+
+#import "IDPRandom.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        IDPCreatureTest *test = [[IDPCreatureTest new] autorelease];
+        IDPCreatureTest *test1 = [[IDPCreatureTest new] autorelease];
         
-        [test execute];
+        [test1 execute];
+        
+        IDPCarwashTest *test2 = [[IDPCarwashTest new] autorelease];
+        
+        [test2 execute];
     }
     
     return 0;

@@ -13,7 +13,7 @@
 
 #import "IDPRandom.h"
 
-#import "NSString+IDPName.h"
+#import "NSString+IDPExtensions.h"
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 
@@ -29,10 +29,8 @@
 #pragma mark -
 #pragma mark Class Methods
 
-+ (id)creature {
-    IDPCreature *creature = IDPRandomBool() ? [IDPMaleCreature object] : [IDPFemaleCreature object];
-    
-    return creature;
++ (id)creature {    
+    return IDPRandomBool() ? [IDPMaleCreature object] : [IDPFemaleCreature object];
 }
 
 #pragma mark -
@@ -53,12 +51,11 @@
 
 - (id)initWithName:(NSString *)name weight:(float)weight age:(IDPAge)age {
     self = [super init];
-    if (self) {
-        self.name = name;
-        self.weight = weight;
-        self.age = age;
-        self.mutableChildren = [NSMutableArray object];
-    }
+    
+    self.name = name;
+    self.weight = weight;
+    self.age = age;
+    self.mutableChildren = [NSMutableArray object];
     
     return self;
 }

@@ -1,12 +1,13 @@
 //
-//  NSString+IDPName.m
+//  NSString+IDPExtensions.h
 //  SuperObjCProject
 //
 //  Created by Ievgen on 6/1/16.
 //  Copyright © 2016 1mlndollarsasset. All rights reserved.
 //
 
-#import "NSString+IDPName.h"
+#import "NSString+IDPExtensions.h"
+
 #import "NSObject+IDPObject.h"
 
 @interface NSString (NSStringPrivate)
@@ -62,16 +63,15 @@
 
 @end
 
-
-@implementation NSString (IDPName)
+@implementation NSString (IDPExtensions)
 
 #pragma mark -
 #pragma mark Class Methods
 
 + (NSString *)randomName {
     return [NSString stringWithFormat:@"%@ %@",
-            [[NSString firstNames] objectAtIndex:arc4random_uniform([[NSString firstNames] count])],
-            [[NSString lastNames] objectAtIndex:arc4random_uniform([[NSString lastNames] count])]];
+            [[NSString firstNames] objectAtIndex:arc4random_uniform((UInt32)[[NSString firstNames] count])],
+            [[NSString lastNames] objectAtIndex:arc4random_uniform((UInt32)[[NSString lastNames] count])]];
 }
 
 

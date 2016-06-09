@@ -42,7 +42,9 @@
 #pragma mark Private Methods
 
 + (NSArray *)creaturesWithCount:(NSUInteger)count {
-    return [NSArray objectsOfClass:[IDPCreature class] createdWith:@selector(creature) count:count];
+    return [NSArray objectsWithCount:count block:^id{
+        return [IDPCreature creature];
+    }]; 
 }
 
 - (void)creaturesPerformGenderSpecificOperation {
@@ -53,8 +55,6 @@
     for (IDPCreature *creature in creatures) {
         [creature performGenderSpecificOperation];
     }
-    
-    [creatures release];
 }
 
 - (void)creaturesSayHi {
@@ -66,8 +66,6 @@
     [creatures performBlockWithEachObject:^(IDPCreature *creature) {
         [creature sayHi];
     }];
-    
-    [creatures release];
 }
 
 - (void)creaturesChildrendSayHi {
@@ -86,8 +84,6 @@
             [childCreature sayHi];
         }];
     }];
-    
-    [creatures release];
 }
 
 @end

@@ -8,23 +8,27 @@
 
 #import "NSArray+IDPArrayEnumerator.h"
 
+#import "IDPRandom.h"
+
 #import "NSObject+IDPObject.h"
 
 @implementation NSArray (IDPArrayEnumerator)
 
-+ (NSArray *)objectsOfClass:(Class)objClass createdWith:(SEL)selector count:(NSUInteger)count
-{
+#pragma mark -
+#pragma mark Class Methods
+
++ (NSArray *)objectsWithCount:(NSUInteger)count block:(id(^)())block {
     NSMutableArray *array = [NSMutableArray object];
     
-    if ([objClass respondsToSelector:selector]) {
-        for (NSUInteger index = 0; index < count; index++) {
-            [array addObject:[objClass performSelector:selector]];
-        }
+    for (NSUInteger index = 0; index < count; index++) {
+        [array addObject:block()];
     }
-    
-    return [array copy];
+
+    return [[array copy] autorelease];
 }
 
+#pragma mark -
+#pragma mark Public Methods
 
 - (void)performBlockWithEachObject:(void (^)(id object))block {
     if (!block) {
@@ -34,6 +38,15 @@
     [self enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
         block(object);
     }];
+}
+
+- (id)randomObject {
+    NSUInteger count = [self count];
+    if (count == 0) {
+        return nil;
+    }
+    
+    return [self objectAtIndex:IDPRandomUIntWithMaxValue(count - 1)];
 }
 
 @end
