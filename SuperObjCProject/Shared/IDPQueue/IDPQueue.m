@@ -16,6 +16,7 @@
 @end
 
 @implementation IDPQueue
+
 @dynamic count;
 
 #pragma mark -
@@ -23,13 +24,14 @@
 
 - (void)dealloc {
     self.objects = nil;
+    
     [super dealloc];
 }
 
-- (id)init
-{
+- (id)init {
     self = [super init];
     self.objects = [NSMutableArray object];
+    
     return self;
 }
 
@@ -57,7 +59,6 @@
     }
     
     id object = [[self.objects[0] retain] autorelease];
-    
     [self.objects removeObjectAtIndex:0];
     
     return object;

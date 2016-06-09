@@ -18,7 +18,6 @@ typedef uint8_t IDPAge;
 
 + (id)creature;
 
-- (id)init;
 - (id)initWithName:(NSString *)name weight:(float)weight age:(IDPAge)age;
 
 - (void)sayHi;

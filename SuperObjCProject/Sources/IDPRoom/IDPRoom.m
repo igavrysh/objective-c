@@ -51,7 +51,7 @@ static const NSUInteger kIDPRoomDefaultCapacity = 10;
 - (id)initWithCapacity:(NSUInteger)capacity {
     self = [super init];
     
-    self.mutableWorkers = [NSMutableArray new];
+    self.mutableWorkers = [[NSMutableArray new] autorelease];
     self.capacity = capacity;
     
     return self;

@@ -11,8 +11,6 @@
 @interface IDPQueue : NSObject
 @property (nonatomic, readonly) NSUInteger count;
 
-- (id)init;
-
 - (void)enqueue:(id)object;
 - (id)dequeue;
 

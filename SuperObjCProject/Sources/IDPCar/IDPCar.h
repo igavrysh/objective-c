@@ -8,11 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import "IDPCashowner.h"
+#import "IDPCashOwner.h"
 
-@interface IDPCar : NSObject <IDPCashowner>
+@interface IDPCar : NSObject <IDPCashOwner>
 @property (nonatomic, assign, getter = isDirty) BOOL dirty;
-
-- (id)init;
 
 @end

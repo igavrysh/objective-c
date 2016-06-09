@@ -33,12 +33,9 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
 @property (nonatomic, retain) NSMutableArray *accountants;
 @property (nonatomic, retain) NSMutableArray *directors;
 
-@property (nonatomic, retain) IDPQueue *cars;
+@property (nonatomic, retain) IDPQueue *carsQueue;
 
 - (void)initCarwashStructure;
-
-- (void)addCar:(IDPCar *)car;
-- (IDPCar *)nextCar;
 
 - (IDPCarwasher *)freeWasher;
 - (IDPAccountant *)freeAccountant;
@@ -79,7 +76,7 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
     self.productionBuilding = nil;
     self.administrativeBuilding = nil;
     
-    self.cars = nil;
+    self.carsQueue = nil;
     
     [super dealloc];
 }
@@ -87,10 +84,10 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
 - (id)init {
     self = [super init];
     
-    self.cars = [IDPQueue new];
-    self.accountants = [NSMutableArray new];
-    self.washers = [NSMutableArray new];
-    self.directors = [NSMutableArray new];
+    self.carsQueue = [IDPQueue object];
+    self.accountants = [NSMutableArray object];
+    self.washers = [NSMutableArray object];
+    self.directors = [NSMutableArray object];
     
     [self initCarwashStructure];
     
@@ -116,43 +113,36 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
 #pragma mark Accessors Methods
 
 - (BOOL)isEmptyQueue {
-    return self.cars.count == 0;
+    return self.carsQueue.count == 0;
 }
 
 #pragma mark -
 #pragma mark Public Methods
 
-- (IDPCar *)operate:(IDPCar *)car {
-    [self addCar:car];
+- (void)processCar:(IDPCar *)car {
+    [self.carsQueue enqueue:car];
     
-    IDPCar *currentCar = [self nextCar];
-    
-    if (!currentCar) {
-        return nil;
+    while (![self isEmptyQueue]) {
+        IDPCar *currentCar = [self.carsQueue dequeue];
+        
+        if (!currentCar) {
+            return;
+        }
+        
+        IDPCarwasher *washer = [self freeWasher];
+        [washer processObject:currentCar];
+        
+        IDPAccountant *accountant = [self freeAccountant];
+        [accountant processObject:washer];
+        
+        IDPDirector *director = [self freeDirector];
+        [director processObject:accountant];
     }
     
-    IDPCarwasher *washer = [self freeWasher];
-    [washer processObject:currentCar];
-    
-    IDPAccountant *accountant = [self freeAccountant];
-    [accountant processObject:washer];
-    
-    IDPDirector *director = [self freeDirector];
-    [director processObject:accountant];
-    
-    return currentCar;
 }
 
 #pragma mark -
 #pragma mark Private Methods
-
-- (IDPCar *)nextCar {
-    return [self.cars dequeue];
-}
-
-- (void)addCar:(IDPCar *)car {
-    [self.cars enqueue:car];
-}
 
 - (IDPCarwasher *)freeWasher {
     return [self.washers randomObject];

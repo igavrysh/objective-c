@@ -9,6 +9,10 @@
 #import "IDPCar.h"
 #import "IDPRandom.h"
 
+@interface IDPCar ()
+
+@end
+
 @implementation IDPCar
 
 @synthesize cash = _cash;
@@ -19,8 +23,8 @@
 - (id)init {
     self = [super init];
     
-    self.cash = IDPRandomUIntWithMaxValue(10000);
-    self.dirty = TRUE;
+    self.cash = 4.99;
+    self.dirty = YES;
     
     return self;
 }
@@ -28,7 +32,7 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)receiveCashFromCashOperatingObject:(id<IDPCashowner>)object {
+- (void)receiveCash:(id<IDPCashOwner>)object {
     return;
 }
 

@@ -34,12 +34,12 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)processObject:(id<IDPCashowner>) object {
-    [self receiveCashFromCashOperatingObject:object];
+- (void)processObject:(id<IDPCashOwner>) object {
+    [self receiveCash:object];
 }
 
-- (void)receiveCashFromCashOperatingObject:(id<IDPCashowner>)object {
-    object.cash = object.cash + [object giveAllCash];
+- (void)receiveCash:(id<IDPCashOwner>)object {
+    self.cash += [object giveAllCash];
 }
 
 - (float)giveAllCash {

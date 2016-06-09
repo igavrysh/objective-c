@@ -8,6 +8,8 @@
 
 #import "IDPCarwashRoom.h"
 
+#include "NSObject+IDPObject.h"
+
 @interface IDPCarwashRoom ()
 @property (nonatomic, retain) NSMutableArray *mutableCars;
 
@@ -28,8 +30,7 @@
 
 - (id)init {
     self = [super init];
-    
-    self.mutableCars = [[NSMutableArray alloc] init];
+    self.mutableCars = [NSMutableArray object];
     
     return self;
 }

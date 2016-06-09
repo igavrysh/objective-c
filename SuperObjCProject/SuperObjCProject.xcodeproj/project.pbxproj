@@ -66,11 +66,11 @@
 		855F13731CFE4422005CEA2C /* IDPFemaleCreature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDPFemaleCreature.m; sourceTree = "<group>"; };
 		855F13741CFE4422005CEA2C /* IDPMaleCreature.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDPMaleCreature.h; sourceTree = "<group>"; };
 		855F13751CFE4422005CEA2C /* IDPMaleCreature.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IDPMaleCreature.m; sourceTree = "<group>"; };
+		85675AB01D0A00F200D46575 /* IDPCashOwner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDPCashOwner.h; sourceTree = "<group>"; };
 		85BF8C5B1D00ECB9008509E4 /* IDPCarwashRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwashRoom.h; sourceTree = "<group>"; };
 		85BF8C5C1D00ECB9008509E4 /* IDPCarwashRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwashRoom.m; sourceTree = "<group>"; };
 		85CA46FC1CFF45B7007B7988 /* IDPBuilding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPBuilding.h; sourceTree = "<group>"; };
 		85CA46FD1CFF45B7007B7988 /* IDPBuilding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPBuilding.m; sourceTree = "<group>"; };
-		85CE688E1D087535004F29EA /* IDPCashowner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IDPCashowner.h; sourceTree = "<group>"; };
 		85D098011D03215C00CC6CAE /* IDPCarwashTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwashTest.h; sourceTree = "<group>"; };
 		85D098021D03215C00CC6CAE /* IDPCarwashTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwashTest.m; sourceTree = "<group>"; };
 		85DC6D0A1D064213001D7014 /* NSString+IDPExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+IDPExtensions.h"; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 		855F136E1CFE4422005CEA2C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				85CE688D1D087535004F29EA /* IDPCashowner */,
+				85675AAF1D0A00F200D46575 /* IDPCashOwner */,
 				8534EE6E1CFF9BAC0057D3B2 /* IDPCarwasher */,
 				8534EE6C1CFF9B200057D3B2 /* IDPAccountant */,
 				8534EE6D1CFF9B3A0057D3B2 /* IDPDirector */,
@@ -217,6 +217,14 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		85675AAF1D0A00F200D46575 /* IDPCashOwner */ = {
+			isa = PBXGroup;
+			children = (
+				85675AB01D0A00F200D46575 /* IDPCashOwner.h */,
+			);
+			path = IDPCashOwner;
+			sourceTree = "<group>";
+		};
 		85BF8C5A1D00ECA4008509E4 /* IDPCarwashRoom */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,14 +241,6 @@
 				85CA46FD1CFF45B7007B7988 /* IDPBuilding.m */,
 			);
 			path = IDPBuilding;
-			sourceTree = "<group>";
-		};
-		85CE688D1D087535004F29EA /* IDPCashowner */ = {
-			isa = PBXGroup;
-			children = (
-				85CE688E1D087535004F29EA /* IDPCashowner.h */,
-			);
-			path = IDPCashowner;
 			sourceTree = "<group>";
 		};
 		85D098001D03214700CC6CAE /* IDPCarwashTest */ = {

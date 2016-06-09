@@ -13,8 +13,6 @@
 @interface IDPCarwashRoom : IDPRoom
 @property (nonatomic, copy, readonly) NSArray *cars;
 
-- (id)init;
-
 - (void)addCar:(IDPCar *)car;
 - (void)removeCar:(IDPCar *)car;
 

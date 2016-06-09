@@ -20,7 +20,6 @@
 + (id)room;
 + (id)roomWithCapacity:(NSUInteger)capacity;
 
-- (id)init;
 - (id)initWithCapacity:(NSUInteger)capacity;
 
 - (BOOL)addWorker:(IDPWorker *)worker;

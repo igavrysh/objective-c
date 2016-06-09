@@ -1,5 +1,5 @@
 //
-//  IDPCashowner.h
+//  IDPCashOwner,h
 //  SuperObjCProject
 //
 //  Created by Ievgen on 6/7/16.
@@ -8,13 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol IDPCashowner <NSObject>
+@protocol IDPCashOwner <NSObject>
 @property (nonatomic, assign) float cash;
 
-- (void)receiveCashFromCashOperatingObject:(id<IDPCashowner>)object;
+@optional
+- (void)receiveCash:(id<IDPCashOwner>)object;
 
+@optional
 - (float)giveAllCash;
 
+@optional
 - (float)giveCash:(float)cash;
 
 @end

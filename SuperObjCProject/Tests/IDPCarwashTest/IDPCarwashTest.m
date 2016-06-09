@@ -29,14 +29,12 @@ static const NSUInteger kIDPCarwashTestCarsCount = 25;
     self.carwash = [IDPCarwash new];
     
     for (NSUInteger index = 0; index < kIDPCarwashTestCarsCount; index++) {
-        IDPCar *car = [self.carwash operate:[IDPCar object]];
-        NSLog(@"%@ is processed", car);
+        NSLog(@"->Car is being processed");
+        [self.carwash processCar:[IDPCar object]];
+        NSLog(@"Car was processed->");
     }
     
     self.carwash = nil;
 }
-
-#pragma mark -
-#pragma mark Private Methods
 
 @end

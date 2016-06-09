@@ -13,7 +13,7 @@
 @interface IDPBuilding ()
 @property (nonatomic, retain) NSMutableArray *mutableRooms;
 
-- (IDPRoom *)roomForExtraWorker;
+- (IDPRoom *)freeRoom;
 
 @end
 
@@ -25,18 +25,12 @@
 #pragma mark Initializtions and Deallocations
 
 - (void)dealloc {
-    [self.mutableRooms performBlockWithEachObject:^(IDPRoom *room) {
-        room.building = nil;
-    }];
-    
     self.mutableRooms = nil;
-    
     [super dealloc];
 }
 
 - (id)init {
     self = [super init];
-    
     self.mutableRooms = [NSMutableArray new];
     
     return self;
@@ -47,6 +41,20 @@
 
 - (NSArray *)rooms {
     return [[self.mutableRooms copy] autorelease];
+}
+
+- (void)setMutableRooms:(NSMutableArray *)mutableRooms {
+    if (_mutableRooms != mutableRooms) {
+        if (!mutableRooms) {
+            [_mutableRooms performBlockWithEachObject:^(IDPRoom *room) {
+                room.building = nil;
+            }];
+        }
+        
+        [_mutableRooms release];
+        
+        _mutableRooms = [mutableRooms retain];
+    }
 }
 
 #pragma mark -
@@ -65,7 +73,7 @@
 }
 
 - (BOOL)addWorker:(IDPWorker *)worker {
-    IDPRoom *room = [self roomForExtraWorker];
+    IDPRoom *room = [self freeRoom];
     if (room) {
         return [room addWorker:worker];
     }
@@ -82,7 +90,7 @@
 #pragma mark -
 #pragma mark Private Methods
 
-- (IDPRoom *)roomForExtraWorker {
+- (IDPRoom *)freeRoom {
     for (IDPRoom *room in self.rooms) {
         if (!room.isFull) {
             return room;

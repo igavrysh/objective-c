@@ -15,8 +15,6 @@
 @interface IDPBuilding : NSObject
 @property (nonatomic, copy, readonly) NSArray *rooms;
 
-- (id)init;
-
 - (void)addRoom:(IDPRoom *)room;
 - (void)removeRoom:(IDPRoom *)room;
 

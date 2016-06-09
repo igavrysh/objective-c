@@ -10,21 +10,27 @@
 
 #import "IDPCarwasher.h"
 
+@interface IDPAccountant ()
+
+- (void)calculateProfit;
+
+@end
+
 @implementation IDPAccountant
 
 #pragma mark -
 #pragma mark Public Methods
 
 - (void)processObject:(IDPCarwasher *)washer {
-    [self doJob];
-    [super receiveCashFromCashOperatingObject:washer];
+    [self calculateProfit];
+    [super receiveCash:washer];
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
-- (void)doJob {
-    [self printMessage:@"Cash is calculated"];
+- (void)calculateProfit {
+    NSLog(@"Cash is calculated");
 }
 
 @end

@@ -20,9 +20,8 @@
 #pragma mark Public Methods
 
 - (void)processObject:(IDPCar *)car {
-    [self doJob];
     [self cleanCar:car];
-    [super receiveCashFromCashOperatingObject:car];
+    [self receiveCash:car];
 }
 
 #pragma mark -
@@ -30,10 +29,7 @@
 
 - (void)cleanCar:(IDPCar *)car {
     car.dirty = NO;
-}
-
-- (void)doJob {
-    [self printMessage:@"Car is washed"];
+    NSLog(@"Car is washed");
 }
 
 @end
