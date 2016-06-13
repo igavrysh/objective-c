@@ -9,13 +9,14 @@
 #import "IDPCar.h"
 #import "IDPRandom.h"
 
+static const float kIDPCarwashPrice = 4.99;
+
 @interface IDPCar ()
+@property (nonatomic, assign) float cash;
 
 @end
 
 @implementation IDPCar
-
-@synthesize cash = _cash;
 
 #pragma mark -
 #pragma mark Initializtions and Deallocations
@@ -23,7 +24,7 @@
 - (id)init {
     self = [super init];
     
-    self.cash = 4.99;
+    self.cash = kIDPCarwashPrice;
     self.dirty = YES;
     
     return self;
@@ -31,10 +32,6 @@
 
 #pragma mark -
 #pragma mark Public Methods
-
-- (void)receiveCash:(id<IDPCashOwner>)object {
-    return;
-}
 
 - (float)giveAllCash {
     return [self giveCash:self.cash];

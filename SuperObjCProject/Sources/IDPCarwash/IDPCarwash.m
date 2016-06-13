@@ -23,7 +23,6 @@
 
 static const NSUInteger kIDPProdRoomCapacity = 10;
 static const NSUInteger kIDPAdminRoomCapacity = 3;
-//static const float      kIDPCarwashPrice = 4.99;
 
 @interface IDPCarwash ()
 @property (nonatomic, retain) IDPBuilding *productionBuilding;

@@ -103,7 +103,6 @@
 		850F83771D0F17800043472C /* IDPCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCar.m; sourceTree = "<group>"; };
 		850F83791D0F17800043472C /* IDPCarwash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwash.h; sourceTree = "<group>"; };
 		850F837A1D0F17800043472C /* IDPCarwash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwash.m; sourceTree = "<group>"; };
-		850F83821D0F17800043472C /* IDPCashowner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCashowner.h; sourceTree = "<group>"; };
 		850F83841D0F17800043472C /* IDPCreature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCreature.h; sourceTree = "<group>"; };
 		850F83851D0F17800043472C /* IDPCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCreature.m; sourceTree = "<group>"; };
 		850F838E1D0F17800043472C /* IDPRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPRoom.h; sourceTree = "<group>"; };
@@ -128,6 +127,7 @@
 		850F83E61D0F22BF0043472C /* IDPFemaleCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPFemaleCreature.m; sourceTree = "<group>"; };
 		850F83E81D0F22BF0043472C /* IDPMaleCreature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPMaleCreature.h; sourceTree = "<group>"; };
 		850F83E91D0F22BF0043472C /* IDPMaleCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPMaleCreature.m; sourceTree = "<group>"; };
+		850F83EF1D0F24910043472C /* IDPCashOwner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCashOwner.h; sourceTree = "<group>"; };
 		855F13561CFE4360005CEA2C /* SuperObjCProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SuperObjCProject; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -253,10 +253,10 @@
 		850F836E1D0F17800043472C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				850F83EE1D0F24910043472C /* IDPCashOwner */,
 				850F83721D0F17800043472C /* IDPBuilding */,
 				850F83751D0F17800043472C /* IDPCar */,
 				850F83781D0F17800043472C /* IDPCarwash */,
-				850F83811D0F17800043472C /* IDPCashowner */,
 				850F83831D0F17800043472C /* IDPCreature */,
 				850F838D1D0F17800043472C /* IDPRoom */,
 				850F83901D0F17800043472C /* IDPWorker */,
@@ -289,14 +289,6 @@
 				850F837A1D0F17800043472C /* IDPCarwash.m */,
 			);
 			path = IDPCarwash;
-			sourceTree = "<group>";
-		};
-		850F83811D0F17800043472C /* IDPCashowner */ = {
-			isa = PBXGroup;
-			children = (
-				850F83821D0F17800043472C /* IDPCashowner.h */,
-			);
-			path = IDPCashowner;
 			sourceTree = "<group>";
 		};
 		850F83831D0F17800043472C /* IDPCreature */ = {
@@ -419,6 +411,14 @@
 				850F83E91D0F22BF0043472C /* IDPMaleCreature.m */,
 			);
 			path = IDPMaleCreature;
+			sourceTree = "<group>";
+		};
+		850F83EE1D0F24910043472C /* IDPCashOwner */ = {
+			isa = PBXGroup;
+			children = (
+				850F83EF1D0F24910043472C /* IDPCashOwner.h */,
+			);
+			path = IDPCashOwner;
 			sourceTree = "<group>";
 		};
 		855F134D1CFE4360005CEA2C = {

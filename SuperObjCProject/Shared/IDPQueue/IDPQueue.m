@@ -54,7 +54,7 @@
 }
 
 - (id)dequeue {
-    if(self.count == 0) {
+    if (self.count == 0) {
         return nil;
     }
     

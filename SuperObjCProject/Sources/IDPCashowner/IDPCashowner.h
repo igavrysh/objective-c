@@ -9,15 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @protocol IDPCashOwner <NSObject>
-@property (nonatomic, assign) float cash;
+@property (nonatomic, readonly) float cash;
 
 @optional
-- (void)receiveCash:(id<IDPCashOwner>)object;
+- (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object;
 
-@optional
+- (void)receiveCash:(float)cash;
+
 - (float)giveAllCash;
 
-@optional
 - (float)giveCash:(float)cash;
 
 @end

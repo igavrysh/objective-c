@@ -23,7 +23,7 @@
 
 - (void)processObject:(IDPAccountant *)accountant {
     [self makeProfit];
-    [super receiveCash:accountant];
+    [self receiveCashFromCashOwner:accountant];
 }
 
 #pragma mark -

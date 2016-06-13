@@ -10,13 +10,16 @@
 
 #import "IDPRandom.h"
 
+static float const kIDPWorkerMaxSalary = 100;
+static float const kIDPWorkerMaxCapital = 100000;
+static NSUInteger const kIDPWorkerMaxExperience = 10;
+
 @interface IDPWorker ()
+@property (nonatomic, assign) float cash;
 
 @end
 
 @implementation IDPWorker
-
-@synthesize cash = _cash;
 
 #pragma mark -
 #pragma mark Initializtions and Deallocations
@@ -24,9 +27,9 @@
 - (id)init {
     self = [super init];
     
-    self.salary = IDPRandomFloatWithMinAndMaxValue(0, 100);
-    self.capital = IDPRandomFloatWithMinAndMaxValue(0, 100000);
-    self.experience = IDPRandomUIntWithMaxValue(10);
+    self.salary = IDPRandomFloatWithMinAndMaxValue(0, kIDPWorkerMaxSalary);
+    self.capital = IDPRandomFloatWithMinAndMaxValue(0, kIDPWorkerMaxCapital);
+    self.experience = IDPRandomUIntWithMaxValue(kIDPWorkerMaxExperience);
     
     return self;
 }
@@ -35,11 +38,15 @@
 #pragma mark Public Methods
 
 - (void)processObject:(id<IDPCashOwner>) object {
-    [self receiveCash:object];
+    [self receiveCashFromCashOwner:object];
 }
 
-- (void)receiveCash:(id<IDPCashOwner>)object {
-    self.cash += [object giveAllCash];
+- (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object {
+    [self receiveCash:[object giveAllCash]];
+}
+
+- (void)receiveCash:(float)cash {
+    self.cash += cash;
 }
 
 - (float)giveAllCash {

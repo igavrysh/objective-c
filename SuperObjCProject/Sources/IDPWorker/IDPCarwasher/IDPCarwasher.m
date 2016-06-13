@@ -21,7 +21,7 @@
 
 - (void)processObject:(IDPCar *)car {
     [self cleanCar:car];
-    [self receiveCash:car];
+    [self receiveCashFromCashOwner:car];
 }
 
 #pragma mark -
