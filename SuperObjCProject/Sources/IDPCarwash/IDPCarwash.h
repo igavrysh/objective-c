@@ -13,7 +13,7 @@
 @class IDPCar;
 
 @interface IDPCarwash : NSObject
-@property (nonatomic, readonly, getter=isEmptyQueue) BOOL emptyQueue;
+@property (nonatomic, readonly, getter=isQueueEmpty) BOOL queueEmpty;
 
 - (void)processCar:(IDPCar *)car;
 

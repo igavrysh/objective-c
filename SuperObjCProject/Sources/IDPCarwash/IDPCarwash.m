@@ -58,7 +58,7 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
 
 @implementation IDPCarwash
 
-@dynamic emptyQueue;
+@dynamic queueEmpty;
 
 #pragma mark -
 #pragma mark Initializtions and Deallocations
@@ -111,7 +111,7 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
 #pragma mark -
 #pragma mark Accessors Methods
 
-- (BOOL)isEmptyQueue {
+- (BOOL)isQueueEmpty {
     return self.carsQueue.count == 0;
 }
 
@@ -121,7 +121,7 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
 - (void)processCar:(IDPCar *)car {
     [self.carsQueue enqueue:car];
     
-    while (![self isEmptyQueue]) {
+    while (![self isQueueEmpty]) {
         IDPCar *currentCar = [self.carsQueue dequeue];
         
         if (!currentCar) {

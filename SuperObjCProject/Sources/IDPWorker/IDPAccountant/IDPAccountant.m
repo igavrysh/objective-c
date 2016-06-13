@@ -23,7 +23,7 @@
 
 - (void)processObject:(IDPCarwasher *)washer {
     [self calculateProfit];
-    [super receiveCashFromCashOwner:washer];
+    [self receiveCashFromCashOwner:washer];
 }
 
 #pragma mark -
