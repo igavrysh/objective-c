@@ -26,26 +26,14 @@
 		850F83AB1D0F17800043472C /* IDPRangeAlphabet.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F836B1D0F17800043472C /* IDPRangeAlphabet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		850F83AC1D0F17800043472C /* IDPStringsAlphabet.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F836D1D0F17800043472C /* IDPStringsAlphabet.m */; };
 		850F83AD1D0F17800043472C /* IDPStringsAlphabet.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F836D1D0F17800043472C /* IDPStringsAlphabet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		850F83AE1D0F17800043472C /* IDPAccountant.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83711D0F17800043472C /* IDPAccountant.m */; };
-		850F83AF1D0F17800043472C /* IDPAccountant.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83711D0F17800043472C /* IDPAccountant.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		850F83B01D0F17800043472C /* IDPBuilding.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83741D0F17800043472C /* IDPBuilding.m */; };
 		850F83B11D0F17800043472C /* IDPBuilding.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83741D0F17800043472C /* IDPBuilding.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		850F83B21D0F17800043472C /* IDPCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83771D0F17800043472C /* IDPCar.m */; };
 		850F83B31D0F17800043472C /* IDPCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83771D0F17800043472C /* IDPCar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		850F83B41D0F17800043472C /* IDPCarwash.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F837A1D0F17800043472C /* IDPCarwash.m */; };
 		850F83B51D0F17800043472C /* IDPCarwash.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F837A1D0F17800043472C /* IDPCarwash.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		850F83B61D0F17800043472C /* IDPCarwasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F837D1D0F17800043472C /* IDPCarwasher.m */; };
-		850F83B71D0F17800043472C /* IDPCarwasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F837D1D0F17800043472C /* IDPCarwasher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		850F83B81D0F17800043472C /* IDPCarwashRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83801D0F17800043472C /* IDPCarwashRoom.m */; };
-		850F83B91D0F17800043472C /* IDPCarwashRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83801D0F17800043472C /* IDPCarwashRoom.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		850F83BA1D0F17800043472C /* IDPCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83851D0F17800043472C /* IDPCreature.m */; };
 		850F83BB1D0F17800043472C /* IDPCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83851D0F17800043472C /* IDPCreature.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		850F83BC1D0F17800043472C /* IDPFemaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83871D0F17800043472C /* IDPFemaleCreature.m */; };
-		850F83BD1D0F17800043472C /* IDPFemaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83871D0F17800043472C /* IDPFemaleCreature.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		850F83BE1D0F17800043472C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83891D0F17800043472C /* IDPMaleCreature.m */; };
-		850F83BF1D0F17800043472C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83891D0F17800043472C /* IDPMaleCreature.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		850F83C01D0F17800043472C /* IDPDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F838C1D0F17800043472C /* IDPDirector.m */; };
-		850F83C11D0F17800043472C /* IDPDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F838C1D0F17800043472C /* IDPDirector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		850F83C21D0F17800043472C /* IDPRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F838F1D0F17800043472C /* IDPRoom.m */; };
 		850F83C31D0F17800043472C /* IDPRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F838F1D0F17800043472C /* IDPRoom.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		850F83C41D0F17800043472C /* IDPWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83921D0F17800043472C /* IDPWorker.m */; };
@@ -56,7 +44,19 @@
 		850F83CA1D0F17800043472C /* IDPCreatureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F839B1D0F17800043472C /* IDPCreatureTest.m */; };
 		850F83CB1D0F17800043472C /* IDPCreatureTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F839B1D0F17800043472C /* IDPCreatureTest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		850F83CC1D0F196A0043472C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83941D0F17800043472C /* main.m */; };
-		850F83CE1D0F1BB50043472C /* IDPAlphabetSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83CD1D0F1BB50043472C /* IDPAlphabetSpec.m */; };
+		850F83CE1D0F1BB50043472C /* IDPAlphabetSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83CD1D0F1BB50043472C /* IDPAlphabetSpec.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		850F83D21D0F22240043472C /* IDPAccountant.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83D11D0F22240043472C /* IDPAccountant.m */; };
+		850F83D31D0F22240043472C /* IDPAccountant.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83D11D0F22240043472C /* IDPAccountant.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		850F83D71D0F22330043472C /* IDPCarwasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83D61D0F22330043472C /* IDPCarwasher.m */; };
+		850F83D81D0F22330043472C /* IDPCarwasher.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83D61D0F22330043472C /* IDPCarwasher.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		850F83DC1D0F22440043472C /* IDPDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83DB1D0F22440043472C /* IDPDirector.m */; };
+		850F83DD1D0F22440043472C /* IDPDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83DB1D0F22440043472C /* IDPDirector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		850F83E11D0F22690043472C /* IDPCarwashRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83E01D0F22690043472C /* IDPCarwashRoom.m */; };
+		850F83E21D0F22690043472C /* IDPCarwashRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83E01D0F22690043472C /* IDPCarwashRoom.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		850F83EA1D0F22BF0043472C /* IDPFemaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83E61D0F22BF0043472C /* IDPFemaleCreature.m */; };
+		850F83EB1D0F22BF0043472C /* IDPFemaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83E61D0F22BF0043472C /* IDPFemaleCreature.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		850F83EC1D0F22BF0043472C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83E91D0F22BF0043472C /* IDPMaleCreature.m */; };
+		850F83ED1D0F22BF0043472C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83E91D0F22BF0043472C /* IDPMaleCreature.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA59C2744B43F1457E87A9E6 /* libPods-ObjCTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27EB1289B3E59395BEB6E1 /* libPods-ObjCTests.a */; };
 /* End PBXBuildFile section */
 
@@ -97,27 +97,15 @@
 		850F836B1D0F17800043472C /* IDPRangeAlphabet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPRangeAlphabet.m; sourceTree = "<group>"; };
 		850F836C1D0F17800043472C /* IDPStringsAlphabet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPStringsAlphabet.h; sourceTree = "<group>"; };
 		850F836D1D0F17800043472C /* IDPStringsAlphabet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPStringsAlphabet.m; sourceTree = "<group>"; };
-		850F83701D0F17800043472C /* IDPAccountant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPAccountant.h; sourceTree = "<group>"; };
-		850F83711D0F17800043472C /* IDPAccountant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPAccountant.m; sourceTree = "<group>"; };
 		850F83731D0F17800043472C /* IDPBuilding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPBuilding.h; sourceTree = "<group>"; };
 		850F83741D0F17800043472C /* IDPBuilding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPBuilding.m; sourceTree = "<group>"; };
 		850F83761D0F17800043472C /* IDPCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCar.h; sourceTree = "<group>"; };
 		850F83771D0F17800043472C /* IDPCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCar.m; sourceTree = "<group>"; };
 		850F83791D0F17800043472C /* IDPCarwash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwash.h; sourceTree = "<group>"; };
 		850F837A1D0F17800043472C /* IDPCarwash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwash.m; sourceTree = "<group>"; };
-		850F837C1D0F17800043472C /* IDPCarwasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwasher.h; sourceTree = "<group>"; };
-		850F837D1D0F17800043472C /* IDPCarwasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwasher.m; sourceTree = "<group>"; };
-		850F837F1D0F17800043472C /* IDPCarwashRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwashRoom.h; sourceTree = "<group>"; };
-		850F83801D0F17800043472C /* IDPCarwashRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwashRoom.m; sourceTree = "<group>"; };
 		850F83821D0F17800043472C /* IDPCashowner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCashowner.h; sourceTree = "<group>"; };
 		850F83841D0F17800043472C /* IDPCreature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCreature.h; sourceTree = "<group>"; };
 		850F83851D0F17800043472C /* IDPCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCreature.m; sourceTree = "<group>"; };
-		850F83861D0F17800043472C /* IDPFemaleCreature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPFemaleCreature.h; sourceTree = "<group>"; };
-		850F83871D0F17800043472C /* IDPFemaleCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPFemaleCreature.m; sourceTree = "<group>"; };
-		850F83881D0F17800043472C /* IDPMaleCreature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPMaleCreature.h; sourceTree = "<group>"; };
-		850F83891D0F17800043472C /* IDPMaleCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPMaleCreature.m; sourceTree = "<group>"; };
-		850F838B1D0F17800043472C /* IDPDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPDirector.h; sourceTree = "<group>"; };
-		850F838C1D0F17800043472C /* IDPDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPDirector.m; sourceTree = "<group>"; };
 		850F838E1D0F17800043472C /* IDPRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPRoom.h; sourceTree = "<group>"; };
 		850F838F1D0F17800043472C /* IDPRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPRoom.m; sourceTree = "<group>"; };
 		850F83911D0F17800043472C /* IDPWorker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPWorker.h; sourceTree = "<group>"; };
@@ -128,6 +116,18 @@
 		850F839A1D0F17800043472C /* IDPCreatureTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCreatureTest.h; sourceTree = "<group>"; };
 		850F839B1D0F17800043472C /* IDPCreatureTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCreatureTest.m; sourceTree = "<group>"; };
 		850F83CD1D0F1BB50043472C /* IDPAlphabetSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPAlphabetSpec.m; sourceTree = "<group>"; };
+		850F83D01D0F22240043472C /* IDPAccountant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPAccountant.h; sourceTree = "<group>"; };
+		850F83D11D0F22240043472C /* IDPAccountant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPAccountant.m; sourceTree = "<group>"; };
+		850F83D51D0F22330043472C /* IDPCarwasher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwasher.h; sourceTree = "<group>"; };
+		850F83D61D0F22330043472C /* IDPCarwasher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwasher.m; sourceTree = "<group>"; };
+		850F83DA1D0F22440043472C /* IDPDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPDirector.h; sourceTree = "<group>"; };
+		850F83DB1D0F22440043472C /* IDPDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPDirector.m; sourceTree = "<group>"; };
+		850F83DF1D0F22690043472C /* IDPCarwashRoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCarwashRoom.h; sourceTree = "<group>"; };
+		850F83E01D0F22690043472C /* IDPCarwashRoom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPCarwashRoom.m; sourceTree = "<group>"; };
+		850F83E51D0F22BF0043472C /* IDPFemaleCreature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPFemaleCreature.h; sourceTree = "<group>"; };
+		850F83E61D0F22BF0043472C /* IDPFemaleCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPFemaleCreature.m; sourceTree = "<group>"; };
+		850F83E81D0F22BF0043472C /* IDPMaleCreature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPMaleCreature.h; sourceTree = "<group>"; };
+		850F83E91D0F22BF0043472C /* IDPMaleCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPMaleCreature.m; sourceTree = "<group>"; };
 		855F13561CFE4360005CEA2C /* SuperObjCProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SuperObjCProject; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -253,28 +253,15 @@
 		850F836E1D0F17800043472C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				850F836F1D0F17800043472C /* IDPAccountant */,
 				850F83721D0F17800043472C /* IDPBuilding */,
 				850F83751D0F17800043472C /* IDPCar */,
 				850F83781D0F17800043472C /* IDPCarwash */,
-				850F837B1D0F17800043472C /* IDPCarwasher */,
-				850F837E1D0F17800043472C /* IDPCarwashRoom */,
 				850F83811D0F17800043472C /* IDPCashowner */,
 				850F83831D0F17800043472C /* IDPCreature */,
-				850F838A1D0F17800043472C /* IDPDirector */,
 				850F838D1D0F17800043472C /* IDPRoom */,
 				850F83901D0F17800043472C /* IDPWorker */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		850F836F1D0F17800043472C /* IDPAccountant */ = {
-			isa = PBXGroup;
-			children = (
-				850F83701D0F17800043472C /* IDPAccountant.h */,
-				850F83711D0F17800043472C /* IDPAccountant.m */,
-			);
-			path = IDPAccountant;
 			sourceTree = "<group>";
 		};
 		850F83721D0F17800043472C /* IDPBuilding */ = {
@@ -304,24 +291,6 @@
 			path = IDPCarwash;
 			sourceTree = "<group>";
 		};
-		850F837B1D0F17800043472C /* IDPCarwasher */ = {
-			isa = PBXGroup;
-			children = (
-				850F837C1D0F17800043472C /* IDPCarwasher.h */,
-				850F837D1D0F17800043472C /* IDPCarwasher.m */,
-			);
-			path = IDPCarwasher;
-			sourceTree = "<group>";
-		};
-		850F837E1D0F17800043472C /* IDPCarwashRoom */ = {
-			isa = PBXGroup;
-			children = (
-				850F837F1D0F17800043472C /* IDPCarwashRoom.h */,
-				850F83801D0F17800043472C /* IDPCarwashRoom.m */,
-			);
-			path = IDPCarwashRoom;
-			sourceTree = "<group>";
-		};
 		850F83811D0F17800043472C /* IDPCashowner */ = {
 			isa = PBXGroup;
 			children = (
@@ -333,28 +302,18 @@
 		850F83831D0F17800043472C /* IDPCreature */ = {
 			isa = PBXGroup;
 			children = (
+				850F83E41D0F22BF0043472C /* IDPFemaleCreature */,
+				850F83E71D0F22BF0043472C /* IDPMaleCreature */,
 				850F83841D0F17800043472C /* IDPCreature.h */,
 				850F83851D0F17800043472C /* IDPCreature.m */,
-				850F83861D0F17800043472C /* IDPFemaleCreature.h */,
-				850F83871D0F17800043472C /* IDPFemaleCreature.m */,
-				850F83881D0F17800043472C /* IDPMaleCreature.h */,
-				850F83891D0F17800043472C /* IDPMaleCreature.m */,
 			);
 			path = IDPCreature;
-			sourceTree = "<group>";
-		};
-		850F838A1D0F17800043472C /* IDPDirector */ = {
-			isa = PBXGroup;
-			children = (
-				850F838B1D0F17800043472C /* IDPDirector.h */,
-				850F838C1D0F17800043472C /* IDPDirector.m */,
-			);
-			path = IDPDirector;
 			sourceTree = "<group>";
 		};
 		850F838D1D0F17800043472C /* IDPRoom */ = {
 			isa = PBXGroup;
 			children = (
+				850F83DE1D0F22690043472C /* IDPCarwashRoom */,
 				850F838E1D0F17800043472C /* IDPRoom.h */,
 				850F838F1D0F17800043472C /* IDPRoom.m */,
 			);
@@ -364,6 +323,9 @@
 		850F83901D0F17800043472C /* IDPWorker */ = {
 			isa = PBXGroup;
 			children = (
+				850F83D91D0F22440043472C /* IDPDirector */,
+				850F83D41D0F22330043472C /* IDPCarwasher */,
+				850F83CF1D0F22240043472C /* IDPAccountant */,
 				850F83911D0F17800043472C /* IDPWorker.h */,
 				850F83921D0F17800043472C /* IDPWorker.m */,
 			);
@@ -403,6 +365,60 @@
 				850F839B1D0F17800043472C /* IDPCreatureTest.m */,
 			);
 			path = IDPCreatureTest;
+			sourceTree = "<group>";
+		};
+		850F83CF1D0F22240043472C /* IDPAccountant */ = {
+			isa = PBXGroup;
+			children = (
+				850F83D01D0F22240043472C /* IDPAccountant.h */,
+				850F83D11D0F22240043472C /* IDPAccountant.m */,
+			);
+			path = IDPAccountant;
+			sourceTree = "<group>";
+		};
+		850F83D41D0F22330043472C /* IDPCarwasher */ = {
+			isa = PBXGroup;
+			children = (
+				850F83D51D0F22330043472C /* IDPCarwasher.h */,
+				850F83D61D0F22330043472C /* IDPCarwasher.m */,
+			);
+			path = IDPCarwasher;
+			sourceTree = "<group>";
+		};
+		850F83D91D0F22440043472C /* IDPDirector */ = {
+			isa = PBXGroup;
+			children = (
+				850F83DA1D0F22440043472C /* IDPDirector.h */,
+				850F83DB1D0F22440043472C /* IDPDirector.m */,
+			);
+			path = IDPDirector;
+			sourceTree = "<group>";
+		};
+		850F83DE1D0F22690043472C /* IDPCarwashRoom */ = {
+			isa = PBXGroup;
+			children = (
+				850F83DF1D0F22690043472C /* IDPCarwashRoom.h */,
+				850F83E01D0F22690043472C /* IDPCarwashRoom.m */,
+			);
+			path = IDPCarwashRoom;
+			sourceTree = "<group>";
+		};
+		850F83E41D0F22BF0043472C /* IDPFemaleCreature */ = {
+			isa = PBXGroup;
+			children = (
+				850F83E51D0F22BF0043472C /* IDPFemaleCreature.h */,
+				850F83E61D0F22BF0043472C /* IDPFemaleCreature.m */,
+			);
+			path = IDPFemaleCreature;
+			sourceTree = "<group>";
+		};
+		850F83E71D0F22BF0043472C /* IDPMaleCreature */ = {
+			isa = PBXGroup;
+			children = (
+				850F83E81D0F22BF0043472C /* IDPMaleCreature.h */,
+				850F83E91D0F22BF0043472C /* IDPMaleCreature.m */,
+			);
+			path = IDPMaleCreature;
 			sourceTree = "<group>";
 		};
 		855F134D1CFE4360005CEA2C = {
@@ -576,30 +592,30 @@
 			files = (
 				850F83A51D0F17800043472C /* IDPAlphabet.m in Sources */,
 				850F83CB1D0F17800043472C /* IDPCreatureTest.m in Sources */,
-				850F83C11D0F17800043472C /* IDPDirector.m in Sources */,
 				850F83AB1D0F17800043472C /* IDPRangeAlphabet.m in Sources */,
 				850F83C51D0F17800043472C /* IDPWorker.m in Sources */,
-				850F83AF1D0F17800043472C /* IDPAccountant.m in Sources */,
 				850F83B51D0F17800043472C /* IDPCarwash.m in Sources */,
-				850F83BD1D0F17800043472C /* IDPFemaleCreature.m in Sources */,
 				850F83A11D0F17800043472C /* NSArray+IDPArrayEnumerator.m in Sources */,
 				850F83A71D0F17800043472C /* NSString+IDPExtensions.m in Sources */,
 				850F83C91D0F17800043472C /* IDPCarwashTest.m in Sources */,
 				850F83B31D0F17800043472C /* IDPCar.m in Sources */,
+				850F83ED1D0F22BF0043472C /* IDPMaleCreature.m in Sources */,
 				850F83C71D0F17800043472C /* main.m in Sources */,
 				850F83A31D0F17800043472C /* NSObject+IDPObject.m in Sources */,
 				850F834F1D0F15B40043472C /* ObjCTests.m in Sources */,
 				850F83B11D0F17800043472C /* IDPBuilding.m in Sources */,
 				850F83BB1D0F17800043472C /* IDPCreature.m in Sources */,
-				850F83B71D0F17800043472C /* IDPCarwasher.m in Sources */,
-				850F83BF1D0F17800043472C /* IDPMaleCreature.m in Sources */,
+				850F83DD1D0F22440043472C /* IDPDirector.m in Sources */,
+				850F83EB1D0F22BF0043472C /* IDPFemaleCreature.m in Sources */,
+				850F83E21D0F22690043472C /* IDPCarwashRoom.m in Sources */,
 				850F839D1D0F17800043472C /* IDPQueue.m in Sources */,
 				850F839F1D0F17800043472C /* IDPRandom.m in Sources */,
 				850F83A91D0F17800043472C /* IDPClusterAlphabet.m in Sources */,
-				850F83B91D0F17800043472C /* IDPCarwashRoom.m in Sources */,
+				850F83D81D0F22330043472C /* IDPCarwasher.m in Sources */,
 				850F83C31D0F17800043472C /* IDPRoom.m in Sources */,
 				850F83AD1D0F17800043472C /* IDPStringsAlphabet.m in Sources */,
 				850F83CE1D0F1BB50043472C /* IDPAlphabetSpec.m in Sources */,
+				850F83D31D0F22240043472C /* IDPAccountant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,27 +624,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				850F83CC1D0F196A0043472C /* main.m in Sources */,
+				850F83DC1D0F22440043472C /* IDPDirector.m in Sources */,
 				850F83BA1D0F17800043472C /* IDPCreature.m in Sources */,
+				850F83D71D0F22330043472C /* IDPCarwasher.m in Sources */,
 				850F83AC1D0F17800043472C /* IDPStringsAlphabet.m in Sources */,
 				850F83AA1D0F17800043472C /* IDPRangeAlphabet.m in Sources */,
+				850F83E11D0F22690043472C /* IDPCarwashRoom.m in Sources */,
 				850F83A81D0F17800043472C /* IDPClusterAlphabet.m in Sources */,
 				850F83A41D0F17800043472C /* IDPAlphabet.m in Sources */,
 				850F839E1D0F17800043472C /* IDPRandom.m in Sources */,
 				850F83B01D0F17800043472C /* IDPBuilding.m in Sources */,
+				850F83EA1D0F22BF0043472C /* IDPFemaleCreature.m in Sources */,
 				850F83B21D0F17800043472C /* IDPCar.m in Sources */,
 				850F839C1D0F17800043472C /* IDPQueue.m in Sources */,
-				850F83B61D0F17800043472C /* IDPCarwasher.m in Sources */,
 				850F83C21D0F17800043472C /* IDPRoom.m in Sources */,
-				850F83B81D0F17800043472C /* IDPCarwashRoom.m in Sources */,
 				850F83CA1D0F17800043472C /* IDPCreatureTest.m in Sources */,
+				850F83D21D0F22240043472C /* IDPAccountant.m in Sources */,
 				850F83A61D0F17800043472C /* NSString+IDPExtensions.m in Sources */,
-				850F83C01D0F17800043472C /* IDPDirector.m in Sources */,
 				850F83C81D0F17800043472C /* IDPCarwashTest.m in Sources */,
+				850F83EC1D0F22BF0043472C /* IDPMaleCreature.m in Sources */,
 				850F83B41D0F17800043472C /* IDPCarwash.m in Sources */,
-				850F83BE1D0F17800043472C /* IDPMaleCreature.m in Sources */,
 				850F83C41D0F17800043472C /* IDPWorker.m in Sources */,
-				850F83AE1D0F17800043472C /* IDPAccountant.m in Sources */,
-				850F83BC1D0F17800043472C /* IDPFemaleCreature.m in Sources */,
 				850F83A21D0F17800043472C /* NSObject+IDPObject.m in Sources */,
 				850F83A01D0F17800043472C /* NSArray+IDPArrayEnumerator.m in Sources */,
 			);
