@@ -108,7 +108,7 @@ describe(@"IDPAlphabet", ^{
                 for (id symbol in alphabet) {
                     [symbol description];
                 }
-            }) shouldNot] raise];;
+            }) shouldNot] raise];
         });
         
         it(@"should return count of symbols equal to 'A'-'z' range", ^{
@@ -201,7 +201,7 @@ describe(@"IDPAlphabet", ^{
                 for (id symbol in alphabet) {
                     [symbol description];
                 }
-            }) shouldNot] raise];;
+            }) shouldNot] raise];
         });
         
         it(@"should return count of symbols equal to 'A'-'z' range", ^{
@@ -222,8 +222,6 @@ describe(@"IDPAlphabet", ^{
             }
         });
     });
-    
-    
 });
 
 SPEC_END
