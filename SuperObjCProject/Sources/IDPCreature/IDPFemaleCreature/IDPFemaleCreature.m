@@ -10,6 +10,7 @@
 #import "IDPRandom.h"
 
 #import "NSString+IDPExtensions.h"
+#import "NSString+IDPRandomName.h"
 
 @interface IDPFemaleCreature ()
 

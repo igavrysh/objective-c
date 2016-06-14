@@ -14,7 +14,7 @@
 SPEC_BEGIN(IDPAlphabetSpec);
 
 describe(@"IDPAlphabet", ^{
-    __block IDPAlphabet *alphabet = nil;
+    __strong __block IDPAlphabet *alphabet = nil;
 //    + (instancetype)alphabetWithRange:(NSRange)range;
 //    + (instancetype)alphabetWithStrings:(NSArray *)strings;
 //    + (instancetype)alphabetWithAlphabets:(NSArray *)alphabets;
@@ -129,6 +129,101 @@ describe(@"IDPAlphabet", ^{
             }
         });
     });
+    
+    context(@"when initialized with +alphabetWithStrings: with @[@\"a\", @\"b\", @\"c\"]", ^{
+        beforeAll(^{
+            alphabet = [IDPAlphabet alphabetWithStrings:@[@"a", @"b", @"c"]];
+        });
+        
+        it(@"should be of class IDPStringsAlphabet", ^{
+            [[alphabet should] beKindOfClass:[IDPStringsAlphabet class]];
+        });
+        
+        it(@"should be of count 3", ^{
+            [[alphabet should] haveCountOf:3];
+        });
+        
+        it(@"should contain @\"a\" at index = 0", ^{
+            [[[alphabet stringAtIndex:0] should] equal:@"a"];
+        });
+        
+        it(@"should contains @\"b\" at index = 1", ^{
+            [[[alphabet stringAtIndex:1] should] equal:@"b"];
+        });
+        
+        it(@"should contains @\"b\" at index = 2", ^{
+            [[[alphabet stringAtIndex:2] should] equal:@"c"];
+        });
+        
+        it(@"should raise, when requesting object at index 3", ^{
+            [[theBlock(^{
+                [alphabet stringAtIndex:3];
+            }) should] raise];
+            
+            [[theBlock(^{
+                id a = alphabet[3];
+                [a description];
+            }) should] raise];
+        });
+        
+        it(@"should return @\"ab\" from - string", ^{
+            [[[alphabet string] should] equal:@"ab"];
+        });
+    });
+    
+    
+    context(@"when initializes with -initWithStrings: with @[@\"a\", @\"b\"]", ^{
+        beforeAll(^{
+            alphabet = [[IDPAlphabet alloc] initWithStrings:@[@"a", @"b"]];
+        });
+        
+        it(@"should be of class IDPStringsAlphabet", ^{
+            [[alphabet should] beKindOfClass:[IDPStringsAlphabet class]];
+        });
+    });
+    
+    
+    context(@"when initialized with + initWithStrings with arrays containing 'A' - 'z' when enumerated", ^{
+        NSRange range = IDPMakeAlphabetRange('A', 'z');
+        NSMutableArray *strings = [NSMutableArray new];
+        
+        
+        beforeAll(^{
+            for (unichar symbol = range.location; symbol < NSMaxRange(range); symbol++) {
+                [strings addObject:[NSString stringWithFormat:@"%c", symbol]];
+            }
+            
+            alphabet = [[IDPAlphabet alloc] initWithStrings:strings];
+        });
+        
+        it(@"shouldn't raise", ^{
+            [[theBlock(^{
+                for (id symbol in alphabet) {
+                    [symbol description];
+                }
+            }) shouldNot] raise];;
+        });
+        
+        it(@"should return count of symbols equal to 'A'-'z' range", ^{
+            NSUInteger count = 0;
+            for (NSString *symbol in alphabet) {
+                [symbol description];
+                count++;
+            }
+            
+            [[theValue(count) should] equal:theValue(range.length)];
+        });
+        
+        it(@"should return symbols in range 'A'-'z'", ^{
+            unichar character = 'A';
+            for (NSString *symbol in alphabet) {
+                [[symbol should] equal:[NSString stringWithFormat:@"%c", character]];
+                character++;
+            }
+        });
+    });
+    
+    
 });
 
 SPEC_END

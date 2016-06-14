@@ -9,6 +9,7 @@
 #import "IDPAlphabet.h"
 
 @interface IDPStringsAlphabet : IDPAlphabet
+@property (nonatomic, readonly) NSArray *strings;
 
 - (instancetype)initWithStrings:(NSArray *)string;
 

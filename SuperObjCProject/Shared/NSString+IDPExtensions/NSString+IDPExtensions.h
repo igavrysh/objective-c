@@ -10,8 +10,6 @@
 
 @interface NSString (IDPExtensions)
 
-+ (NSString *)randomName;
-
 // arabian
 + (instancetype)alphanumericAlphabet;
 

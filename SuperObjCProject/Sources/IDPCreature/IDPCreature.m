@@ -14,6 +14,7 @@
 #import "IDPRandom.h"
 
 #import "NSString+IDPExtensions.h"
+#import "NSString+IDPRandomName.h"
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 
