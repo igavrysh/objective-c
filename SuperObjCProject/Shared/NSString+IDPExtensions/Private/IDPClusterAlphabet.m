@@ -77,7 +77,7 @@
 #pragma mark NSFastEnumeration
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
-                                  objects:(id  _Nonnull *)stackbuf
+                                  objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength {
     return [super countByEnumeratingWithState:state
                                       objects:stackbuf
