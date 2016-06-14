@@ -56,13 +56,13 @@ NSRange IDPMakeAlphabetRange(unichar value1, unichar value2) {
 - (instancetype)initWithAlphabets:(NSArray *)alphabets {
     [self release];
     
-    return [[IDPRangeAlphabet alloc] initWithAlphabets:alphabets];
+    return [[IDPClusterAlphabet alloc] initWithAlphabets:alphabets];
 }
 
 - (instancetype)initWithStrings:(NSArray *)strings {
     [self release];
     
-    return [[IDPRangeAlphabet alloc] initWithStrings:strings];
+    return [[IDPStringsAlphabet alloc] initWithStrings:strings];
 }
 
 - (instancetype)initWithSymbols:(NSString *)string {

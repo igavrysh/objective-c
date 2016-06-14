@@ -167,7 +167,7 @@ describe(@"IDPAlphabet", ^{
         });
         
         it(@"should return @\"ab\" from - string", ^{
-            [[[alphabet string] should] equal:@"ab"];
+            [[[alphabet string] should] equal:@"abc"];
         });
     });
     
