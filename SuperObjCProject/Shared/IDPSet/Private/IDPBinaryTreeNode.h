@@ -20,6 +20,8 @@ const NSUInteger kIDPBinaryTreeNodeDataCapacity;
 @property (nonatomic, retain, readonly) IDPBinaryTreeNode   *rightChild;
 @property (nonatomic, readonly, getter=isFull) BOOL full;
 
+- (id)initWithObject:(IDPComparisonId)object;
+
 - (void)addObject:(IDPComparisonId)object;
 
 @end
