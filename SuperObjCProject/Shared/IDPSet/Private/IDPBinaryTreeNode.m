@@ -21,6 +21,15 @@ const NSUInteger kIDPBinaryTreeNodeDataCapacity = 5;
 
 @dynamic full;
 
+#pragma mark - Initializations and Deallocations
+#pragma mark
+
+- (id)initWithObject:(IDPComparisonId)object {
+    [self init]
+    [self addObject:object];
+    
+    return self;
+}
 
 #pragma mark -
 #pragma mark Accessor Properties
