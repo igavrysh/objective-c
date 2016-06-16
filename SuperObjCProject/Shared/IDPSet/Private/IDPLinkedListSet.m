@@ -1,30 +1,58 @@
 //
-//  IDPLinkedList.m
+//  IDPLinkedListSet.m
 //  SuperObjCProject
 //
 //  Created by Ievgen on 6/15/16.
 //  Copyright © 2016 1mlndollarsasset. All rights reserved.
 //
 
-#import "IDPLinkedList.h"
+#import "IDPLinkedListSet.h"
 
 #import "IDPLinkedListNode.h"
 
-#import "NSObject+IDPObject.h"
-
-@interface IDPLinkedList ()
+@interface IDPLinkedListSet ()
 @property (nonatomic, retain) IDPLinkedListNode *head;
 @property (nonatomic, assign) IDPLinkedListNode *tail;
 @property (nonatomic, assign) NSUInteger        count;
 
 @end
 
-@implementation IDPLinkedList
+@implementation IDPLinkedListSet
 
 #pragma mark
 #pragma mark - Public Methods
 
-- (void)addObject:(id)object {
+- (IDPComparisonId)objectAtIndexedSubscript:(NSUInteger)index {
+    if (index >= [self count]) {
+        return nil;
+    }
+    
+    NSUInteger counter = 0;
+    for (IDPComparisonId object in self) {
+        if (counter == index) {
+            return object;
+        }
+        
+        counter++;
+    }
+    
+    return nil;
+}
+
+- (BOOL)containsObject:(IDPComparisonId)object {
+    NSUInteger counter = 0;
+    for (IDPComparisonId innerObject in self) {
+        if (object == innerObject) {
+            return YES;
+        }
+        
+        counter++;
+    }
+    
+    return NO;
+}
+
+- (void)addObject:(IDPComparisonId)object {
     IDPLinkedListNode *node= [[IDPLinkedListNode alloc] initWithObject:object
                                                           previousNode:nil
                                                               nextNode:self.head];
@@ -40,28 +68,24 @@
     return self.head.object;
 }
 
-- (id)getObjectBeforeObject:(id)object {
-    
+- (IDPComparisonId)getObjectBeforeObject:(IDPComparisonId)object {
+    return nil;
 }
 
-- (id)getObjectAfterObject:(id)object {
-    
+- (IDPComparisonId)getObjectAfterObject:(IDPComparisonId)object {
+    return nil;
 }
 
-- (id)removeFirstObject {
-    
+- (IDPComparisonId)removeFirstObject {
+    return nil;
 }
 
-- (id)removeObject:(id)object {
-    
+- (IDPComparisonId)removeObject:(IDPComparisonId)object {
+    return nil;
 }
 
-- (id)removeAllObjects {
-    
-}
-
-- (BOOL)containsObject:(id)object {
-    
+- (IDPComparisonId)removeAllObjects {
+    return nil;
 }
 
 #pragma mark -
@@ -73,20 +97,26 @@
 {
     state->mutationsPtr = (unsigned long *)self;
     
+    static IDPLinkedListNode *currentNode = nil;
+    if (!state->state) {
+        currentNode = self.head;
+    }
+    
     NSUInteger length = MIN(state->state + resultLength, [self count]);
     resultLength = length - state->state;
     
     if (0 != resultLength) {
         for (NSUInteger index = 0; index < resultLength; index++) {
-            stackbuf[index] = self[index + state->state];
+            stackbuf[index] = currentNode.object;
+            currentNode = currentNode.nextNode;
         }
     }
+    
+    state->itemsPtr = stackbuf;
     
     state->state += resultLength;
     
     return resultLength;
 }
-
-
 
 @end

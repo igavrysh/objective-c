@@ -14,7 +14,7 @@
 SPEC_BEGIN(IDPAlphabetSpec);
 
 describe(@"IDPAlphabet", ^{
-    __strong __block IDPAlphabet *alphabet = nil;
+    __block IDPAlphabet *alphabet = nil;
 //    + (instancetype)alphabetWithRange:(NSRange)range;
 //    + (instancetype)alphabetWithStrings:(NSArray *)strings;
 //    + (instancetype)alphabetWithAlphabets:(NSArray *)alphabets;
