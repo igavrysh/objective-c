@@ -10,4 +10,6 @@
 
 @interface IDPBinaryTreeSet : IDPSet
 
+- (void)addObject:(IDPComparisonId)object;
+
 @end
