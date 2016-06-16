@@ -57,6 +57,7 @@
 		850F83EB1D0F22BF0043472C /* IDPFemaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83E61D0F22BF0043472C /* IDPFemaleCreature.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		850F83EC1D0F22BF0043472C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83E91D0F22BF0043472C /* IDPMaleCreature.m */; };
 		850F83ED1D0F22BF0043472C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83E91D0F22BF0043472C /* IDPMaleCreature.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		85253BCD1D129635000E19C2 /* IDPBinaryTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 85253BCC1D129635000E19C2 /* IDPBinaryTreeNode.m */; };
 		854B35951D11B8D1004B51A8 /* IDPLinkedListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 854B35941D11B8D1004B51A8 /* IDPLinkedListNode.m */; };
 		854B35961D11B8D1004B51A8 /* IDPLinkedListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 854B35941D11B8D1004B51A8 /* IDPLinkedListNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		85833D6C1D1179CB0045154D /* IDPLinkedListSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 85833D6B1D1179CB0045154D /* IDPLinkedListSet.m */; };
@@ -139,6 +140,8 @@
 		850F83E81D0F22BF0043472C /* IDPMaleCreature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPMaleCreature.h; sourceTree = "<group>"; };
 		850F83E91D0F22BF0043472C /* IDPMaleCreature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPMaleCreature.m; sourceTree = "<group>"; };
 		850F83EF1D0F24910043472C /* IDPCashOwner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCashOwner.h; sourceTree = "<group>"; };
+		85253BCB1D129635000E19C2 /* IDPBinaryTreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPBinaryTreeNode.h; sourceTree = "<group>"; };
+		85253BCC1D129635000E19C2 /* IDPBinaryTreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPBinaryTreeNode.m; sourceTree = "<group>"; };
 		854B35931D11B8D1004B51A8 /* IDPLinkedListNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPLinkedListNode.h; sourceTree = "<group>"; };
 		854B35941D11B8D1004B51A8 /* IDPLinkedListNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPLinkedListNode.m; sourceTree = "<group>"; };
 		855F13561CFE4360005CEA2C /* SuperObjCProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SuperObjCProject; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -498,6 +501,8 @@
 				85833D6B1D1179CB0045154D /* IDPLinkedListSet.m */,
 				85833D6E1D1179E20045154D /* IDPBinaryTreeSet.h */,
 				85833D6F1D1179E20045154D /* IDPBinaryTreeSet.m */,
+				85253BCB1D129635000E19C2 /* IDPBinaryTreeNode.h */,
+				85253BCC1D129635000E19C2 /* IDPBinaryTreeNode.m */,
 			);
 			path = Private;
 			sourceTree = "<group>";
@@ -704,6 +709,7 @@
 				85B516271D10ADCA004CDB85 /* IDPSet.m in Sources */,
 				850F83AC1D0F17800043472C /* IDPStringsAlphabet.m in Sources */,
 				850F83AA1D0F17800043472C /* IDPRangeAlphabet.m in Sources */,
+				85253BCD1D129635000E19C2 /* IDPBinaryTreeNode.m in Sources */,
 				850F83E11D0F22690043472C /* IDPCarwashRoom.m in Sources */,
 				850F83A81D0F17800043472C /* IDPClusterAlphabet.m in Sources */,
 				85833D6C1D1179CB0045154D /* IDPLinkedListSet.m in Sources */,

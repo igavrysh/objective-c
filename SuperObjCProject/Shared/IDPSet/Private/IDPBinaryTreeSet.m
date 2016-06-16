@@ -8,6 +8,13 @@
 
 #import "IDPBinaryTreeSet.h"
 
+#import "IDPBinaryTreeNode.h"
+
+@interface IDPBinaryTreeSet ()
+@property (nonatomic, retain) IDPBinaryTreeNode *root;
+
+@end
+
 @implementation IDPBinaryTreeSet
 
 @end
