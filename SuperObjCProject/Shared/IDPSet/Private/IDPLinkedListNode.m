@@ -26,7 +26,7 @@
 #pragma mark -
 #pragma mark Class Methods
 
-+ (instancetype)nodeWithObject:(id)object
++ (instancetype)nodeWithObject:(id<IDPComparison>)object
                       nextNode:(IDPLinkedListNode *)nextNode
                   previousNode:(IDPLinkedListNode *)previousNode
 {
@@ -38,7 +38,5 @@
     
     return node;
 }
-
-
 
 @end

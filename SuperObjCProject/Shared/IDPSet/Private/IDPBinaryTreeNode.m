@@ -11,15 +11,14 @@
 const NSUInteger kIDPBinaryTreeNodeDataCapacity = 5;
 
 @interface IDPBinaryTreeNode ()
-@property (nonatomic, retain) IDPLinkedListSet  *data;
+@property (nonatomic, retain) id<IDPComparison> object;
+@property (nonatomic, assign) NSUInteger        key;
 @property (nonatomic, retain) IDPBinaryTreeNode *leftChild;
 @property (nonatomic, retain) IDPBinaryTreeNode *rightChild;
 
 @end
 
 @implementation IDPBinaryTreeNode
-
-@dynamic full;
 
 #pragma mark - Initializations and Deallocations
 #pragma mark
@@ -36,9 +35,6 @@ const NSUInteger kIDPBinaryTreeNodeDataCapacity = 5;
 #pragma mark -
 #pragma mark Accessor Properties
 
-- (BOOL)isFull {
-    return self.data.count == kIDPBinaryTreeNodeDataCapacity;
-}
 
 #pragma mark -
 #pragma mark Public Methods
@@ -48,27 +44,5 @@ const NSUInteger kIDPBinaryTreeNodeDataCapacity = 5;
     [self addObject:object];
 }
 
-- (IDPBinaryTreeNode *)addObject:(id<IDPComparison>)object {
-   
-    /*
-    if (!self.isFull) {
-        [self populateDataWithObject:object];
-    } else if () {
-        return nil;
-    }
-    
-    if (!*node) {
-        *node = [[[IDPBinaryTreeNode alloc] initWithObject:object] autorelease];
-    } else if (![*node isFull]) {
-        [*node addObject:object];
-    } else if (![*node.leftChild isFull]) {
-        [self addObject: object node:&node.leftChild];
-    } else {
-        [self addObject: object node:&node.rightChild];
-    }
-     */
-    
-    return nil;
-}
 
 @end

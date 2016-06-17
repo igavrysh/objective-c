@@ -15,9 +15,16 @@
 @interface IDPBinaryTreeSet ()
 @property (nonatomic, retain) IDPBinaryTreeNode *root;
 
+- (void)addObject:(id<IDPComparison>)object;
+
+- (IDPBinaryTreeNode *)nodeWithObject:(id<IDPComparison>)object inNode:(IDPBinaryTreeNode *)node;
+
 @end
 
 @implementation IDPBinaryTreeSet
+
+#pragma mark -
+#pragma mark Initializations and Deallocations
 
 - (instancetype)init
 {
@@ -31,7 +38,35 @@
 #pragma mark Public Methods
 
 - (void)addObject:(id<IDPComparison>)object {
-  [self.root addObject:object];
+    self.root = [self nodeWithObject:object inNode:self.root];
+}
+
+
+- (IDPBinaryTreeNode *)nodeWithObject:(id<IDPComparison>)object inNode:(IDPBinaryTreeNode *)node {
+    /*
+     if (!self.isFull) {
+     [self populateDataWithObject:object];
+     } else if () {
+     return nil;
+     }
+     
+     if (!*node) {
+     *node = [[[IDPBinaryTreeNode alloc] initWithObject:object] autorelease];
+     } else if (![*node isFull]) {
+     [*node addObject:object];
+     } else if (![*node.leftChild isFull]) {
+     [self addObject: object node:&node.leftChild];
+     } else {
+     [self addObject: object node:&node.rightChild];
+     }
+     */
+    
+    return nil;
+    
+}
+- (IDPBinaryTreeNode *)addObject:(id<IDPComparison>)object {
+    
+    
 }
 
 #pragma mark -

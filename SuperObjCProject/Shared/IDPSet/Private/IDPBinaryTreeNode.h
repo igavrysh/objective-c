@@ -15,13 +15,11 @@ extern
 const NSUInteger kIDPBinaryTreeNodeDataCapacity;
 
 @interface IDPBinaryTreeNode : NSObject
-@property (nonatomic, retain, readonly) IDPLinkedListSet    *data;
+@property (nonatomic, retain, readonly) id<IDPComparison>   object;
+@property (nonatomic, readonly)         NSUInteger          key;
 @property (nonatomic, retain, readonly) IDPBinaryTreeNode   *leftChild;
 @property (nonatomic, retain, readonly) IDPBinaryTreeNode   *rightChild;
-@property (nonatomic, readonly, getter=isFull) BOOL full;
 
 - (id)initWithObject:(id<IDPComparison>)object;
-
-- (void)addObject:(id<IDPComparison>)object;
 
 @end

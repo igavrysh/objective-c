@@ -81,7 +81,7 @@
     self.count += 1;
 }
 
-- (id)getFirstObject {
+- (id<IDPComparison>)getFirstObject {
     return self.head.object;
 }
 
