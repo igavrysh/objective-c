@@ -14,7 +14,7 @@
 
 SPEC_BEGIN(IDPLinkedListSpec);
 
-describe(@"IDPAlphabet", ^{
+describe(@"IDPLinkedListSet", ^{
     __block IDPLinkedListSet *linkedList = nil;
     __block NSUInteger kIDPListNumbersCount = 10;
     
@@ -24,7 +24,7 @@ describe(@"IDPAlphabet", ^{
     
     registerMatchers(@"IDP");
     
-    context(@"when initialized with + alphabetWithRange: with range 'A'-'B' ", ^{
+    context(@"when added objects in range 10-1 should iterate through these numbers", ^{
         
         beforeAll(^{ // Occurs once
             linkedList = [IDPLinkedListSet object];
@@ -41,9 +41,7 @@ describe(@"IDPAlphabet", ^{
         it(@"should return integers in range 1-10", ^{
             NSUInteger counter = 10;
             for (NSNumber *number in linkedList) {
-                NSComparisonResult result = [number compare:[NSNumber numberWithUnsignedLong:counter]];
-                
-                [[theValue(NSOrderedSame == result) should] beYes];
+                [[theValue([number compare:[NSNumber numberWithUnsignedLong:counter]]) should] equal:theValue(NSOrderedSame)];
         
                 counter--;
             }

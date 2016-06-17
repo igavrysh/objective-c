@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol IDPComparison;
+
 @interface IDPSet : NSObject<NSFastEnumeration>
 
 + (instancetype)setWithSet:(NSSet *)set;
@@ -18,10 +20,12 @@
 - (NSUInteger)count;
 
 // the method should be overriden
-- (NSString *)stringAtIndex:(NSUInteger)index;
 
-- (NSString *)objectAtIndexedSubscript:(NSUInteger)index;
+- (id<IDPComparison>)objectAtIndexedSubscript:(NSUInteger)index;
 
-- (NSString *)string;
+- (NSSet *)set;
+
+- (void)enumerateObjectsUsingSimpleBlock:(void(^)(id<IDPComparison>))block;
+- (void)enumerateObjectsUsingBlock:(void(^)(id<IDPComparison> object, NSUInteger index, BOOL *stop))block;
 
 @end

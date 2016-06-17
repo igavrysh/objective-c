@@ -24,10 +24,12 @@ const NSUInteger kIDPBinaryTreeNodeDataCapacity = 5;
 #pragma mark - Initializations and Deallocations
 #pragma mark
 
-- (id)initWithObject:(IDPComparisonId)object {
-    [self init]
-    [self addObject:object];
-    
+- (instancetype)initWithObject:(id<IDPComparison>)object
+{
+    self = [super init];
+    if (self) {
+        [self addObject:object];
+    }
     return self;
 }
 
@@ -40,10 +42,33 @@ const NSUInteger kIDPBinaryTreeNodeDataCapacity = 5;
 
 #pragma mark -
 #pragma mark Public Methods
-- (void)addObject:(IDPComparisonId)object {
+- (void)populateDataWithObject:(id<IDPComparison>)object {
     assert(kIDPBinaryTreeNodeDataCapacity - 1 > self.data.count);
     
-    [self.data addObject:object];
+    [self addObject:object];
+}
+
+- (IDPBinaryTreeNode *)addObject:(id<IDPComparison>)object {
+   
+    /*
+    if (!self.isFull) {
+        [self populateDataWithObject:object];
+    } else if () {
+        return nil;
+    }
+    
+    if (!*node) {
+        *node = [[[IDPBinaryTreeNode alloc] initWithObject:object] autorelease];
+    } else if (![*node isFull]) {
+        [*node addObject:object];
+    } else if (![*node.leftChild isFull]) {
+        [self addObject: object node:&node.leftChild];
+    } else {
+        [self addObject: object node:&node.rightChild];
+    }
+     */
+    
+    return nil;
 }
 
 @end

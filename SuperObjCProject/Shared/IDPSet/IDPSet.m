@@ -10,6 +10,8 @@
 
 #import "IDPLinkedListSet.h"
 
+#import "NSObject+IDPObject.h"
+
 @implementation IDPSet
 
 #pragma mark -
@@ -37,34 +39,71 @@
     return 0;
 }
 
-- (NSString *)stringAtIndex:(NSUInteger)index {
+- (NSString *)objectAtIndexedSubscript:(NSUInteger)index {
     [self doesNotRecognizeSelector:_cmd];
     
     return nil;
 }
 
-- (NSString *)objectAtIndexedSubscript:(NSUInteger)index {
-    return nil; //[self stringAtIndex:index];
+- (NSSet *)set {
+    __block NSMutableSet *set = [NSMutableSet object];
+    
+    [self enumerateObjectsUsingSimpleBlock:^(id<IDPComparison> object) {
+        [set addObject:object];
+    }];
+    
+    return [[set copy] autorelease];
 }
 
-- (NSString *)string {
-    /*NSMutableString *string = [NSMutableString stringWithCapacity:[self count]];
-    for (NSString *symbol in self) {
-        [string appendString:symbol];
+- (void)enumerateObjectsUsingSimpleBlock:(void(^)(id<IDPComparison>))block {
+    if (!block) {
+        return;
     }
     
-    return [[string copy] autorelease];
-     */
-    return nil;
+    [self enumerateObjectsUsingBlock:^(id<IDPComparison> object, NSUInteger index, BOOL *stop) {
+        block(object);
+    }];
+}
+
+- (void)enumerateObjectsUsingBlock:(void(^)(id<IDPComparison> object, NSUInteger index, BOOL *stop))block {
+    
+    if (!block) {
+        return;
+    }
+    
+    NSUInteger index = 0;
+    BOOL stop = NO;
+    for (id<IDPComparison> object in self) {
+        block(object, index, &stop);
+        
+        if (stop) {
+            break;
+        }
+        
+        index++;
+    }
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength
 {
-    [self doesNotRecognizeSelector:_cmd];
+    state->mutationsPtr = (unsigned long *)self;
     
-    return 0;
+    NSUInteger length = MIN(state->state + resultLength, [self count]);
+    resultLength = length - state->state;
+    
+    if (0 != resultLength) {
+        for (NSUInteger index = 0; index < resultLength; index++) {
+            stackbuf[index] = self[index + state->state];
+        }
+    }
+    
+    state->itemsPtr = stackbuf;
+    
+    state->state += resultLength;
+    
+    return resultLength;
 }
 
 @end

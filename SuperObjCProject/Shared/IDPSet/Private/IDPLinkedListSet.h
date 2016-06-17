@@ -11,20 +11,12 @@
 #import "IDPComparison.h"
 
 @interface IDPLinkedListSet : IDPSet
-@property (nonatomic, assign, readonly) NSUInteger count;
+@property (nonatomic, readonly) NSUInteger count;
 
-- (BOOL)containsObject:(IDPComparisonId)object;
-- (IDPComparisonId)objectAtIndexedSubscript:(NSUInteger)index;
+- (BOOL)containsObject:(id<IDPComparison>)object;
+- (id<IDPComparison>)objectAtIndexedSubscript:(NSUInteger)index;
+- (NSUInteger)indexOfObject:(id<IDPComparison>)object;
 
-- (void)addObject:(IDPComparisonId)object;
-
-- (IDPComparisonId)getFirstObject;
-- (IDPComparisonId)getObjectBeforeObject:(IDPComparisonId)object;
-- (IDPComparisonId)getObjectAfterObject:(IDPComparisonId)object;
-
-- (IDPComparisonId)removeFirstObject;
-- (IDPComparisonId)removeObject:(IDPComparisonId)object;
-- (IDPComparisonId)removeAllObjects;
-
+- (id<IDPComparison>)getFirstObject;
 
 @end

@@ -13,8 +13,9 @@
 @property (nonatomic, assign) IDPLinkedListNode     *previousNode;
 @property (nonatomic, retain) id                    object;
 
-- (instancetype)initWithObject:(id)object
-                previousNode:(IDPLinkedListNode *)previousNode
-                    nextNode:(IDPLinkedListNode *)nextNode;
++ (instancetype)nodeWithObject:(id)object
+                      nextNode:(IDPLinkedListNode *)nextNode
+                  previousNode:(IDPLinkedListNode *)previousNode;
+
 
 @end

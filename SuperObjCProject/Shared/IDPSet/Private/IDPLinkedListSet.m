@@ -10,52 +10,69 @@
 
 #import "IDPLinkedListNode.h"
 
+#import "NSObject+IDPObject.h"
+#import "IDPConstants.h"
+
 @interface IDPLinkedListSet ()
 @property (nonatomic, retain) IDPLinkedListNode *head;
 @property (nonatomic, assign) IDPLinkedListNode *tail;
 @property (nonatomic, assign) NSUInteger        count;
+
+- (void)addObject:(id<IDPComparison>)object;
 
 @end
 
 @implementation IDPLinkedListSet
 
 #pragma mark
+#pragma mark - Initializations and Deallocations
+
+- (instancetype)initWithSet:(NSSet *)set {
+    self = [super init];
+    if (self) {
+        for (id<IDPComparison> object in set) {
+            [self addObject:object];
+        }
+    }
+    return self;
+}
+
+#pragma mark
 #pragma mark - Public Methods
 
-- (IDPComparisonId)objectAtIndexedSubscript:(NSUInteger)index {
-    if (index >= [self count]) {
-        return nil;
-    }
+- (NSUInteger)indexOfObject:(id<IDPComparison>)object {
+    __block NSUInteger resultIndex = kIDPNotFound;
     
-    NSUInteger counter = 0;
-    for (IDPComparisonId object in self) {
-        if (counter == index) {
-            return object;
+    [self enumerateObjectsUsingBlock:^(id<IDPComparison> blockObject, NSUInteger index, BOOL *stop) {
+        if (NSOrderedSame == [blockObject compareToObject:object]) {
+            resultIndex = index;
+            *stop = YES;
         }
-        
-        counter++;
-    }
+    }];
     
-    return nil;
+    return resultIndex;
 }
 
-- (BOOL)containsObject:(IDPComparisonId)object {
-    NSUInteger counter = 0;
-    for (IDPComparisonId innerObject in self) {
-        if (object == innerObject) {
-            return YES;
-        }
-        
-        counter++;
-    }
+- (id<IDPComparison>)objectAtIndexedSubscript:(NSUInteger)index {
+    __block id<IDPComparison> resultObject = nil;
     
-    return NO;
+    [self enumerateObjectsUsingBlock:^(id<IDPComparison> blockObject, NSUInteger blockIndex, BOOL *stop) {
+        if (blockIndex == index) {
+            *stop = YES;
+            resultObject = blockObject;
+        }
+    }];
+    
+    return resultObject;
 }
 
-- (void)addObject:(IDPComparisonId)object {
-    IDPLinkedListNode *node= [[IDPLinkedListNode alloc] initWithObject:object
-                                                          previousNode:nil
-                                                              nextNode:self.head];
+- (BOOL)containsObject:(id<IDPComparison>)object {
+    return kIDPNotFound != [self indexOfObject:object];
+}
+
+- (void)addObject:(id<IDPComparison>)object {
+    IDPLinkedListNode *node= [IDPLinkedListNode nodeWithObject:object nextNode:self.head previousNode:nil];
+                              
     self.head = node;
     if (self.count == 0) {
         self.tail = node;
@@ -68,26 +85,6 @@
     return self.head.object;
 }
 
-- (IDPComparisonId)getObjectBeforeObject:(IDPComparisonId)object {
-    return nil;
-}
-
-- (IDPComparisonId)getObjectAfterObject:(IDPComparisonId)object {
-    return nil;
-}
-
-- (IDPComparisonId)removeFirstObject {
-    return nil;
-}
-
-- (IDPComparisonId)removeObject:(IDPComparisonId)object {
-    return nil;
-}
-
-- (IDPComparisonId)removeAllObjects {
-    return nil;
-}
-
 #pragma mark -
 #pragma mark NSFastEnumeration
 
@@ -97,8 +94,8 @@
 {
     state->mutationsPtr = (unsigned long *)self;
     
-    static IDPLinkedListNode *currentNode = nil;
-    if (!state->state) {
+    IDPLinkedListNode *currentNode = (IDPLinkedListNode *)state->extra[0];
+    if (!currentNode) {
         currentNode = self.head;
     }
     
@@ -109,6 +106,7 @@
         for (NSUInteger index = 0; index < resultLength; index++) {
             stackbuf[index] = currentNode.object;
             currentNode = currentNode.nextNode;
+            state->extra[0] = (NSUInteger)currentNode;
         }
     }
     

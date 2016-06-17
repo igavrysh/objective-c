@@ -8,7 +8,12 @@
 
 #import "IDPLinkedListNode.h"
 
+#import "NSObject+IDPObject.h"
+
 @implementation IDPLinkedListNode
+
+#pragma mark -
+#pragma mark Initializations and Deallocations
 
 - (void)dealloc {
     self.object = nil;
@@ -18,17 +23,22 @@
     [super dealloc];
 }
 
-- (instancetype)initWithObject:(id)object
-                  previousNode:(IDPLinkedListNode *)previousNode
+#pragma mark -
+#pragma mark Class Methods
+
++ (instancetype)nodeWithObject:(id)object
                       nextNode:(IDPLinkedListNode *)nextNode
+                  previousNode:(IDPLinkedListNode *)previousNode
 {
-    self = [super init];
+    IDPLinkedListNode *node = [IDPLinkedListNode object];
    
-    self.object = object;
-    self.previousNode = previousNode;
-    self.nextNode = nextNode;
+    node.object = object;
+    node.previousNode = previousNode;
+    node.nextNode = nextNode;
     
-    return self;
+    return node;
 }
+
+
 
 @end

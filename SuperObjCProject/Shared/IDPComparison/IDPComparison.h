@@ -10,11 +10,9 @@
 
 @protocol IDPComparison;
 
-typedef id<IDPComparison> IDPComparisonId;
-
 @protocol IDPComparison <NSObject>
 
-- (NSComparisonResult)compare:(IDPComparisonId)object;
+- (NSComparisonResult)compareToObject:(id<IDPComparison>)object;
 
 @end
 
