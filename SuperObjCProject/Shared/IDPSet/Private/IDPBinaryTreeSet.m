@@ -13,14 +13,29 @@
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPIndex.h"
 
+BOOL IDPRangeContainsUIntegerNumber(NSRange range, NSUInteger number) {
+    return range.location <= number && range.location + range.length >= number;
+}
+
+BOOL IDPRangeIsLowerToUIntegerNumber(NSRange range, NSUInteger number) {
+    return range.location + range.length < number;
+}
+
 @interface IDPBinaryTreeSet ()
 @property (nonatomic, retain) IDPBinaryTreeNode *root;
+//@property (nonatomic, assign) IDPBinaryTreeNode **nodes;
 
-- (void)addObject:(id<IDPComparison>)object key:(NSUInteger)key;
+- (void)addObject:(id<IDPComparison>)object;
 
 - (IDPBinaryTreeNode *)nodeWithObject:(id<IDPComparison>)object
-                                  key:(NSUInteger)key
                                  node:(IDPBinaryTreeNode *)node;
+
+- (NSArray *)nodesWithIndicesRange:(NSRange)range;
+- (void)addNode:(IDPBinaryTreeNode *)node
+        toArray:(NSMutableArray *)array
+withIndicesRange:(NSRange)range
+        counter:(NSUInteger)counter;
+
 @end
 
 @implementation IDPBinaryTreeSet
@@ -32,11 +47,20 @@
 #pragma mark Initializations and Deallocations
 
 - (instancetype)initWithSet:(NSSet *)set {
-    self = [super init];
+    self = [self init];
     [self addObjectsFromSet:set];
     
     return self;
 }
+
+#pragma mark -
+#pragma mark Accessors
+
+/*
+- (void)setNodes:(IDPBinaryTreeNode **)nodes {
+    
+}
+*/
 
 #pragma mark -
 #pragma mark Public Methods
@@ -54,10 +78,12 @@
     }
 }
 
+#pragma mark -
+#pragma mark Private Methods
+
 - (void)addObject:(id<IDPComparison>)object{
     self.root = [self nodeWithObject:object node:self.root];
 }
-
 
 - (IDPBinaryTreeNode *)nodeWithObject:(id<IDPComparison>)object
                                  node:(IDPBinaryTreeNode *)node
@@ -81,8 +107,71 @@
     return nil;
 }
 
-#pragma mark -
-#pragma mark Private Methods
+- (NSArray *)nodesWithIndicesRange:(NSRange)range {
+    NSMutableArray *array = [NSMutableArray object];
+    [self addNode:self.root toArray:array withIndicesRange:range counter:0];
+    
+    return [[array copy] autorelease];
+}
 
+- (void)addNode:(IDPBinaryTreeNode *)node
+        toArray:(NSMutableArray *)array
+withIndicesRange:(NSRange)range
+        counter:(NSUInteger)counter
+{
+    if (IDPRangeIsLowerToUIntegerNumber(range, counter)) {
+        return;
+    }
+    
+    if (IDPRangeContainsUIntegerNumber(range, counter)) {
+        [array addObject:node];
+    }
+    
+    counter++;
+    
+    if (node.leftChild) {
+        [self addNode:node.leftChild toArray:array withIndicesRange:range counter:counter];
+    }
+    
+    if (node.rightChild) {
+        [self addNode:node.rightChild toArray:array withIndicesRange:range counter:counter];
+    }
+}
+
+#pragma mark -
+#pragma mark NSFastEnumeration
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
+                                  objects:(id *)stackbuf
+                                    count:(NSUInteger)resultLength
+{
+    /*
+    state->mutationsPtr = (unsigned long *)self;
+    
+    IDPLinkedListNode *currentNode = (IDPLinkedListNode *)state->extra[0];
+    if (!currentNode) {
+        currentNode = self.head;
+    }
+    
+    NSUInteger length = MIN(state->state + resultLength, [self count]);
+    resultLength = length - state->state;
+    
+    if (0 != resultLength) {
+        for (NSUInteger index = 0; index < resultLength; index++) {
+            stackbuf[index] = currentNode.object;
+            currentNode = currentNode.nextNode;
+        }
+        
+        state->extra[0] = (NSUInteger)currentNode;
+    }
+    
+    state->itemsPtr = stackbuf;
+    
+    state->state += resultLength;
+    
+    return resultLength;*/
+    
+    return 0;
+}
 
 @end
