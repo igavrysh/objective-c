@@ -10,6 +10,10 @@
 
 @protocol IDPComparison;
 
+typedef void(^IDPProcessComparisonObject)(id<IDPComparison>);
+
+typedef void(^IDPProcessComparisonObjectWithIndexStop)(id<IDPComparison> object, NSUInteger index, BOOL *stop);
+
 @protocol IDPComparison <NSObject>
 
 - (NSComparisonResult)compareToObject:(id<IDPComparison>)object;

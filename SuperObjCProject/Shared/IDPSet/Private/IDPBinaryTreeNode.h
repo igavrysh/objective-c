@@ -11,15 +11,13 @@
 #import "IDPLinkedListSet.h"
 #import "IDPComparison.h"
 
-extern
-const NSUInteger kIDPBinaryTreeNodeDataCapacity;
-
 @interface IDPBinaryTreeNode : NSObject
-@property (nonatomic, retain, readonly) id<IDPComparison>   object;
-@property (nonatomic, readonly)         NSUInteger          key;
-@property (nonatomic, retain, readonly) IDPBinaryTreeNode   *leftChild;
-@property (nonatomic, retain, readonly) IDPBinaryTreeNode   *rightChild;
+@property (nonatomic, retain) id<IDPComparison> object;
+@property (nonatomic, retain) IDPBinaryTreeNode *leftChild;
+@property (nonatomic, retain) IDPBinaryTreeNode *rightChild;
 
-- (id)initWithObject:(id<IDPComparison>)object;
++ (instancetype)nodeWithObject:(id<IDPComparison>)object
+                         leftChild:(IDPBinaryTreeNode *)leftChild
+                        rightChild:(IDPBinaryTreeNode *)rightChild;
 
 @end

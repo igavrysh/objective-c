@@ -11,12 +11,10 @@
 #import "IDPLinkedListNode.h"
 
 #import "NSObject+IDPObject.h"
-#import "IDPConstants.h"
 
 @interface IDPLinkedListSet ()
 @property (nonatomic, retain) IDPLinkedListNode *head;
 @property (nonatomic, assign) IDPLinkedListNode *tail;
-@property (nonatomic, assign) NSUInteger        count;
 
 - (void)addObject:(id<IDPComparison>)object;
 
@@ -27,47 +25,13 @@
 #pragma mark
 #pragma mark - Initializations and Deallocations
 
-- (instancetype)initWithSet:(NSSet *)set {
-    self = [super init];
-    if (self) {
-        for (id<IDPComparison> object in set) {
-            [self addObject:object];
-        }
-    }
-    return self;
-}
-
 #pragma mark
 #pragma mark - Public Methods
 
-- (NSUInteger)indexOfObject:(id<IDPComparison>)object {
-    __block NSUInteger resultIndex = kIDPNotFound;
-    
-    [self enumerateObjectsUsingBlock:^(id<IDPComparison> blockObject, NSUInteger index, BOOL *stop) {
-        if (NSOrderedSame == [blockObject compareToObject:object]) {
-            resultIndex = index;
-            *stop = YES;
-        }
-    }];
-    
-    return resultIndex;
-}
-
-- (id<IDPComparison>)objectAtIndexedSubscript:(NSUInteger)index {
-    __block id<IDPComparison> resultObject = nil;
-    
-    [self enumerateObjectsUsingBlock:^(id<IDPComparison> blockObject, NSUInteger blockIndex, BOOL *stop) {
-        if (blockIndex == index) {
-            *stop = YES;
-            resultObject = blockObject;
-        }
-    }];
-    
-    return resultObject;
-}
-
-- (BOOL)containsObject:(id<IDPComparison>)object {
-    return kIDPNotFound != [self indexOfObject:object];
+- (void)addObjectsFromSet:(NSSet *)set  {
+    for (id<IDPComparison> object in set) {
+        [self addObject:object];
+    }
 }
 
 - (void)addObject:(id<IDPComparison>)object {
@@ -106,8 +70,9 @@
         for (NSUInteger index = 0; index < resultLength; index++) {
             stackbuf[index] = currentNode.object;
             currentNode = currentNode.nextNode;
-            state->extra[0] = (NSUInteger)currentNode;
         }
+        
+        state->extra[0] = (NSUInteger)currentNode;
     }
     
     state->itemsPtr = stackbuf;

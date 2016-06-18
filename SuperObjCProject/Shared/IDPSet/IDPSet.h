@@ -8,24 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol IDPComparison;
+#import "IDPComparison.h"
 
 @interface IDPSet : NSObject<NSFastEnumeration>
+@property (nonatomic, assign) NSUInteger count;
 
 + (instancetype)setWithSet:(NSSet *)set;
 
-- (instancetype)initWithSet:(NSSet *)set;
-
-// the method should be overriden
-- (NSUInteger)count;
-
-// the method should be overriden
-
-- (id<IDPComparison>)objectAtIndexedSubscript:(NSUInteger)index;
-
 - (NSSet *)set;
 
-- (void)enumerateObjectsUsingSimpleBlock:(void(^)(id<IDPComparison>))block;
-- (void)enumerateObjectsUsingBlock:(void(^)(id<IDPComparison> object, NSUInteger index, BOOL *stop))block;
+- (instancetype)initWithSet:(NSSet *)set;
+
+- (void)addObjectsFromSet:(NSSet *)set;
+
+- (BOOL)containsObject:(id<IDPComparison>)object;
+
+// the method should be overriden
+- (id)objectAtIndexedSubscript:(NSUInteger)index;
+
+- (id)objectAtIndex:(NSUInteger)index;
+- (NSUInteger)indexOfObject:(id<IDPComparison>)object;
+
+- (id<IDPComparison>)firstObject;
+- (id<IDPComparison>)lastObject;
+
+- (void)performBlockWithEachObject:(IDPProcessComparisonObject)block;
+- (void)iterateObjectsWithBlock:(IDPProcessComparisonObjectWithIndexStop)block;
 
 @end

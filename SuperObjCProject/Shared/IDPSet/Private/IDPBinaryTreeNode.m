@@ -8,29 +8,30 @@
 
 #import "IDPBinaryTreeNode.h"
 
-const NSUInteger kIDPBinaryTreeNodeDataCapacity = 5;
+#import "NSObject+IDPObject.h"
 
 @interface IDPBinaryTreeNode ()
-@property (nonatomic, retain) id<IDPComparison> object;
-@property (nonatomic, assign) NSUInteger        key;
-@property (nonatomic, retain) IDPBinaryTreeNode *leftChild;
-@property (nonatomic, retain) IDPBinaryTreeNode *rightChild;
 
 @end
 
 @implementation IDPBinaryTreeNode
 
-#pragma mark - Initializations and Deallocations
-#pragma mark
+#pragma mark -
+#pragma mark Class methods
 
-- (instancetype)initWithObject:(id<IDPComparison>)object
-{
-    self = [super init];
-    if (self) {
-        [self addObject:object];
-    }
-    return self;
++ (instancetype)nodeWithObject:(id<IDPComparison>)object
+                         leftChild:(IDPBinaryTreeNode *)leftChild
+                        rightChild:(IDPBinaryTreeNode *)rightChild {
+    IDPBinaryTreeNode *node = [IDPBinaryTreeNode object];
+    node.object = object;
+    node.leftChild = leftChild;
+    node.rightChild = rightChild;
+    
+    return node;
 }
+
+#pragma mark -
+#pragma mark Initializations and Deallocations
 
 #pragma mark -
 #pragma mark Accessor Properties
@@ -38,11 +39,7 @@ const NSUInteger kIDPBinaryTreeNodeDataCapacity = 5;
 
 #pragma mark -
 #pragma mark Public Methods
-- (void)populateDataWithObject:(id<IDPComparison>)object {
-    assert(kIDPBinaryTreeNodeDataCapacity - 1 > self.data.count);
-    
-    [self addObject:object];
-}
+
 
 
 @end

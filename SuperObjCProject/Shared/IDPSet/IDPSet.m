@@ -12,6 +12,10 @@
 
 #import "NSObject+IDPObject.h"
 
+@interface IDPSet ()
+
+@end
+
 @implementation IDPSet
 
 #pragma mark -
@@ -33,40 +37,78 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (NSUInteger)count {
+- (void)addObjectsFromSet:(NSSet *)set {
     [self doesNotRecognizeSelector:_cmd];
-    
-    return 0;
 }
 
-- (NSString *)objectAtIndexedSubscript:(NSUInteger)index {
-    [self doesNotRecognizeSelector:_cmd];
+- (id)objectAtIndex:(NSUInteger)index {
+    return self[index];
+}
+
+- (NSUInteger)indexOfObject:(id<IDPComparison>)object {
+    __block NSUInteger resultIndex = NSNotFound;
     
-    return nil;
+    [self iterateObjectsWithBlock:^(id<IDPComparison> blockObject, NSUInteger index, BOOL *stop) {
+        if (NSOrderedSame == [blockObject compareToObject:object]) {
+            resultIndex = index;
+            *stop = YES;
+        }
+    }];
+    
+    return resultIndex;
+}
+
+- (id<IDPComparison>)objectAtIndexedSubscript:(NSUInteger)index {
+    __block id<IDPComparison> resultObject = nil;
+    
+    [self iterateObjectsWithBlock:^(id<IDPComparison> blockObject, NSUInteger blockIndex, BOOL *stop) {
+        if (blockIndex == index) {
+            *stop = YES;
+            resultObject = blockObject;
+        }
+    }];
+    
+    return resultObject;
+}
+
+- (BOOL)containsObject:(id<IDPComparison>)object {
+    return NSNotFound != [self indexOfObject:object];
+}
+
+- (id<IDPComparison>)firstObject {
+    return self[0];
+}
+
+- (id<IDPComparison>)lastObject {
+    NSUInteger objectsCount = [self count];
+    if (objectsCount == 0) {
+        return nil;
+    }
+    
+    return self[objectsCount - 1];
 }
 
 - (NSSet *)set {
     __block NSMutableSet *set = [NSMutableSet object];
     
-    [self enumerateObjectsUsingSimpleBlock:^(id<IDPComparison> object) {
+    [self performBlockWithEachObject:^(id<IDPComparison> object) {
         [set addObject:object];
     }];
     
     return [[set copy] autorelease];
 }
 
-- (void)enumerateObjectsUsingSimpleBlock:(void(^)(id<IDPComparison>))block {
+- (void)performBlockWithEachObject:(IDPProcessComparisonObject)block {
     if (!block) {
         return;
     }
     
-    [self enumerateObjectsUsingBlock:^(id<IDPComparison> object, NSUInteger index, BOOL *stop) {
+    [self iterateObjectsWithBlock:^(id<IDPComparison> object, NSUInteger index, BOOL *stop) {
         block(object);
     }];
 }
 
-- (void)enumerateObjectsUsingBlock:(void(^)(id<IDPComparison> object, NSUInteger index, BOOL *stop))block {
-    
+- (void)iterateObjectsWithBlock:(IDPProcessComparisonObjectWithIndexStop)block {
     if (!block) {
         return;
     }
