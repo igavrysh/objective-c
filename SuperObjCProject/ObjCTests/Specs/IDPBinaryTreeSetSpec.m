@@ -44,6 +44,26 @@ describe(@"IDPBinaryTreeSpec", ^{
             }
         });
         
+        it(@"shouldn't raise", ^{
+            [[theBlock(^{
+                NSUInteger index = 0;
+                for (NSNumber *number in numbersSet) {
+                    [binaryTreeSet[index] description];
+                    [number description];
+                    index++;
+                }
+            }) shouldNot] raise];
+        });
+        
+        it(@"shouldn't raise", ^{
+            [[theBlock(^{
+                NSUInteger index = 0;
+                for (NSNumber *number in numbersSet) {
+                    [[theValue([binaryTreeSet indexOfObject:number]) shouldNot] equal:theValue(NSNotFound)];
+                    index++;
+                }
+            }) shouldNot] raise];
+        });
         
     });
 });
