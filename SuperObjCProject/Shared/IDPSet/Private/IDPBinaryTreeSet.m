@@ -16,7 +16,9 @@
 
 @interface IDPBinaryTreeSet ()
 @property (nonatomic, retain) IDPBinaryTreeNode *root;
-//@property (nonatomic, assign) IDPBinaryTreeNode **nodes;
+@property (nonatomic, assign) id                *objects;
+
+- (void)allocateObjectsWithSet:(NSSet *)set;
 
 - (void)addObjectsFromSet:(NSSet *)set;
 
@@ -31,6 +33,8 @@
 withIndicesRange:(NSRange)range
         counter:(NSUInteger *)counter;
 
+- (BOOL)containsObject:(id<IDPComparison>)object withNodeAsRoot:(IDPBinaryTreeNode *)node;
+
 @end
 
 @implementation IDPBinaryTreeSet
@@ -41,8 +45,15 @@ withIndicesRange:(NSRange)range
 #pragma mark -
 #pragma mark Initializations and Deallocations
 
+- (void)dealloc {
+    self.objects = NULL;
+    
+    [super dealloc];
+}
+
 - (instancetype)initWithSet:(NSSet *)set {
     self = [self init];
+    [self allocateObjectsWithSet:set];
     [self addObjectsFromSet:set];
     
     return self;
@@ -51,11 +62,13 @@ withIndicesRange:(NSRange)range
 #pragma mark -
 #pragma mark Accessors
 
-/*
-- (void)setNodes:(IDPBinaryTreeNode **)nodes {
-    
+- (void)setObjects:(id *)objects {
+    if (objects != _objects) {
+        free(_objects);
+        
+        _objects = objects;
+    }
 }
-*/
 
 #pragma mark -
 #pragma mark Public Methods
@@ -69,12 +82,33 @@ withIndicesRange:(NSRange)range
     
     NSArray *indexes = [NSArray arrayWithUniformIndexesCount:[set count]];
     for (NSNumber *index in indexes) {
-        [self addObject:array[[index unsignedIntegerValue]]];
+        NSUInteger uIntIndex = [index unsignedIntegerValue];
+        [self addObject:array[uIntIndex]];
+        self.objects[uIntIndex] = array[uIntIndex];
     }
+}
+
+- (BOOL)containsObject:(id<IDPComparison>)object {
+    return [self containsObject:object withNodeAsRoot:self.root];
 }
 
 #pragma mark -
 #pragma mark Private Methods
+
+- (BOOL)containsObject:(id<IDPComparison>)object withNodeAsRoot:(IDPBinaryTreeNode *)node {
+    if (!node) {
+        return NO;
+    }
+    
+    if (NSOrderedSame == [node.object compare:object]) {
+        return YES;
+    }
+    
+    BOOL leftNodeResult = [self containsObject:object withNodeAsRoot:node.leftChild];
+    BOOL rightNodeResult = [self containsObject:object withNodeAsRoot:node.rightChild];
+    
+    return leftNodeResult | rightNodeResult;
+}
 
 - (void)addObject:(id<IDPComparison>)object{
     self.root = [self nodeWithObject:object node:self.root];
@@ -132,10 +166,19 @@ withIndicesRange:(NSRange)range
     }
 }
 
+- (void)allocateObjectsWithSet:(NSSet *)set {
+    NSUInteger objectsCount = [set count];
+    if (0 == objectsCount) {
+        return;
+    }
+    
+    self.objects = malloc(sizeof(self.objects) * objectsCount);
+}
+
 #pragma mark -
 #pragma mark NSFastEnumeration
 
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
+- (NSUInteger)countVersion1ByEnumeratingWithState:(NSFastEnumerationState *)state
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength
 {
@@ -147,6 +190,22 @@ withIndicesRange:(NSRange)range
     [self addObjects:stackbuf withIndicesRange:NSMakeRange(state->state, resultLength)];
     
     state->itemsPtr = stackbuf;
+    
+    state->state += resultLength;
+    
+    return resultLength;
+}
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
+                                          objects:(id *)stackbuf
+                                            count:(NSUInteger)resultLength
+{
+    state->mutationsPtr = (unsigned long *)self;
+    
+    NSUInteger length = MIN(state->state + resultLength, [self count]);
+    resultLength = length - state->state;
+    
+    state->itemsPtr = &self.objects[state->state];
     
     state->state += resultLength;
     
