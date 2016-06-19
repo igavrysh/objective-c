@@ -30,9 +30,9 @@ BOOL IDPRangeIsLowerToUIntegerNumber(NSRange range, NSUInteger number) {
 - (IDPBinaryTreeNode *)nodeWithObject:(id<IDPComparison>)object
                                  node:(IDPBinaryTreeNode *)node;
 
-- (NSArray *)nodesWithIndicesRange:(NSRange)range;
+- (void)addNodesToObjects:(id *)objects withIndicesRange:(NSRange)range;
 - (void)addNode:(IDPBinaryTreeNode *)node
-        toArray:(NSMutableArray *)array
+        toObjects:(id *)objects
 withIndicesRange:(NSRange)range
         counter:(NSUInteger)counter;
 
@@ -107,15 +107,13 @@ withIndicesRange:(NSRange)range
     return nil;
 }
 
-- (NSArray *)nodesWithIndicesRange:(NSRange)range {
-    NSMutableArray *array = [NSMutableArray object];
-    [self addNode:self.root toArray:array withIndicesRange:range counter:0];
-    
-    return [[array copy] autorelease];
+- (void)addNodesToObjects:(id *)objects withIndicesRange:(NSRange)range {
+    memset(objects, 0, sizeof(objects) * range.length);
+    [self addNode:self.root toObjects:objects withIndicesRange:range counter:0];
 }
 
 - (void)addNode:(IDPBinaryTreeNode *)node
-        toArray:(NSMutableArray *)array
+        toObjects:(id *)objects
 withIndicesRange:(NSRange)range
         counter:(NSUInteger)counter
 {
@@ -124,17 +122,17 @@ withIndicesRange:(NSRange)range
     }
     
     if (IDPRangeContainsUIntegerNumber(range, counter)) {
-        [array addObject:node];
+        objects[counter - range.location] = node.object;
     }
     
     counter++;
     
     if (node.leftChild) {
-        [self addNode:node.leftChild toArray:array withIndicesRange:range counter:counter];
+        [self addNode:node.leftChild toObjects:objects withIndicesRange:range counter:counter];
     }
     
     if (node.rightChild) {
-        [self addNode:node.rightChild toArray:array withIndicesRange:range counter:counter];
+        [self addNode:node.rightChild toObjects:objects withIndicesRange:range counter:counter];
     }
 }
 

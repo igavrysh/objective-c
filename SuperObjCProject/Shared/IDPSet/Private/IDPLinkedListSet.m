@@ -25,6 +25,13 @@
 #pragma mark
 #pragma mark - Initializations and Deallocations
 
+- (instancetype)initWithSet:(NSSet *)set {
+    self = [super init];
+    [self addObjectsFromSet:set];
+    
+    return self;
+}
+
 #pragma mark
 #pragma mark - Public Methods
 

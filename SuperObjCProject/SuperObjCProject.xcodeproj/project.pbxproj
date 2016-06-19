@@ -72,6 +72,7 @@
 		85AF94551D15684E0057BEF5 /* NSMutableArray+IDPIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AF94531D15684E0057BEF5 /* NSMutableArray+IDPIndex.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		85B516271D10ADCA004CDB85 /* IDPSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B516261D10ADCA004CDB85 /* IDPSet.m */; };
 		85B516281D10ADCA004CDB85 /* IDPSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B516261D10ADCA004CDB85 /* IDPSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		85E036201D1699A4006DEF17 /* IDPBinaryTreeSetSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E0361F1D1699A4006DEF17 /* IDPBinaryTreeSetSpec.m */; };
 		85E1DEE51D10177C002D1215 /* NSString+IDPRandomName.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E1DEE41D10177C002D1215 /* NSString+IDPRandomName.m */; };
 		85E1DEE61D10177C002D1215 /* NSString+IDPRandomName.m in Sources */ = {isa = PBXBuildFile; fileRef = 85E1DEE41D10177C002D1215 /* NSString+IDPRandomName.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CA59C2744B43F1457E87A9E6 /* libPods-ObjCTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C27EB1289B3E59395BEB6E1 /* libPods-ObjCTests.a */; };
@@ -162,6 +163,7 @@
 		85AF94531D15684E0057BEF5 /* NSMutableArray+IDPIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+IDPIndex.m"; sourceTree = "<group>"; };
 		85B516251D10ADCA004CDB85 /* IDPSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPSet.h; sourceTree = "<group>"; };
 		85B516261D10ADCA004CDB85 /* IDPSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPSet.m; sourceTree = "<group>"; };
+		85E0361F1D1699A4006DEF17 /* IDPBinaryTreeSetSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPBinaryTreeSetSpec.m; sourceTree = "<group>"; };
 		85E1DEE31D10177C002D1215 /* NSString+IDPRandomName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+IDPRandomName.h"; sourceTree = "<group>"; };
 		85E1DEE41D10177C002D1215 /* NSString+IDPRandomName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+IDPRandomName.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,6 +211,7 @@
 			children = (
 				850F83CD1D0F1BB50043472C /* IDPAlphabetSpec.m */,
 				85ADBB5F1D12012D00ACFEF4 /* IDPLinkedListSetSpec.m */,
+				85E0361F1D1699A4006DEF17 /* IDPBinaryTreeSetSpec.m */,
 			);
 			path = Specs;
 			sourceTree = "<group>";
@@ -721,6 +724,7 @@
 				850F839F1D0F17800043472C /* IDPRandom.m in Sources */,
 				850F83A91D0F17800043472C /* IDPClusterAlphabet.m in Sources */,
 				850F83D81D0F22330043472C /* IDPCarwasher.m in Sources */,
+				85E036201D1699A4006DEF17 /* IDPBinaryTreeSetSpec.m in Sources */,
 				850F83C31D0F17800043472C /* IDPRoom.m in Sources */,
 				850F83AD1D0F17800043472C /* IDPStringsAlphabet.m in Sources */,
 				850F83CE1D0F1BB50043472C /* IDPAlphabetSpec.m in Sources */,

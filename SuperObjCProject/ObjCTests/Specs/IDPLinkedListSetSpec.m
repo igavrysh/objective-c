@@ -15,35 +15,26 @@
 SPEC_BEGIN(IDPLinkedListSpec);
 
 describe(@"IDPLinkedListSet", ^{
-    __block IDPLinkedListSet *linkedList = nil;
-    __block NSUInteger kIDPListNumbersCount = 10;
-    
-    afterAll(^{
-        linkedList = nil;
-    });
-    
     registerMatchers(@"IDP");
     
-    context(@"when added objects in range 10-1 should iterate through these numbers", ^{
+    context(@"when added objects in range 1-5 should iterate through these numbers", ^{
+        __block NSUInteger kIDPListNumbersCount = 5;
         
-        beforeAll(^{ // Occurs once
-            linkedList = [IDPLinkedListSet object];
-            
-            for (NSUInteger index = 0; index < kIDPListNumbersCount; index++){
-                [linkedList addObject:[NSNumber numberWithUnsignedLong:index + 1]];
-            }
+        let(numbersSet, ^id{
+            return [[[NSSet alloc] initWithArray:@[@1, @2, @3, @4, @5]] autorelease];
+        });
+        
+        let(linkedListSet, ^id{
+            return [IDPSet setWithSet:numbersSet];
         });
         
         it(@"should be of count kIDPListNumbersCount", ^{
-            [[linkedList should] haveCountOf:kIDPListNumbersCount];
+            [[linkedListSet should] haveCountOf:kIDPListNumbersCount];
         });
         
-        it(@"should return integers in range 1-10", ^{
-            NSUInteger counter = 10;
-            for (NSNumber *number in linkedList) {
-                [[theValue([number compare:[NSNumber numberWithUnsignedLong:counter]]) should] equal:theValue(NSOrderedSame)];
-        
-                counter--;
+        it(@"should contain integers in range 1-5", ^{
+            for (NSNumber *number in linkedListSet) {
+                [[theValue([numbersSet containsObject:number]) should] equal:theValue(YES)];
             }
         });
         
