@@ -16,6 +16,8 @@
 @property (nonatomic, retain) IDPLinkedListNode *head;
 @property (nonatomic, assign) IDPLinkedListNode *tail;
 
+- (void)addObjectsFromSet:(NSSet *)set;
+
 - (void)addObject:(id<IDPComparison>)object;
 
 @end
@@ -35,6 +37,13 @@
 #pragma mark
 #pragma mark - Public Methods
 
+- (id<IDPComparison>)getFirstObject {
+    return self.head.object;
+}
+
+#pragma mark
+#pragma mark - Private Methods
+
 - (void)addObjectsFromSet:(NSSet *)set  {
     for (id<IDPComparison> object in set) {
         [self addObject:object];
@@ -50,10 +59,6 @@
     }
     
     self.count += 1;
-}
-
-- (id<IDPComparison>)getFirstObject {
-    return self.head.object;
 }
 
 #pragma mark -

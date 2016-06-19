@@ -9,6 +9,7 @@
 #import "IDPSet.h"
 
 #import "IDPLinkedListSet.h"
+#import "IDPBinaryTreeSet.h"
 
 #import "NSObject+IDPObject.h"
 
@@ -25,13 +26,33 @@
     return [[[IDPLinkedListSet alloc] initWithSet:set] autorelease];
 }
 
++ (instancetype)linkedListSetWithSet:(NSSet *)set {
+    return [[[IDPLinkedListSet alloc] initLinkedListSetWithSet:set] autorelease];
+}
+
++ (instancetype)binaryTreeSetWithSet:(NSSet *)set {
+    return [[[IDPBinaryTreeSet alloc] initBinrayTreeSetWithSet:set] autorelease];
+}
+
 #pragma mark -
 #pragma mark Initializations and Deallocations
 
 - (instancetype)initWithSet:(NSSet *)set {
+    [self autorelease];
+    
+    return [self initLinkedListSetWithSet:set];
+}
+
+- (instancetype)initLinkedListSetWithSet:(NSSet *)set {
     [self release];
     
     return [[IDPLinkedListSet alloc] initWithSet:set];
+}
+
+- (instancetype)initBinrayTreeSetWithSet:(NSSet *)set {
+    [self release];
+    
+    return [[IDPBinaryTreeSet alloc] initWithSet:set];
 }
 
 #pragma mark -
@@ -49,7 +70,7 @@
     __block NSUInteger resultIndex = NSNotFound;
     
     [self iterateObjectsWithBlock:^(id<IDPComparison> blockObject, NSUInteger index, BOOL *stop) {
-        if (NSOrderedSame == [blockObject compareToObject:object]) {
+        if (NSOrderedSame == [blockObject compare:object]) {
             resultIndex = index;
             *stop = YES;
         }

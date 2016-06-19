@@ -10,5 +10,4 @@
 
 @interface IDPBinaryTreeSet : IDPSet
 
-
 @end

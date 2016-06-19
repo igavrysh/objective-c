@@ -9,32 +9,27 @@
 #import "IDPBinaryTreeSet.h"
 
 #import "IDPBinaryTreeNode.h"
+#import "IDPRange.h"
 
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPIndex.h"
 
-BOOL IDPRangeContainsUIntegerNumber(NSRange range, NSUInteger number) {
-    return range.location <= number && range.location + range.length >= number;
-}
-
-BOOL IDPRangeIsLowerToUIntegerNumber(NSRange range, NSUInteger number) {
-    return range.location + range.length < number;
-}
-
 @interface IDPBinaryTreeSet ()
 @property (nonatomic, retain) IDPBinaryTreeNode *root;
 //@property (nonatomic, assign) IDPBinaryTreeNode **nodes;
+
+- (void)addObjectsFromSet:(NSSet *)set;
 
 - (void)addObject:(id<IDPComparison>)object;
 
 - (IDPBinaryTreeNode *)nodeWithObject:(id<IDPComparison>)object
                                  node:(IDPBinaryTreeNode *)node;
 
-- (void)addNodesToObjects:(id *)objects withIndicesRange:(NSRange)range;
+- (void)addObjects:(id *)objects withIndicesRange:(NSRange)range;
 - (void)addNode:(IDPBinaryTreeNode *)node
-        toObjects:(id *)objects
+      toObjects:(id *)objects
 withIndicesRange:(NSRange)range
-        counter:(NSUInteger)counter;
+        counter:(NSUInteger *)counter;
 
 @end
 
@@ -69,7 +64,7 @@ withIndicesRange:(NSRange)range
     NSMutableArray *array = [[set allObjects] mutableCopy];
     [array sortUsingComparator:
      ^NSComparisonResult(id<IDPComparison> object1, id<IDPComparison> object2) {
-         return [object1 compareToObject:object2];
+         return [object1 compare:object2];
      }];
     
     NSArray *indexes = [NSArray arrayWithUniformIndexesCount:[set count]];
@@ -95,37 +90,38 @@ withIndicesRange:(NSRange)range
     
     IDPBinaryTreeNode *leftChild = node.leftChild;
     IDPBinaryTreeNode *rightChild = node.rightChild;
-    if (NSOrderedAscending == [object compareToObject:node.object]) {
+    if (NSOrderedAscending == [object compare:node.object]) {
         node.leftChild = [self nodeWithObject:object node:leftChild];
-    } else if (NSOrderedDescending == [object compareToObject:node.object]) {
+    } else if (NSOrderedDescending == [object compare:node.object]) {
         node.rightChild = [self nodeWithObject:object node:rightChild];
     } else {
         node.object = object;
         return node;
     }
     
-    return nil;
+    return node;
 }
 
-- (void)addNodesToObjects:(id *)objects withIndicesRange:(NSRange)range {
+- (void)addObjects:(id *)objects withIndicesRange:(NSRange)range {
     memset(objects, 0, sizeof(objects) * range.length);
-    [self addNode:self.root toObjects:objects withIndicesRange:range counter:0];
+    NSUInteger counter = 0;
+    [self addNode:self.root toObjects:objects withIndicesRange:range counter:&counter];
 }
 
 - (void)addNode:(IDPBinaryTreeNode *)node
         toObjects:(id *)objects
 withIndicesRange:(NSRange)range
-        counter:(NSUInteger)counter
+        counter:(NSUInteger *)counter
 {
-    if (IDPRangeIsLowerToUIntegerNumber(range, counter)) {
+    if (IDPRangeIsLowerToUIntegerNumber(range, *counter)) {
         return;
     }
     
-    if (IDPRangeContainsUIntegerNumber(range, counter)) {
-        objects[counter - range.location] = node.object;
+    if (IDPRangeContainsUIntegerNumber(range, *counter)) {
+        objects[*counter - range.location] = node.object;
     }
     
-    counter++;
+    *counter = *counter + 1;
     
     if (node.leftChild) {
         [self addNode:node.leftChild toObjects:objects withIndicesRange:range counter:counter];
@@ -143,33 +139,18 @@ withIndicesRange:(NSRange)range
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength
 {
-    /*
     state->mutationsPtr = (unsigned long *)self;
-    
-    IDPLinkedListNode *currentNode = (IDPLinkedListNode *)state->extra[0];
-    if (!currentNode) {
-        currentNode = self.head;
-    }
     
     NSUInteger length = MIN(state->state + resultLength, [self count]);
     resultLength = length - state->state;
     
-    if (0 != resultLength) {
-        for (NSUInteger index = 0; index < resultLength; index++) {
-            stackbuf[index] = currentNode.object;
-            currentNode = currentNode.nextNode;
-        }
-        
-        state->extra[0] = (NSUInteger)currentNode;
-    }
+    [self addObjects:stackbuf withIndicesRange:NSMakeRange(state->state, resultLength)];
     
     state->itemsPtr = stackbuf;
     
     state->state += resultLength;
     
-    return resultLength;*/
-    
-    return 0;
+    return resultLength;
 }
 
 @end

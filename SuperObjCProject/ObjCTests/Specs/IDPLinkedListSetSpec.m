@@ -17,11 +17,9 @@ SPEC_BEGIN(IDPLinkedListSpec);
 describe(@"IDPLinkedListSet", ^{
     registerMatchers(@"IDP");
     
-    context(@"when added objects in range 1-5 should iterate through these numbers", ^{
-        __block NSUInteger kIDPListNumbersCount = 5;
-        
+    context(@"when added objects in range 1-7, linked list should iterate through these numbers", ^{
         let(numbersSet, ^id{
-            return [[[NSSet alloc] initWithArray:@[@1, @2, @3, @4, @5]] autorelease];
+            return [[NSSet alloc] initWithArray:@[@1, @2, @3, @4, @5, @6, @7]];
         });
         
         let(linkedListSet, ^id{
@@ -29,7 +27,7 @@ describe(@"IDPLinkedListSet", ^{
         });
         
         it(@"should be of count kIDPListNumbersCount", ^{
-            [[linkedListSet should] haveCountOf:kIDPListNumbersCount];
+            [[linkedListSet should] haveCountOf:[numbersSet count]];
         });
         
         it(@"should contain integers in range 1-5", ^{

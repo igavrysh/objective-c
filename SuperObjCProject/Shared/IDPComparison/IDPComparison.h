@@ -16,7 +16,7 @@ typedef void(^IDPProcessComparisonObjectWithIndexStop)(id<IDPComparison> object,
 
 @protocol IDPComparison <NSObject>
 
-- (NSComparisonResult)compareToObject:(id<IDPComparison>)object;
+- (NSComparisonResult)compare:(id<IDPComparison>)object;
 
 @end
 

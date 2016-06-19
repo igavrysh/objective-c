@@ -6,34 +6,40 @@
 //  Copyright © 2016 1mlndollarsasset. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
+#import "Kiwi.h"
 
-@interface IDPBinaryTreeSetSpec : XCTestCase
+#import "IDPSet.h"
+#import "IDPBinaryTreeSet.h"
 
-@end
+#import "NSObject+IDPObject.h"
 
-@implementation IDPBinaryTreeSetSpec
+SPEC_BEGIN(IDPBinaryTreeSpec);
 
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
+describe(@"IDPBinaryTreeSpec", ^{
+    registerMatchers(@"IDP");
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
+    context(@"when added objects in range 1-5, binary tree should iterate through these numbers", ^{
+        let(numbersSet, ^id{
+            return [[NSSet alloc] initWithArray:@[@1, @2, @3, @4, @5, @6, @7]];
+        });
+        
+        let(binaryTreeSet, ^id{
+            IDPSet *tree = [IDPSet binaryTreeSetWithSet:numbersSet];
+            return tree;
+        });
+        
+        it(@"should be of count kIDPListNumbersCount", ^{
+            [[binaryTreeSet should] haveCountOf:[numbersSet count]];
+        });
+        
+        it(@"should contain integers in range 1-5", ^{
+            for (NSNumber *number in binaryTreeSet) {
+                [[theValue([numbersSet containsObject:number]) should] equal:theValue(YES)];
+            }
+        });
+        
+    });
+});
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
-
-@end
+SPEC_END

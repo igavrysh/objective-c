@@ -14,12 +14,14 @@
 @property (nonatomic, assign) NSUInteger count;
 
 + (instancetype)setWithSet:(NSSet *)set;
++ (instancetype)linkedListSetWithSet:(NSSet *)set;
++ (instancetype)binaryTreeSetWithSet:(NSSet *)set;
 
 - (NSSet *)set;
 
 - (instancetype)initWithSet:(NSSet *)set;
-
-- (void)addObjectsFromSet:(NSSet *)set;
+- (instancetype)initLinkedListSetWithSet:(NSSet *)set;
+- (instancetype)initBinrayTreeSetWithSet:(NSSet *)set;
 
 - (BOOL)containsObject:(id<IDPComparison>)object;
 
