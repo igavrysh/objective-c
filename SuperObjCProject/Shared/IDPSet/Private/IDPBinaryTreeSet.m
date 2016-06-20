@@ -190,34 +190,20 @@ withIndicesRange:(NSRange)range
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength
 {
-    state->mutationsPtr = (unsigned long *)self;
-    
-    NSUInteger length = MIN(state->state + resultLength, [self count]);
-    resultLength = length - state->state;
-    
-    [self addObjects:stackbuf withIndicesRange:NSMakeRange(state->state, resultLength)];
-    
-    state->itemsPtr = stackbuf;
-    
-    state->state += resultLength;
-    
-    return resultLength;
+    return [self countByEnumeratingWithBlock:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength) {
+        [self addObjects:stackbuf withIndicesRange:NSMakeRange(state->state, resultLength)];
+        
+        state->itemsPtr = stackbuf;
+    } state:state objects:stackbuf count:resultLength];
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
                                           objects:(id *)stackbuf
                                             count:(NSUInteger)resultLength
 {
-    state->mutationsPtr = (unsigned long *)self;
-    
-    NSUInteger length = MIN(state->state + resultLength, [self count]);
-    resultLength = length - state->state;
-    
-    state->itemsPtr = &self.objects[state->state];
-    
-    state->state += resultLength;
-    
-    return resultLength;
+    return [self countByEnumeratingWithBlock:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength) {
+        state->itemsPtr = &self.objects[state->state];
+    } state:state objects:stackbuf count:resultLength];
 }
 
 @end

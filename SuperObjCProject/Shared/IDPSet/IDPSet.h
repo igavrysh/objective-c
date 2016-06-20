@@ -10,6 +10,8 @@
 
 #import "IDPComparison.h"
 
+typedef void(^IDPEnumerationBlock)(NSFastEnumerationState * state, id *stackbuf, NSUInteger resultLength);
+
 @interface IDPSet : NSObject<NSFastEnumeration>
 @property (nonatomic, assign) NSUInteger count;
 
@@ -36,5 +38,10 @@
 
 - (void)performBlockWithEachObject:(IDPProcessComparisonObject)block;
 - (void)iterateObjectsWithBlock:(IDPProcessComparisonObjectWithIndexStop)block;
+
+- (NSUInteger)countByEnumeratingWithBlock:(IDPEnumerationBlock)block
+                                    state:(NSFastEnumerationState *)state
+                                  objects:(id *)stackbuf
+                                    count:(NSUInteger)resultLength;
 
 @end

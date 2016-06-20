@@ -151,22 +151,33 @@
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength
 {
+    return [self countByEnumeratingWithBlock:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength) {
+        if (0 != resultLength) {
+            for (NSUInteger index = 0; index < resultLength; index++) {
+                stackbuf[index] = self[index + state->state];
+            }
+        }
+        
+        state->itemsPtr = stackbuf;
+    } state:state objects:stackbuf count:resultLength];
+}
+
+- (NSUInteger)countByEnumeratingWithBlock: (IDPEnumerationBlock)block
+                                    state:(NSFastEnumerationState *)state
+                                  objects:(id *)stackbuf
+                                    count:(NSUInteger)resultLength
+{
     state->mutationsPtr = (unsigned long *)self;
     
     NSUInteger length = MIN(state->state + resultLength, [self count]);
     resultLength = length - state->state;
     
-    if (0 != resultLength) {
-        for (NSUInteger index = 0; index < resultLength; index++) {
-            stackbuf[index] = self[index + state->state];
-        }
-    }
-    
-    state->itemsPtr = stackbuf;
+    block(state, stackbuf, resultLength);
     
     state->state += resultLength;
     
     return resultLength;
 }
+
 
 @end

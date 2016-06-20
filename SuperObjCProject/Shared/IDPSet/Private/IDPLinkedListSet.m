@@ -68,30 +68,23 @@
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength
 {
-    state->mutationsPtr = (unsigned long *)self;
-    
-    IDPLinkedListNode *currentNode = (IDPLinkedListNode *)state->extra[0];
-    if (!currentNode) {
-        currentNode = self.head;
-    }
-    
-    NSUInteger length = MIN(state->state + resultLength, [self count]);
-    resultLength = length - state->state;
-    
-    if (0 != resultLength) {
-        for (NSUInteger index = 0; index < resultLength; index++) {
-            stackbuf[index] = currentNode.object;
-            currentNode = currentNode.nextNode;
+    return[self countByEnumeratingWithBlock:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength) {
+        IDPLinkedListNode *currentNode = (IDPLinkedListNode *)state->extra[0];
+        if (!currentNode) {
+            currentNode = self.head;
         }
         
-        state->extra[0] = (NSUInteger)currentNode;
-    }
-    
-    state->itemsPtr = stackbuf;
-    
-    state->state += resultLength;
-    
-    return resultLength;
+        if (0 != resultLength) {
+            for (NSUInteger index = 0; index < resultLength; index++) {
+                stackbuf[index] = currentNode.object;
+                currentNode = currentNode.nextNode;
+            }
+            
+            state->extra[0] = (NSUInteger)currentNode;
+        }
+        
+        state->itemsPtr = stackbuf;
+    } state:state objects:stackbuf count:resultLength];
 }
 
 @end
