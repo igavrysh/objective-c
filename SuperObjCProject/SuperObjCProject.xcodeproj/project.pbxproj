@@ -233,7 +233,6 @@
 		850F83621D0F17800043472C /* NSString+IDPExtensions */ = {
 			isa = PBXGroup;
 			children = (
-				85E1DEE11D101740002D1215 /* NSString+IDPRandomName */,
 				850F83631D0F17800043472C /* IDPAlphabet.h */,
 				850F83641D0F17800043472C /* IDPAlphabet.m */,
 				850F83651D0F17800043472C /* NSString+IDPExtensions.h */,
@@ -448,13 +447,6 @@
 				850F834C1D0F15B40043472C /* ObjCTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		85E1DEE11D101740002D1215 /* NSString+IDPRandomName */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "NSString+IDPRandomName";
 			sourceTree = "<group>";
 		};
 		85E1DEE21D101754002D1215 /* NSString+IDPRandomName */ = {

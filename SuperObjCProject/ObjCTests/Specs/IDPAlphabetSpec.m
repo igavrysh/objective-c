@@ -122,7 +122,7 @@ describe(@"IDPAlphabet", ^{
         });
         
         it(@"should return symbols in range 'A'-'z'", ^{
-            unichar character = 'A';
+            unichar character = range.location;
             for (NSString *symbol in alphabet) {
                 [[symbol should] equal:[NSString stringWithFormat:@"%c", character]];
                 character++;
@@ -183,10 +183,9 @@ describe(@"IDPAlphabet", ^{
     });
     
     
-    context(@"when initialized with + initWithStrings with arrays containing 'A' - 'z' when enumerated", ^{
+    context(@"when initialized with +initWithStrings with array containing 'A' - 'z' when enumerated", ^{
         NSRange range = IDPMakeAlphabetRange('A', 'z');
         NSMutableArray *strings = [NSMutableArray new];
-        
         
         beforeAll(^{
             for (unichar symbol = range.location; symbol < NSMaxRange(range); symbol++) {
@@ -215,13 +214,104 @@ describe(@"IDPAlphabet", ^{
         });
         
         it(@"should return symbols in range 'A'-'z'", ^{
-            unichar character = 'A';
+            unichar character = range.location;
             for (NSString *symbol in alphabet) {
                 [[symbol should] equal:[NSString stringWithFormat:@"%c", character]];
                 character++;
             }
         });
     });
+    
+#pragma mark -
+#pragma mark Cluster
+    context(@"when initialized with +alphabetWithAlphabets: with alphabets in range 'A'-'Z', 'a'-'z'", ^{
+        IDPAlphabet *capitalizedAlphabet = [IDPAlphabet alphabetWithRange:IDPMakeAlphabetRange('A', 'Z')];
+        IDPAlphabet *lowercaseAlphabet = [IDPAlphabet alphabetWithRange:IDPMakeAlphabetRange('a', 'z')];
+        
+        beforeAll(^{
+            alphabet = [IDPAlphabet alphabetWithAlphabets:@[capitalizedAlphabet, lowercaseAlphabet]];
+        });
+        
+        it(@"should be of class IDPClusterAlphabet", ^{
+            [[alphabet should] beKindOfClass:[IDPClusterAlphabet class]];
+        });
+        
+        it(@"should be of count 52", ^{
+            [[alphabet should] haveCountOf:52];
+        });
+        
+        it(@"should raise, when requesting object at index 53", ^{
+            [[theBlock(^{
+                [alphabet stringAtIndex:53];
+            }) should] raise];
+            
+            [[theBlock(^{
+                id a = alphabet[53];
+                [a description];
+            }) should] raise];
+        });
+        
+        it(@"should return @\"A-Za-z\" from - string", ^{
+            NSString *string = [NSString stringWithFormat:@"%@%@", [capitalizedAlphabet string], [lowercaseAlphabet string]];
+            [[[alphabet string] should] equal:string];
+        });
+    });
+    
+    context(@"when initializes with -initWithAlphabets: with alphabets in range 'A'-'Z', 'a'-'z'", ^{
+        IDPAlphabet *capitalizedAlphabet = [IDPAlphabet alphabetWithRange:IDPMakeAlphabetRange('A', 'Z')];
+        IDPAlphabet *lowercaseAlphabet = [IDPAlphabet alphabetWithRange:IDPMakeAlphabetRange('a', 'z')];
+        
+        beforeAll(^{
+            alphabet = [[IDPAlphabet alloc] initWithAlphabets:@[capitalizedAlphabet, lowercaseAlphabet]];
+        });
+        
+        it(@"should be of class IDPStringsAlphabet", ^{
+            [[alphabet should] beKindOfClass:[IDPClusterAlphabet class]];
+        });
+    });
+    
+    context(@"when initialized with +initWithStrings with array containing 'A' - 'z' when enumerated", ^{
+        NSRange capitalizedRange = IDPMakeAlphabetRange('A', 'Z');
+        NSRange lowercaseRange = IDPMakeAlphabetRange('a', 'z');
+        
+        
+        IDPAlphabet *capitalizedAlphabet = [IDPAlphabet alphabetWithRange:capitalizedRange];
+        IDPAlphabet *lowercaseAlphabet = [IDPAlphabet alphabetWithRange:lowercaseRange];
+        
+        beforeAll(^{
+            alphabet = [[IDPAlphabet alloc] initWithAlphabets:@[capitalizedAlphabet, lowercaseAlphabet]];
+        });
+        
+        it(@"shouldn't raise", ^{
+            [[theBlock(^{
+                for (id symbol in alphabet) {
+                    [symbol description];
+                }
+            }) shouldNot] raise];
+        });
+        
+        it(@"should return count of symbols equal to 'A'-'Z' + 'a'-'z' range", ^{
+            NSUInteger count = 0;
+            for (NSString *symbol in alphabet) {
+                [symbol description];
+                count++;
+            }
+            
+            [[theValue(count) should] equal:theValue([capitalizedAlphabet count] + [lowercaseAlphabet count])];
+        });
+        
+        it(@"should return symbols in range 'A'-'Z' + 'a'-'z'", ^{
+            NSMutableString *string = [NSMutableString stringWithString:[capitalizedAlphabet string]];
+            [string appendString:[lowercaseAlphabet string]];
+            
+            NSUInteger index = 0;
+            for (NSString *symbol in alphabet) {
+                [[symbol should] equal:[NSString stringWithFormat:@"%c", [string characterAtIndex:index]]];
+                index++;
+            }
+        });
+    });
+    
 });
 
 SPEC_END
