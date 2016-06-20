@@ -10,6 +10,6 @@
 
 @interface NSArray (IDPIndex)
 
-+ (NSArray *)arrayWithUniformIndexesCount:(NSUInteger)count;
++ (NSArray *)uniformIndexArrayWithCount:(NSUInteger)count;
 
 @end

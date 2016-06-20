@@ -10,6 +10,7 @@
 
 #import "IDPLinkedListSet.h"
 #import "IDPBinaryTreeSet.h"
+#import "IDPDynamicSet.h"
 
 #import "NSObject+IDPObject.h"
 
@@ -32,6 +33,10 @@
 
 + (instancetype)binaryTreeSetWithSet:(NSSet *)set {
     return [[[IDPBinaryTreeSet alloc] initBinrayTreeSetWithSet:set] autorelease];
+}
+
++ (instancetype)dynamicIndexSet {
+    return [IDPDynamicSet object];
 }
 
 #pragma mark -
@@ -58,15 +63,11 @@
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)addObjectsFromSet:(NSSet *)set {
-    [self doesNotRecognizeSelector:_cmd];
-}
-
 - (NSUInteger)indexOfObject:(id<IDPComparison>)object {
     __block NSUInteger resultIndex = NSNotFound;
     
     [self iterateObjectsWithBlock:^(id<IDPComparison> blockObject, NSUInteger index, BOOL *stop) {
-        if (NSOrderedSame == [blockObject compare:object]) {
+        if (NSOrderedSame == [blockObject compareToObject:object]) {
             resultIndex = index;
             *stop = YES;
         }
@@ -97,6 +98,10 @@
 }
 
 - (id<IDPComparison>)firstObject {
+    if ([self count] == 0) {
+        return nil;
+    }
+    
     return self[0];
 }
 
@@ -119,7 +124,7 @@
     return [[set copy] autorelease];
 }
 
-- (void)performBlockWithEachObject:(IDPProcessComparisonObject)block {
+- (void)performBlockWithEachObject:(IDPObjectBlock)block {
     if (!block) {
         return;
     }
@@ -129,7 +134,7 @@
     }];
 }
 
-- (void)iterateObjectsWithBlock:(IDPProcessComparisonObjectWithIndexStop)block {
+- (void)iterateObjectsWithBlock:(IDPArrayIteratrionBlock)block {
     if (!block) {
         return;
     }
@@ -151,7 +156,11 @@
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength
 {
-    return [self countByEnumeratingWithBlock:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength) {
+    return [self countByEnumeratingWithState:state
+                                     objects:stackbuf
+                                       count:resultLength
+                                       block:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength)
+    {
         if (0 != resultLength) {
             for (NSUInteger index = 0; index < resultLength; index++) {
                 stackbuf[index] = self[index + state->state];
@@ -159,14 +168,18 @@
         }
         
         state->itemsPtr = stackbuf;
-    } state:state objects:stackbuf count:resultLength];
+    }];
 }
 
-- (NSUInteger)countByEnumeratingWithBlock: (IDPEnumerationBlock)block
-                                    state:(NSFastEnumerationState *)state
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength
+                                    block:(IDPEnumerationBlock)block
 {
+    if (!block) {
+        return 0;
+    }
+    
     state->mutationsPtr = (unsigned long *)self;
     
     NSUInteger length = MIN(state->state + resultLength, [self count]);

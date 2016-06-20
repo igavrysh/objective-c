@@ -17,7 +17,7 @@
 @property (nonatomic, retain) IDPBinaryTreeNode *rightChild;
 
 + (instancetype)nodeWithObject:(id<IDPComparison>)object
-                         leftChild:(IDPBinaryTreeNode *)leftChild
-                        rightChild:(IDPBinaryTreeNode *)rightChild;
+                     leftChild:(IDPBinaryTreeNode *)leftChild
+                    rightChild:(IDPBinaryTreeNode *)rightChild;
 
 @end

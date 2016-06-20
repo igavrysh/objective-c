@@ -10,7 +10,9 @@
 
 @interface NSMutableArray (IDPIndex)
 
-- (void)addUniformIndexWithLowerBound:(NSUInteger)lowerBound
-                           upperBound:(NSUInteger)upperBound;
++ (NSMutableArray *)uniformIndexWithRange:(NSRange)indexRange;
+
++ (NSMutableArray *)uniformIndexWithLowerBound:(NSUInteger)lowerBound
+                                  upperBound:(NSUInteger)upperBound;
 
 @end

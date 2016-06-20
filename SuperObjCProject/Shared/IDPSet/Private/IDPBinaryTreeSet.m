@@ -27,10 +27,10 @@
 - (IDPBinaryTreeNode *)nodeWithObject:(id<IDPComparison>)object
                                  node:(IDPBinaryTreeNode *)node;
 
-- (void)addObjects:(id *)objects withIndicesRange:(NSRange)range;
+- (void)addObjects:(id *)objects withIndexRange:(NSRange)range;
 - (void)addNode:(IDPBinaryTreeNode *)node
       toObjects:(id *)objects
-withIndicesRange:(NSRange)range
+ withIndexRange:(NSRange)range
         counter:(NSUInteger *)counter;
 
 - (BOOL)containsObject:(id<IDPComparison>)object withNodeAsRoot:(IDPBinaryTreeNode *)node;
@@ -75,12 +75,11 @@ withIndicesRange:(NSRange)range
 
 - (void)addObjectsFromSet:(NSSet *)set {
     NSMutableArray *array = [[set allObjects] mutableCopy];
-    [array sortUsingComparator:
-     ^NSComparisonResult(id<IDPComparison> object1, id<IDPComparison> object2) {
-         return [object1 compare:object2];
+    [array sortUsingComparator:^NSComparisonResult(id<IDPComparison> object1, id<IDPComparison> object2) {
+         return [object1 compareToObject:object2];
      }];
     
-    NSArray *indexes = [NSArray arrayWithUniformIndexesCount:[set count]];
+    NSArray *indexes = [NSArray uniformIndexArrayWithCount:[set count]];
     for (NSNumber *index in indexes) {
         NSUInteger uIntIndex = [index unsignedIntegerValue];
         [self addObject:array[uIntIndex]];
@@ -108,14 +107,14 @@ withIndicesRange:(NSRange)range
         return NO;
     }
     
-    if (NSOrderedSame == [node.object compare:object]) {
+    if (NSOrderedSame == [node.object compareToObject:object]) {
         return YES;
     }
     
     BOOL leftNodeResult = [self containsObject:object withNodeAsRoot:node.leftChild];
     BOOL rightNodeResult = [self containsObject:object withNodeAsRoot:node.rightChild];
     
-    return leftNodeResult | rightNodeResult;
+    return leftNodeResult || rightNodeResult;
 }
 
 - (void)addObject:(id<IDPComparison>)object{
@@ -132,27 +131,36 @@ withIndicesRange:(NSRange)range
     
     IDPBinaryTreeNode *leftChild = node.leftChild;
     IDPBinaryTreeNode *rightChild = node.rightChild;
-    if (NSOrderedAscending == [object compare:node.object]) {
-        node.leftChild = [self nodeWithObject:object node:leftChild];
-    } else if (NSOrderedDescending == [object compare:node.object]) {
-        node.rightChild = [self nodeWithObject:object node:rightChild];
-    } else {
-        node.object = object;
-        return node;
+    
+    switch ([object compareToObject:node.object]) {
+        case NSOrderedAscending:
+            node.leftChild = [self nodeWithObject:object node:leftChild];
+            break;
+        
+        case NSOrderedDescending:
+            node.rightChild = [self nodeWithObject:object node:rightChild];
+            break;
+            
+        case NSOrderedSame:
+            node.object = object;
+            break;
+            
+        default:
+            break;
     }
     
     return node;
 }
 
-- (void)addObjects:(id *)objects withIndicesRange:(NSRange)range {
+- (void)addObjects:(id *)objects withIndexRange:(NSRange)range {
     memset(objects, 0, sizeof(objects) * range.length);
     NSUInteger counter = 0;
-    [self addNode:self.root toObjects:objects withIndicesRange:range counter:&counter];
+    [self addNode:self.root toObjects:objects withIndexRange:range counter:&counter];
 }
 
 - (void)addNode:(IDPBinaryTreeNode *)node
-        toObjects:(id *)objects
-withIndicesRange:(NSRange)range
+      toObjects:(id *)objects
+ withIndexRange:(NSRange)range
         counter:(NSUInteger *)counter
 {
     if (IDPRangeIsLowerToUIntegerNumber(range, *counter)) {
@@ -166,11 +174,11 @@ withIndicesRange:(NSRange)range
     *counter = *counter + 1;
     
     if (node.leftChild) {
-        [self addNode:node.leftChild toObjects:objects withIndicesRange:range counter:counter];
+        [self addNode:node.leftChild toObjects:objects withIndexRange:range counter:counter];
     }
     
     if (node.rightChild) {
-        [self addNode:node.rightChild toObjects:objects withIndicesRange:range counter:counter];
+        [self addNode:node.rightChild toObjects:objects withIndexRange:range counter:counter];
     }
 }
 
@@ -186,24 +194,17 @@ withIndicesRange:(NSRange)range
 #pragma mark -
 #pragma mark NSFastEnumeration
 
-- (NSUInteger)count1ByEnumeratingWithState:(NSFastEnumerationState *)state
-                                  objects:(id *)stackbuf
-                                    count:(NSUInteger)resultLength
-{
-    return [self countByEnumeratingWithBlock:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength) {
-        [self addObjects:stackbuf withIndicesRange:NSMakeRange(state->state, resultLength)];
-        
-        state->itemsPtr = stackbuf;
-    } state:state objects:stackbuf count:resultLength];
-}
-
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
                                           objects:(id *)stackbuf
                                             count:(NSUInteger)resultLength
 {
-    return [self countByEnumeratingWithBlock:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength) {
+    return [self countByEnumeratingWithState:state
+                                     objects:stackbuf
+                                       count:resultLength
+                                       block:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength)
+    {
         state->itemsPtr = &self.objects[state->state];
-    } state:state objects:stackbuf count:resultLength];
+    }];
 }
 
 @end

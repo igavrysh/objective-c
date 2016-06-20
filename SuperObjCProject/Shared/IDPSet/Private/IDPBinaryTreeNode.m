@@ -20,14 +20,26 @@
 #pragma mark Class methods
 
 + (instancetype)nodeWithObject:(id<IDPComparison>)object
-                         leftChild:(IDPBinaryTreeNode *)leftChild
-                        rightChild:(IDPBinaryTreeNode *)rightChild {
+                     leftChild:(IDPBinaryTreeNode *)leftChild
+                    rightChild:(IDPBinaryTreeNode *)rightChild
+{
     IDPBinaryTreeNode *node = [IDPBinaryTreeNode object];
     node.object = object;
     node.leftChild = leftChild;
     node.rightChild = rightChild;
     
     return node;
+}
+
+#pragma mark -
+#pragma mark Initializations and Deallocations
+
+- (void)dealloc {
+    self.object = nil;
+    self.leftChild = nil;
+    self.rightChild = nil;
+    
+    [super dealloc];
 }
 
 @end

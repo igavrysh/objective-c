@@ -37,7 +37,7 @@
 #pragma mark
 #pragma mark - Public Methods
 
-- (id<IDPComparison>)getFirstObject {
+- (id<IDPComparison>)firstObject {
     return self.head.object;
 }
 
@@ -46,9 +46,8 @@
 
 - (void)addObjectsFromSet:(NSSet *)set  {
     NSMutableArray *array = [[set allObjects] mutableCopy];
-    [array sortUsingComparator:
-     ^NSComparisonResult(id<IDPComparison> object1, id<IDPComparison> object2) {
-         return [object1 compare:object2];
+    [array sortUsingComparator:^NSComparisonResult(id<IDPComparison> object1, id<IDPComparison> object2) {
+         return [object1 compareToObject:object2];
      }];
     
     for (id<IDPComparison> object in array) {
@@ -74,7 +73,11 @@
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength
 {
-    return[self countByEnumeratingWithBlock:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength) {
+    return [self countByEnumeratingWithState:state
+                                     objects:stackbuf
+                                       count:resultLength
+                                       block:^(NSFastEnumerationState *state, id *stackbuf, NSUInteger resultLength)
+    {
         IDPLinkedListNode *currentNode = (IDPLinkedListNode *)state->extra[0];
         if (!currentNode) {
             currentNode = self.head;
@@ -90,7 +93,7 @@
         }
         
         state->itemsPtr = stackbuf;
-    } state:state objects:stackbuf count:resultLength];
+    }];
 }
 
 @end

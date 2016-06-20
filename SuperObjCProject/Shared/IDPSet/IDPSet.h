@@ -19,6 +19,8 @@ typedef void(^IDPEnumerationBlock)(NSFastEnumerationState * state, id *stackbuf,
 + (instancetype)linkedListSetWithSet:(NSSet *)set;
 + (instancetype)binaryTreeSetWithSet:(NSSet *)set;
 
++ (instancetype)dynamicIndexSet;
+
 - (NSSet *)set;
 
 - (instancetype)initWithSet:(NSSet *)set;
@@ -27,7 +29,6 @@ typedef void(^IDPEnumerationBlock)(NSFastEnumerationState * state, id *stackbuf,
 
 - (BOOL)containsObject:(id<IDPComparison>)object;
 
-// the method should be overriden
 - (id)objectAtIndexedSubscript:(NSUInteger)index;
 
 - (id)objectAtIndex:(NSUInteger)index;
@@ -36,12 +37,12 @@ typedef void(^IDPEnumerationBlock)(NSFastEnumerationState * state, id *stackbuf,
 - (id<IDPComparison>)firstObject;
 - (id<IDPComparison>)lastObject;
 
-- (void)performBlockWithEachObject:(IDPProcessComparisonObject)block;
-- (void)iterateObjectsWithBlock:(IDPProcessComparisonObjectWithIndexStop)block;
+- (void)performBlockWithEachObject:(IDPObjectBlock)block;
+- (void)iterateObjectsWithBlock:(IDPArrayIteratrionBlock)block;
 
-- (NSUInteger)countByEnumeratingWithBlock:(IDPEnumerationBlock)block
-                                    state:(NSFastEnumerationState *)state
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
                                   objects:(id *)stackbuf
-                                    count:(NSUInteger)resultLength;
+                                    count:(NSUInteger)resultLength
+                                    block:(IDPEnumerationBlock)block;
 
 @end

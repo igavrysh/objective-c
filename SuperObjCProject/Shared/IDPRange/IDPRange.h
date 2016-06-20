@@ -15,7 +15,7 @@ BOOL IDPRangeContainsUIntegerNumber(NSRange range, NSUInteger number) {
 
 static inline
 BOOL IDPRangeIsLowerToUIntegerNumber(NSRange range, NSUInteger number) {
-    return range.location + range.length < number;
+    return (range.location + range.length) < number;
 }
 
 static inline

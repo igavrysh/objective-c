@@ -16,9 +16,8 @@
 #pragma mark -
 #pragma mark Class Methods
 
-+ (NSArray *)arrayWithUniformIndexesCount:(NSUInteger)count {
-    NSMutableArray *array = [NSMutableArray object];
-    [array addUniformIndexWithLowerBound:0 upperBound:count - 1];
++ (NSArray *)uniformIndexArrayWithCount:(NSUInteger)count {
+    NSMutableArray *array = [NSMutableArray uniformIndexWithLowerBound:0 upperBound:count - 1];
     
     return [[array copy] autorelease];
 }
