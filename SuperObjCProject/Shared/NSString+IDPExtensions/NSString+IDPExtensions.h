@@ -8,24 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "IDPAlphabet.h"
+
 @interface NSString (IDPExtensions)
-
-// arabian
-+ (instancetype)alphanumericAlphabet;
-
-// english
-+ (instancetype)numericAlphabet;
-
-// english
-+ (instancetype)lowercaseLetterAlphabet;
-
-// english
-+ (instancetype)capitalizedLetterAlphabet;
-
-// english
-+ (instancetype)letterAlphabet;
-
-+ (instancetype)alphabetWithUnicodeRange:(NSRange)range;
 
 // returns random string with English alphanumeric characters of random length of up to 30 symbols with the class of receiver
 + (instancetype)randomString;
@@ -34,7 +19,7 @@
 + (instancetype)randomStringWithLength:(NSUInteger)length;
 
 // returns string with characters from alphabet of length with the class of receiver
-+ (instancetype)randomStringWithLength:(NSUInteger)length alphabet:(NSString *)alphabet;
++ (instancetype)randomStringWithLength:(NSUInteger)length alphabet:(IDPAlphabet *)alphabet;
 
 - (NSArray *)symbols;
 

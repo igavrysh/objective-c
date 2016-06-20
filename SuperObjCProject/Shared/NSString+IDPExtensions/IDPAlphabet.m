@@ -44,6 +44,30 @@ NSRange IDPMakeAlphabetRange(unichar value1, unichar value2) {
     return [self alphabetWithStrings:[string symbols]];
 }
 
++ (instancetype)alphanumericAlphabet {
+    return [IDPAlphabet alphabetWithAlphabets:@[[IDPAlphabet letterAlphabet], [IDPAlphabet numericAlphabet]]];
+}
+
++ (instancetype)numericAlphabet {
+    return [IDPAlphabet alphabetWithRange:NSMakeRange('0', '9' - '0' + 1)];
+}
+
++ (instancetype)lowercaseLetterAlphabet {
+    return [IDPAlphabet alphabetWithRange:NSMakeRange('a', 'z' - 'a' + 1)];
+}
+
++ (instancetype)capitalizedLetterAlphabet {
+    return [IDPAlphabet alphabetWithRange:NSMakeRange('A', 'Z' - 'A' + 1)];
+}
+
++ (instancetype)letterAlphabet {
+    return [IDPAlphabet alphabetWithAlphabets:@[[IDPAlphabet lowercaseLetterAlphabet], [IDPAlphabet capitalizedLetterAlphabet]]];
+}
+
++ (instancetype)alphabetWithUnicodeRange:(NSRange)range {
+    return [IDPAlphabet alphabetWithRange:range];
+}
+
 #pragma mark
 #pragma mark Initializations and Deallocations
 

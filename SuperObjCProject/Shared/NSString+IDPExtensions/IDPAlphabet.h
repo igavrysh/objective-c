@@ -18,6 +18,23 @@ NSRange IDPMakeAlphabetRange(unichar value1, unichar value2);
 + (instancetype)alphabetWithAlphabets:(NSArray *)alphabets;
 + (instancetype)alphabetWithSymbols:(NSString *)string;
 
+// arabian
++ (instancetype)alphanumericAlphabet;
+
+// english
++ (instancetype)numericAlphabet;
+
+// english
++ (instancetype)lowercaseLetterAlphabet;
+
+// english
++ (instancetype)capitalizedLetterAlphabet;
+
+// english
++ (instancetype)letterAlphabet;
+
++ (instancetype)alphabetWithUnicodeRange:(NSRange)range;
+
 - (instancetype)initWithRange:(NSRange)range;
 - (instancetype)initWithAlphabets:(NSArray *)alphabets;
 - (instancetype)initWithStrings:(NSArray *)strings;
