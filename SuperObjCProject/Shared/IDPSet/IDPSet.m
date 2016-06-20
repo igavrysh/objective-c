@@ -62,10 +62,6 @@
     [self doesNotRecognizeSelector:_cmd];
 }
 
-- (id)objectAtIndex:(NSUInteger)index {
-    return self[index];
-}
-
 - (NSUInteger)indexOfObject:(id<IDPComparison>)object {
     __block NSUInteger resultIndex = NSNotFound;
     
@@ -77,6 +73,10 @@
     }];
     
     return resultIndex;
+}
+
+- (id)objectAtIndex:(NSUInteger)index {
+    return self[index];
 }
 
 - (id<IDPComparison>)objectAtIndexedSubscript:(NSUInteger)index {

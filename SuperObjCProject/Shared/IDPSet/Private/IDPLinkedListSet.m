@@ -45,7 +45,13 @@
 #pragma mark - Private Methods
 
 - (void)addObjectsFromSet:(NSSet *)set  {
-    for (id<IDPComparison> object in set) {
+    NSMutableArray *array = [[set allObjects] mutableCopy];
+    [array sortUsingComparator:
+     ^NSComparisonResult(id<IDPComparison> object1, id<IDPComparison> object2) {
+         return [object1 compare:object2];
+     }];
+    
+    for (id<IDPComparison> object in array) {
         [self addObject:object];
     }
 }
