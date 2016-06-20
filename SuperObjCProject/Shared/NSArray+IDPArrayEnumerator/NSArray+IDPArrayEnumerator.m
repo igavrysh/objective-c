@@ -35,7 +35,7 @@
         return;
     }
     
-    [self enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
+    [self enumerateObjectsUsingBlock:^(id object, NSUInteger idex, BOOL *stop) {
         block(object);
     }];
 }

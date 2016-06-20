@@ -167,7 +167,9 @@ NSRange IDPMakeAlphabetRange(unichar value1, unichar value2) {
 //    }
 //}
 
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id *)stackbuf count:(NSUInteger)resultLength
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
+                                  objects:(id *)stackbuf
+                                    count:(NSUInteger)resultLength
 {
     state->mutationsPtr = (unsigned long *)self;
     
