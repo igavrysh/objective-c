@@ -92,6 +92,14 @@ withIndicesRange:(NSRange)range
     return [self containsObject:object withNodeAsRoot:self.root];
 }
 
+- (id)objectAtIndexedSubscript:(NSUInteger)index {
+    if (index >= [self count]) {
+        return nil;
+    }
+    
+    return self.objects[index];
+}
+
 #pragma mark -
 #pragma mark Private Methods
 
@@ -178,7 +186,7 @@ withIndicesRange:(NSRange)range
 #pragma mark -
 #pragma mark NSFastEnumeration
 
-- (NSUInteger)countVersion1ByEnumeratingWithState:(NSFastEnumerationState *)state
+- (NSUInteger)count1ByEnumeratingWithState:(NSFastEnumerationState *)state
                                   objects:(id *)stackbuf
                                     count:(NSUInteger)resultLength
 {
