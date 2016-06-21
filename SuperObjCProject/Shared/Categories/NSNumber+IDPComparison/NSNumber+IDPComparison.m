@@ -13,8 +13,12 @@
 #pragma mark -
 #pragma mark Public methods
 
-- (NSComparisonResult)compareToObject:(NSNumber *)number {
-    return [self compare:number];
+- (NSComparisonResult)compareToObject:(id)object {
+    if ([self class] != [object class]) {
+        return NSOrderedDescending;
+    }
+    
+    return [self compare:object];
 }
 
 @end

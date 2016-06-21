@@ -19,10 +19,9 @@
 
 - (instancetype)initWithObjectsCount:(NSUInteger)count {
     self = [super init];
-    self.count = sqrt(count);
+    self.count = count;
     
     return self;
-    
 }
 
 #pragma mark -
