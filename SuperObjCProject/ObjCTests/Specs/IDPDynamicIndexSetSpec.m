@@ -10,7 +10,7 @@
 
 #import "IDPDynamicIndexSet.h"
 
-#import "NSNumber+IDPNumber.h"
+#import "NSNumber+IDPComparison.h"
 
 SPEC_BEGIN(IDPDynamicIndexSetSpec);
 

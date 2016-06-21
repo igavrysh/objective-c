@@ -1,12 +1,12 @@
 //
-//  NSNumber+IDPNumber.m
+//  NSNumber+IDPComparison.m
 //  SuperObjCProject
 //
 //  Created by Ievgen on 6/20/16.
 //  Copyright © 2016 1mlndollarsasset. All rights reserved.
 //
 
-#import "NSNumber+IDPNumber.h"
+#import "NSNumber+IDPComparison.h"
 
 @implementation NSNumber (IDPNumber)
 
