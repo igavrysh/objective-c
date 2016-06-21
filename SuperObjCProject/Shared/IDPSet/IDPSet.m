@@ -10,7 +10,7 @@
 
 #import "IDPLinkedListSet.h"
 #import "IDPBinaryTreeSet.h"
-#import "IDPDynamicSet.h"
+#import "IDPDynamicIndexSet.h"
 
 #import "NSObject+IDPObject.h"
 
@@ -35,8 +35,8 @@
     return [[[IDPBinaryTreeSet alloc] initBinrayTreeSetWithSet:set] autorelease];
 }
 
-+ (instancetype)dynamicIndexSet {
-    return [IDPDynamicSet object];
++ (instancetype)dynamicIndexSetWithObjectsCount:(NSUInteger)count {
+    return [[[IDPDynamicIndexSet alloc] initWithObjectsCount:count] autorelease];
 }
 
 #pragma mark -

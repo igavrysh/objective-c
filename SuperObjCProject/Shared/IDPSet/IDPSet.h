@@ -18,8 +18,7 @@ typedef void(^IDPEnumerationBlock)(NSFastEnumerationState * state, id *stackbuf,
 + (instancetype)setWithSet:(NSSet *)set;
 + (instancetype)linkedListSetWithSet:(NSSet *)set;
 + (instancetype)binaryTreeSetWithSet:(NSSet *)set;
-
-+ (instancetype)dynamicIndexSet;
++ (instancetype)dynamicIndexSetWithObjectsCount:(NSUInteger)count;
 
 - (NSSet *)set;
 
