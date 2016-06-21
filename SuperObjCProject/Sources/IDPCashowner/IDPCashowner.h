@@ -9,18 +9,18 @@
 #import <Foundation/Foundation.h>
 
 
-@class IDPCashGiver;
+@protocol IDPCashGiver;
 
 @protocol IDPCashTaker <NSObject>
 
-- (void)cashGiver:(IDPCashGiver*)cashGiver didReceivedCash:(float)cash;
+- (void)cashGiver:(id<IDPCashGiver>)cashGiver didReceivedCash:(float)cash;
 
 @optional
-- (BOOL)cashGiverShouldReceiveCash:(IDPCashGiver *)cashGiver;
+- (BOOL)cashGiverShouldReceiveCash:(id<IDPCashGiver>)cashGiver;
 
 @end
 
-@interface IDPCashGiver : NSObject
+@protocol IDPCashGiver
 @property (nonatomic, assign) float cash;
 
 @property (nonatomic, assign) id<IDPCashTaker> cashTaker;
