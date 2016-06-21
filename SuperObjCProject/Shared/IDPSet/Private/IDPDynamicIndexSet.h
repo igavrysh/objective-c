@@ -1,5 +1,5 @@
 //
-//  IDPDynamicSet.h
+//  IDPDynamicIndexSet.h
 //  SuperObjCProject
 //
 //  Created by Ievgen on 6/20/16.
@@ -8,6 +8,8 @@
 
 #import "IDPSet.h"
 
-@interface IDPDynamicSet : IDPSet
+@interface IDPDynamicIndexSet : IDPSet
+
+- (instancetype)initWithObjectsCount:(NSUInteger)count;
 
 @end

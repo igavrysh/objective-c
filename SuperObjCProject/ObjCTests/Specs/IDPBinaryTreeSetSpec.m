@@ -12,7 +12,7 @@
 #import "IDPBinaryTreeSet.h"
 
 #import "NSObject+IDPObject.h"
-#import "NSNumber+IDPNumber.h"
+#import "NSNumber+IDPComparison.h"
 
 SPEC_BEGIN(IDPBinaryTreeSpec);
 

@@ -1,5 +1,5 @@
 //
-//  NSNumber+IDPNumber.h
+//  NSNumber+IDPComparison.h
 //  SuperObjCProject
 //
 //  Created by Ievgen on 6/20/16.
