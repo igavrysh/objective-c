@@ -22,6 +22,8 @@
 - (void)processObject:(IDPCar *)car {
     [self cleanCar:car];
     [self receiveCashFromCashOwner:car];
+    
+    [self.workerDelegate didFinishProcessingObject:self];
 }
 
 #pragma mark -
@@ -30,6 +32,13 @@
 - (void)cleanCar:(IDPCar *)car {
     car.dirty = NO;
     NSLog(@"Car is washed");
+}
+
+#pragma mark -
+#pragma mark Delegation
+
+- (void)didFinishProcessingObject:(id<IDPCashOwner>)cashOwner {
+    [self processObject:cashOwner];
 }
 
 @end

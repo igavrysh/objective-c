@@ -98,14 +98,20 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
     [administrativeBuilding addRoom:[IDPRoom roomWithCapacity:kIDPAdminRoomCapacity]];
     self.administrativeBuilding = administrativeBuilding;
     
-    [self addDirector:[IDPDirector object]];
-    [self addAccountant:[IDPAccountant object]];
-    
     IDPBuilding *productionBuilding = [IDPBuilding object];
     [productionBuilding addRoom:[IDPCarwashRoom roomWithCapacity:kIDPProdRoomCapacity]];
     self.productionBuilding = productionBuilding;
     
-    [self addCarwasher:[IDPCarwasher object]];
+    IDPDirector *director = [IDPDirector object];
+    IDPAccountant *accountant = [IDPAccountant object];
+    IDPCarwasher *carwasher = [IDPCarwash object];
+    
+    accountant.workerDelegate = director;
+    carwasher.workerDelegate = accountant;
+    
+    [self addDirector:director];
+    [self addAccountant:accountant];
+    [self addCarwasher:carwasher];
 }
 
 #pragma mark -

@@ -8,31 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol IDPCashOwner;
 
-@protocol IDPCashGiver;
+@protocol IDPWorkerDelegate <NSObject>
 
-@protocol IDPCashTaker <NSObject>
-
-- (void)cashGiver:(id<IDPCashGiver>)cashGiver didReceivedCash:(float)cash;
+- (void)didFinishProcessingObject:(id<IDPCashOwner>)cashOwner;
 
 @optional
-- (BOOL)cashGiverShouldReceiveCash:(id<IDPCashGiver>)cashGiver;
+- (BOOL)cashOwnerShouldProcessObject:(id<IDPCashOwner>)cashOwner;
 
 @end
 
-@protocol IDPCashGiver
-@property (nonatomic, assign) float cash;
-
-@property (nonatomic, assign) id<IDPCashTaker> cashTaker;
-
-@end
-
-
-
-/*
 @protocol IDPCashOwner <NSObject>
-
 @property (nonatomic, readonly) float cash;
+@property (nonatomic, assign) id<IDPWorkerDelegate> workerDelegate;
 
 @optional
 - (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object;
@@ -44,7 +33,3 @@
 - (float)giveCash:(float)cash;
 
 @end
- */
-
-
-

@@ -16,6 +16,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 @interface IDPWorker ()
 @property (nonatomic, assign) float cash;
+@property (nonatomic, assign) id<IDPWorkerDelegate> workerDelegate;
 
 @end
 
