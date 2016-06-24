@@ -16,7 +16,6 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 @interface IDPWorker ()
 @property (nonatomic, assign) float cash;
-@property (nonatomic, assign) id<IDPWorkerDelegate> workerDelegate;
 
 @end
 
@@ -33,6 +32,21 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     self.experience = IDPRandomUIntWithMaxValue(kIDPWorkerMaxExperience);
     
     return self;
+}
+
+#pragma mark -
+#pragma mark Accessors
+
+- (void)setWorkerDelegate:(IDPWorker *)workerDelegate {
+    if (_workerDelegate != workerDelegate) {
+        [workerDelegate retain];
+        
+        if (!_workerDelegate) {
+            [_workerDelegate release];
+        }
+        
+        _workerDelegate = workerDelegate;
+    }
 }
 
 #pragma mark -
@@ -60,6 +74,13 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     self.cash = cashOwned - cashToGive;
     
     return cashToGive;
+}
+
+#pragma mark -
+#pragma mark IDPWorkerDelegate
+
+- (void)workerDidFinishProcessingObject:(IDPWorker *)worker {
+    [self processObject:worker];
 }
 
 @end

@@ -10,6 +10,6 @@
 
 #import "IDPCar.h"
 
-@interface IDPCarwasher : IDPWorker <IDPWorkerDelegate>
+@interface IDPCarwasher : IDPWorker
 
 @end

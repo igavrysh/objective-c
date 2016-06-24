@@ -47,6 +47,10 @@
     }
     
     return [self objectAtIndex:IDPRandomUIntWithMaxValue(count - 1)];
+    
+    [self filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id  _Nonnull evaluatedObject, NSDictionary<NSString *,id> * _Nullable bindings) {
+        <#code#>
+    }]
 }
 
 @end

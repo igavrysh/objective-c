@@ -9,11 +9,14 @@
 #import "IDPCreature.h"
 
 #import "IDPCashOwner.h"
+#import "IDPWorkerDelegate.h"
 
-@interface IDPWorker : IDPCreature <IDPCashOwner>
-@property (nonatomic, assign) float salary;
-@property (nonatomic, assign) float capital;
-@property (nonatomic, assign) NSUInteger experience;
+@interface IDPWorker : IDPCreature <IDPCashOwner, IDPWorkerDelegate>
+@property (nonatomic, retain) id<IDPWorkerDelegate> workerDelegate;
+
+@property (nonatomic, assign) float                 salary;
+@property (nonatomic, assign) float                 capital;
+@property (nonatomic, assign) NSUInteger            experience;
 
 - (void)processObject:(id<IDPCashOwner>) object;
 

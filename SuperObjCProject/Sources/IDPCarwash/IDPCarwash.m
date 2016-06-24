@@ -11,23 +11,14 @@
 #import "IDPRandom.h"
 #import "IDPQueue.h"
 #import "IDPCar.h"
-#import "IDPRoom.h"
-#import "IDPBuilding.h"
 #import "IDPCarwasher.h"
 #import "IDPAccountant.h"
 #import "IDPDirector.h"
-#import "IDPCarwashRoom.h"
 
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 
-static const NSUInteger kIDPProdRoomCapacity = 10;
-static const NSUInteger kIDPAdminRoomCapacity = 3;
-
 @interface IDPCarwash ()
-@property (nonatomic, retain) IDPBuilding *productionBuilding;
-@property (nonatomic, retain) IDPBuilding *administrativeBuilding;
-
 @property (nonatomic, retain) NSMutableArray *washers;
 @property (nonatomic, retain) NSMutableArray *accountants;
 @property (nonatomic, retain) NSMutableArray *directors;
@@ -51,7 +42,7 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
 - (void)addDirector:(IDPDirector *)director;
 - (void)removeDirector;
 
-- (BOOL)addWorker:(IDPWorker *)worker toArray:(NSMutableArray *)array building:(IDPBuilding *)building;
+- (BOOL)addWorker:(IDPWorker *)worker toArray:(NSMutableArray *)array;
 - (void)removeWorker:(IDPWorker *)worker;
 - (void)removeWorkersInArray:(NSMutableArray *)workers;
 @end
@@ -72,9 +63,6 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
     self.accountants = nil;
     self.directors = nil;
     
-    self.productionBuilding = nil;
-    self.administrativeBuilding = nil;
-    
     self.carsQueue = nil;
     
     [super dealloc];
@@ -94,14 +82,6 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
 }
 
 - (void)initCarwashStructure {
-    IDPBuilding *administrativeBuilding = [IDPBuilding object];
-    [administrativeBuilding addRoom:[IDPRoom roomWithCapacity:kIDPAdminRoomCapacity]];
-    self.administrativeBuilding = administrativeBuilding;
-    
-    IDPBuilding *productionBuilding = [IDPBuilding object];
-    [productionBuilding addRoom:[IDPCarwashRoom roomWithCapacity:kIDPProdRoomCapacity]];
-    self.productionBuilding = productionBuilding;
-    
     IDPDirector *director = [IDPDirector object];
     IDPAccountant *accountant = [IDPAccountant object];
     IDPCarwasher *carwasher = [IDPCarwash object];
@@ -136,14 +116,7 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
         
         IDPCarwasher *washer = [self freeWasher];
         [washer processObject:currentCar];
-        
-        IDPAccountant *accountant = [self freeAccountant];
-        [accountant processObject:washer];
-        
-        IDPDirector *director = [self freeDirector];
-        [director processObject:accountant];
     }
-    
 }
 
 #pragma mark -
@@ -162,7 +135,7 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
 }
 
 - (void)addCarwasher:(IDPCarwasher *)washer {
-    [self addWorker:washer toArray:self.washers building:self.productionBuilding];
+    [self addWorker:washer toArray:self.washers];
 }
 
 - (void)removeCarwasher:(IDPCarwasher *)washer {
@@ -174,7 +147,7 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
 }
 
 - (void)addAccountant:(IDPAccountant *)accountant {
-    [self addWorker:accountant toArray:self.accountants building:self.administrativeBuilding];
+    [self addWorker:accountant toArray:self.accountants];
 }
 
 - (void)removeAccountant:(IDPCarwasher *)accountant {
@@ -190,7 +163,7 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
         return;
     }
     
-    [self addWorker:director toArray:self.directors building:self.administrativeBuilding];
+    [self addWorker:director toArray:self.directors];
 }
 
 - (void)removeDirector {
@@ -201,10 +174,8 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
     [self removeWorker:self.directors[0]];
 }
 
-- (BOOL)addWorker:(IDPWorker *)worker toArray:(NSMutableArray *)array building:(IDPBuilding *)building {
-    if ([building addWorker:worker]) {
-        [array addObject:worker];
-    }
+- (BOOL)addWorker:(IDPWorker *)worker toArray:(NSMutableArray *)array{
+    [array addObject:worker];
     
     return NO;
 }
@@ -213,9 +184,6 @@ static const NSUInteger kIDPAdminRoomCapacity = 3;
     if (!worker) {
         return;
     }
-    
-    [self.productionBuilding removeWorker:worker];
-    [self.administrativeBuilding removeWorker:worker];
     
     [self.directors removeObject:worker];
     [self.washers removeObject:worker];

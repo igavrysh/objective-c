@@ -23,7 +23,7 @@
     [self cleanCar:car];
     [self receiveCashFromCashOwner:car];
     
-    [self.workerDelegate didFinishProcessingObject:self];
+    [self.workerDelegate workerDidFinishProcessingObject:self];
 }
 
 #pragma mark -
@@ -34,11 +34,5 @@
     NSLog(@"Car is washed");
 }
 
-#pragma mark -
-#pragma mark Delegation
-
-- (void)didFinishProcessingObject:(id<IDPCashOwner>)cashOwner {
-    [self processObject:cashOwner];
-}
 
 @end

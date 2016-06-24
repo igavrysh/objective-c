@@ -8,28 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol IDPCashOwner;
-
-@protocol IDPWorkerDelegate <NSObject>
-
-- (void)didFinishProcessingObject:(id<IDPCashOwner>)cashOwner;
-
-@optional
-- (BOOL)cashOwnerShouldProcessObject:(id<IDPCashOwner>)cashOwner;
-
-@end
+#import "IDPWorker.h"
 
 @protocol IDPCashOwner <NSObject>
 @property (nonatomic, readonly) float cash;
-@property (nonatomic, assign) id<IDPWorkerDelegate> workerDelegate;
 
-@optional
 - (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object;
-
 - (void)receiveCash:(float)cash;
-
 - (float)giveAllCash;
-
 - (float)giveCash:(float)cash;
 
 @end
