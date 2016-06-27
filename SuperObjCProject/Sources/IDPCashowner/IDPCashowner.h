@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "IDPWorker.h"
-
 @protocol IDPCashOwner <NSObject>
 @property (nonatomic, readonly) float cash;
 

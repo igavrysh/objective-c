@@ -37,23 +37,15 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark -
 #pragma mark Accessors
 
-- (void)setWorkerDelegate:(IDPWorker *)workerDelegate {
-    if (_workerDelegate != workerDelegate) {
-        [workerDelegate retain];
-        
-        if (!_workerDelegate) {
-            [_workerDelegate release];
-        }
-        
-        _workerDelegate = workerDelegate;
-    }
-}
-
 #pragma mark -
 #pragma mark Public Methods
 
 - (void)processObject:(id<IDPCashOwner>) object {
+    self.state = IDPWorkerBusy;
+    
     [self receiveCashFromCashOwner:object];
+    
+    self.state = IDPWorkerFree;
 }
 
 - (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object {
@@ -81,6 +73,25 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 - (void)workerDidFinishProcessingObject:(IDPWorker *)worker {
     [self processObject:worker];
+}
+
+#pragma mark -
+#pragma mark Overloaded Methods
+
+- (SEL)selectorForState:(NSUInteger)state {
+    switch (state) {
+        case IDPWorkerBusy:
+            return @selector(workerDidBecomeBusy:);
+            
+        case IDPWorkerFree:
+            return @selector(workerDidBecomeFree:);
+            
+        case IDPWorkerPending:
+            return @selector(workerDidBecomePending:);
+            
+        default:
+            return [super selectorForState:state];
+    }
 }
 
 @end

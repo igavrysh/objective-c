@@ -20,10 +20,12 @@
 #pragma mark Public Methods
 
 - (void)processObject:(IDPCar *)car {
+    self.state = IDPWorkerBusy;
+    
     [self cleanCar:car];
     [self receiveCashFromCashOwner:car];
     
-    [self.workerDelegate workerDidFinishProcessingObject:self];
+    self.state = IDPWorkerPending;
 }
 
 #pragma mark -

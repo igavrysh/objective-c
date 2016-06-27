@@ -8,6 +8,6 @@
 
 #import "IDPWorker.h"
 
-@interface IDPDirector : IDPWorker
+@interface IDPDirector : IDPWorker <IDPWorkerObserver>
 
 @end

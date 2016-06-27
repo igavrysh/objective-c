@@ -22,8 +22,14 @@
 #pragma mark Public Methods
 
 - (void)processObject:(IDPAccountant *)accountant {
-    [self makeProfit];
+    self.state = IDPWorkerBusy;
+    
     [self receiveCashFromCashOwner:accountant];
+    
+    accountant.state = IDPWorkerFree;
+    [self makeProfit];
+    
+    self.state = IDPWorkerFree;
 }
 
 #pragma mark -
@@ -31,6 +37,20 @@
 
 - (void)makeProfit {
     NSLog(@"Profit is made");
+}
+
+#pragma mark -
+#pragma mark Overloaded Methods
+
+- (void)workerDidBecomeFree:(IDPAccountant *)accountant {
+}
+
+- (void)workerDidBecomeBusy:(IDPAccountant *)accountant {
+}
+
+- (void)workerDidBecomePending:(IDPAccountant *)accountant {
+    [self processObject:accountant];
+    
 }
 
 @end

@@ -22,10 +22,14 @@
 #pragma mark Public Methods
 
 - (void)processObject:(IDPCarwasher *)washer {
-    [self calculateProfit];
-    [self receiveCashFromCashOwner:washer];
+    self.state = IDPWorkerBusy;
     
-    [self.workerDelegate workerDidFinishProcessingObject:self];
+    [self receiveCashFromCashOwner:washer];
+    washer.state = IDPWorkerFree;
+    
+    [self calculateProfit];
+    
+    self.state = IDPWorkerPending;
 }
 
 #pragma mark -
@@ -33,6 +37,21 @@
 
 - (void)calculateProfit {
     NSLog(@"Cash is calculated");
+}
+
+#pragma mark -
+#pragma mark Overloaded Methods
+
+- (void)workerDidBecomeFree:(IDPCarwasher *)carwasher {
+    
+}
+
+- (void)workerDidBecomeBusy:(IDPCarwasher *)carwasher {
+    
+}
+
+- (void)workerDidBecomePending:(IDPWorker *)carwasher {
+    [self processObject:carwasher];
 }
 
 

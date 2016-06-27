@@ -29,9 +29,8 @@ const NSUInteger kIDPCarwashersCount = 10;
 
 - (void)initCarwashStructure;
 
-- (IDPCarwasher *)freeWasher;
-- (IDPAccountant *)freeAccountant;
-- (IDPDirector *)freeDirector;
+- (IDPWorker *)freeWorkerFromWorkers:(NSArray *)workers;
+- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher;
 @end
 
 @implementation IDPCarwash
@@ -74,12 +73,12 @@ const NSUInteger kIDPCarwashersCount = 10;
     
     self.carwashers = [[[NSArray objectsWithCount:kIDPCarwashersCount block:^id{
         IDPCarwasher *carwasher = [IDPCarwasher object];
-        carwasher.workerDelegate = accountant;
+        [carwasher addObserver:accountant];
         
         return carwasher;
     }] mutableCopy] autorelease];
     
-    accountant.workerDelegate = director;
+    [accountant addObserver:director];
     [self.accountants addObject:accountant];
     [self.directors addObject:director];
 }
@@ -98,30 +97,44 @@ const NSUInteger kIDPCarwashersCount = 10;
     [self.carsQueue enqueue:car];
     
     while (![self isQueueEmpty]) {
-        IDPCar *currentCar = [self.carsQueue dequeue];
-        
-        if (!currentCar) {
-            return;
-        }
-        
-        IDPCarwasher *washer = [self freeWasher];
-        [washer processObject:currentCar];
+        [self assignWorkToCarwasher:(IDPCarwasher *)[self freeWorkerFromWorkers:self.carwashers]];
     }
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
-- (IDPCarwasher *)freeWasher {
-    return [self.carwashers randomObject];
+- (IDPWorker *)freeWorkerFromWorkers:(NSArray *)workers {
+    id freeWorkerFilter = ^BOOL(IDPWorker* worker, NSDictionary<NSString *,id> *bindings) {
+        return worker.state == IDPWorkerFree;
+    };
+    
+    NSArray *freeWorkers = [workers filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:freeWorkerFilter]];
+    
+    return [freeWorkers count] ? freeWorkers[0] : nil;
 }
 
-- (IDPAccountant *)freeAccountant {
-    return [self.accountants randomObject];
+- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher {
+    IDPCar *currentCar = [self.carsQueue dequeue];
+    
+    if (!currentCar) {
+        return;
+    }
+    
+    [carwasher processObject:currentCar];
 }
 
-- (IDPDirector *)freeDirector {
-    return [self.directors randomObject];
+#pragma mark -
+#pragma mark Overloaded Methods
+
+- (void)workerDidBecomeFree:(IDPCarwasher *)carwasher {
+    [self assignWorkToCarwasher:carwasher];
+}
+
+- (void)workerDidBecomeBusy:(IDPCarwasher *)carwasher {
+}
+
+- (void)workerDidBecomePending:(IDPWorker *)carwasher {
 }
 
 @end

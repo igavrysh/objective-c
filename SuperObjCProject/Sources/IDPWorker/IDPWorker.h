@@ -6,14 +6,25 @@
 //  Copyright (c) 2016 1mlndollarsasset. All rights reserved.
 //
 
-#import "IDPCreature.h"
-
+#import "IDPObservableObject.h"
 #import "IDPCashOwner.h"
-#import "IDPWorkerDelegate.h"
 
-@interface IDPWorker : IDPCreature <IDPCashOwner, IDPWorkerDelegate>
-@property (nonatomic, retain) id<IDPWorkerDelegate> workerDelegate;
+@class IDPWorker;
 
+typedef NS_ENUM(NSUInteger, IDPWorkerState) {
+    IDPWorkerFree,
+    IDPWorkerBusy,
+    IDPWorkerPending
+};
+
+@protocol IDPWorkerObserver <NSObject>
+- (void)workerDidBecomeFree:(IDPWorker *)worker;
+- (void)workerDidBecomeBusy:(IDPWorker *)worker;
+- (void)workerDidBecomePending:(IDPWorker *)worker;
+
+@end
+
+@interface IDPWorker : IDPObservableObject <IDPCashOwner>
 @property (nonatomic, assign) float                 salary;
 @property (nonatomic, assign) float                 capital;
 @property (nonatomic, assign) NSUInteger            experience;

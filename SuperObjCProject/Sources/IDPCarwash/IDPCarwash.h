@@ -10,9 +10,11 @@
 
 #include "IDPBuilding.h"
 
+@protocol IDPWorkerObserver;
+
 @class IDPCar;
 
-@interface IDPCarwash : NSObject
+@interface IDPCarwash : NSObject <IDPWorkerObserver>
 @property (nonatomic, readonly, getter=isQueueEmpty) BOOL queueEmpty;
 
 - (void)processCar:(IDPCar *)car;
