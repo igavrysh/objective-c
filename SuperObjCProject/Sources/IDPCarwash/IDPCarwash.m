@@ -18,8 +18,10 @@
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 
+const NSUInteger kIDPCarwashersCount = 10;
+
 @interface IDPCarwash ()
-@property (nonatomic, retain) NSMutableArray *washers;
+@property (nonatomic, retain) NSMutableArray *carwashers;
 @property (nonatomic, retain) NSMutableArray *accountants;
 @property (nonatomic, retain) NSMutableArray *directors;
 
@@ -30,21 +32,6 @@
 - (IDPCarwasher *)freeWasher;
 - (IDPAccountant *)freeAccountant;
 - (IDPDirector *)freeDirector;
-
-- (void)addCarwasher:(IDPCarwasher *)washer;
-- (void)removeCarwasher:(IDPCarwasher *)washer;
-- (void)removeCarwashers;
-
-- (void)addAccountant:(IDPAccountant *)accountant;
-- (void)removeAccountant:(IDPCarwasher *)accountant;
-- (void)removeAccountants;
-
-- (void)addDirector:(IDPDirector *)director;
-- (void)removeDirector;
-
-- (BOOL)addWorker:(IDPWorker *)worker toArray:(NSMutableArray *)array;
-- (void)removeWorker:(IDPWorker *)worker;
-- (void)removeWorkersInArray:(NSMutableArray *)workers;
 @end
 
 @implementation IDPCarwash
@@ -55,11 +42,11 @@
 #pragma mark Initializtions and Deallocations
 
 - (void) dealloc {
-    [self removeCarwashers];
-    [self removeAccountants];
-    [self removeDirector];
+    [self.carwashers removeAllObjects];
+    [self.accountants removeAllObjects];
+    [self.directors removeAllObjects];
     
-    self.washers = nil;
+    self.carwashers = nil;
     self.accountants = nil;
     self.directors = nil;
     
@@ -73,7 +60,7 @@
     
     self.carsQueue = [IDPQueue object];
     self.accountants = [NSMutableArray object];
-    self.washers = [NSMutableArray object];
+    self.carwashers = [NSMutableArray object];
     self.directors = [NSMutableArray object];
     
     [self initCarwashStructure];
@@ -84,14 +71,17 @@
 - (void)initCarwashStructure {
     IDPDirector *director = [IDPDirector object];
     IDPAccountant *accountant = [IDPAccountant object];
-    IDPCarwasher *carwasher = [IDPCarwash object];
+    
+    self.carwashers = [[[NSArray objectsWithCount:kIDPCarwashersCount block:^id{
+        IDPCarwasher *carwasher = [IDPCarwasher object];
+        carwasher.workerDelegate = accountant;
+        
+        return carwasher;
+    }] mutableCopy] autorelease];
     
     accountant.workerDelegate = director;
-    carwasher.workerDelegate = accountant;
-    
-    [self addDirector:director];
-    [self addAccountant:accountant];
-    [self addCarwasher:carwasher];
+    [self.accountants addObject:accountant];
+    [self.directors addObject:director];
 }
 
 #pragma mark -
@@ -123,7 +113,7 @@
 #pragma mark Private Methods
 
 - (IDPCarwasher *)freeWasher {
-    return [self.washers randomObject];
+    return [self.carwashers randomObject];
 }
 
 - (IDPAccountant *)freeAccountant {
@@ -131,69 +121,7 @@
 }
 
 - (IDPDirector *)freeDirector {
-    return self.directors[0];
-}
-
-- (void)addCarwasher:(IDPCarwasher *)washer {
-    [self addWorker:washer toArray:self.washers];
-}
-
-- (void)removeCarwasher:(IDPCarwasher *)washer {
-    [self removeWorker:washer];
-}
-
-- (void)removeCarwashers {
-    [self removeWorkersInArray:self.washers];
-}
-
-- (void)addAccountant:(IDPAccountant *)accountant {
-    [self addWorker:accountant toArray:self.accountants];
-}
-
-- (void)removeAccountant:(IDPCarwasher *)accountant {
-    [self removeWorker:accountant];
-}
-
-- (void)removeAccountants {
-    [self removeWorkersInArray:self.accountants];
-}
-
-- (void)addDirector:(IDPDirector *)director {
-    if ([self.directors count]) {
-        return;
-    }
-    
-    [self addWorker:director toArray:self.directors];
-}
-
-- (void)removeDirector {
-    if (![self.directors count]) {
-        return;
-    }
-    
-    [self removeWorker:self.directors[0]];
-}
-
-- (BOOL)addWorker:(IDPWorker *)worker toArray:(NSMutableArray *)array{
-    [array addObject:worker];
-    
-    return NO;
-}
-
-- (void)removeWorker:(IDPWorker *)worker {
-    if (!worker) {
-        return;
-    }
-    
-    [self.directors removeObject:worker];
-    [self.washers removeObject:worker];
-    [self.accountants removeObject:worker];
-}
-
-- (void)removeWorkersInArray:(NSMutableArray *)workers {
-    for (IDPWorker *worker in workers) {
-        [self removeWorker:worker];
-    }
+    return [self.directors randomObject];
 }
 
 @end

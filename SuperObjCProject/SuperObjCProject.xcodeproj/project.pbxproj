@@ -60,7 +60,7 @@
 		850F83ED1D0F22BF0043472C /* IDPMaleCreature.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83E91D0F22BF0043472C /* IDPMaleCreature.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		85253BCD1D129635000E19C2 /* IDPBinaryTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 85253BCC1D129635000E19C2 /* IDPBinaryTreeNode.m */; };
 		854162821D1D9B7000D2690A /* IDPObservableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 854162811D1D9B7000D2690A /* IDPObservableObject.m */; };
-		854162831D1D9B7000D2690A /* IDPObservableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 854162811D1D9B7000D2690A /* IDPObservableObject.m */; };
+		854162831D1D9B7000D2690A /* IDPObservableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 854162811D1D9B7000D2690A /* IDPObservableObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		854B35951D11B8D1004B51A8 /* IDPLinkedListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 854B35941D11B8D1004B51A8 /* IDPLinkedListNode.m */; };
 		854B35961D11B8D1004B51A8 /* IDPLinkedListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 854B35941D11B8D1004B51A8 /* IDPLinkedListNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		85833D6C1D1179CB0045154D /* IDPLinkedListSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 85833D6B1D1179CB0045154D /* IDPLinkedListSet.m */; };
