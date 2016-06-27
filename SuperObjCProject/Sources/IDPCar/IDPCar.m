@@ -9,7 +9,7 @@
 #import "IDPCar.h"
 #import "IDPRandom.h"
 
-static const float kIDPCarwashPrice = 4.99;
+static const float kIDPCarwashPrice = 5;
 
 @interface IDPCar ()
 @property (nonatomic, assign) float cash;

@@ -7,9 +7,10 @@
 //
 
 #import "IDPObservableObject.h"
+#import "IDPAssignReference.h"
 
 @interface IDPObservableObject ()
-@property (nonatomic, retain) NSMutableSet *mutableObserverSet;
+@property (nonatomic, retain) NSMutableSet *mutableRefereceObserverSet;
 
 @end
 
@@ -21,7 +22,7 @@
 #pragma mark Initializations and Deallocations
 
 - (void)dealloc {
-    self.mutableObserverSet = nil;
+    self.mutableRefereceObserverSet = nil;
     
     [super dealloc];
 }
@@ -29,7 +30,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.mutableObserverSet = [NSMutableSet set];
+        self.mutableRefereceObserverSet = [NSMutableSet set];
     }
     
     return self;
@@ -39,7 +40,13 @@
 #pragma mark Accessors
 
 - (NSSet *)observerSet {
-    return [[self.mutableObserverSet copy] autorelease];
+    NSMutableSet *observerSet = self.mutableRefereceObserverSet;
+    NSMutableSet *result = [NSMutableSet setWithCapacity:[observerSet count]];
+    for (IDPReference *reference in observerSet) {
+        [result addObject:reference.target];
+    }
+    
+    return [[result copy] autorelease];
 }
 
 - (void)setState:(NSUInteger)state {
@@ -54,15 +61,15 @@
 #pragma mark Public
 
 - (void)addObserver:(id)observer {
-    [self.mutableObserverSet addObject:observer];
+    [self.mutableRefereceObserverSet addObject:[IDPAssignReference referenceWithTarget:observer]];
 }
 
 - (void)removeObserver:(id)observer {
-    [self.mutableObserverSet removeObject:observer];
+    [self.mutableRefereceObserverSet removeObject:[IDPAssignReference referenceWithTarget:observer]];
 }
 
 - (BOOL)isObservedByObject:(id)observer {
-    return [self.mutableObserverSet containsObject:observer];
+    return [self.mutableRefereceObserverSet containsObject:[IDPAssignReference referenceWithTarget:observer]];
 }
 
 #pragma mark -
@@ -75,10 +82,11 @@
 }
 
 - (void)notifyOfStateChangewithSelector:(SEL)selector {
-    NSMutableSet *observerSet = self.mutableObserverSet;
-    for (id observer in observerSet) {
-        if ([observer respondsToSelector:selector]) {
-            [observer performSelector:selector withObject:self];
+    NSMutableSet *observerSet = self.mutableRefereceObserverSet;
+    for (IDPAssignReference *reference in observerSet) {
+        id target = reference.target;
+        if ([target respondsToSelector:selector]) {
+            [target performSelector:selector withObject:self];
         }
     }
 }
