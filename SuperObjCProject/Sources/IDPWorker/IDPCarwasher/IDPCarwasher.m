@@ -22,6 +22,8 @@
 - (void)processObject:(IDPCar *)car {
     [self cleanCar:car];
     [self receiveCashFromCashOwner:car];
+    
+    [self.workerDelegate workerDidFinishProcessingObject:self];
 }
 
 #pragma mark -
@@ -31,5 +33,6 @@
     car.dirty = NO;
     NSLog(@"Car is washed");
 }
+
 
 @end

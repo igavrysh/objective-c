@@ -8,16 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+#import "IDPWorker.h"
+
 @protocol IDPCashOwner <NSObject>
 @property (nonatomic, readonly) float cash;
 
-@optional
 - (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object;
-
 - (void)receiveCash:(float)cash;
-
 - (float)giveAllCash;
-
 - (float)giveCash:(float)cash;
 
 @end

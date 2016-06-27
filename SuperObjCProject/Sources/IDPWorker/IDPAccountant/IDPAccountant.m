@@ -24,6 +24,8 @@
 - (void)processObject:(IDPCarwasher *)washer {
     [self calculateProfit];
     [self receiveCashFromCashOwner:washer];
+    
+    [self.workerDelegate workerDidFinishProcessingObject:self];
 }
 
 #pragma mark -
@@ -32,5 +34,6 @@
 - (void)calculateProfit {
     NSLog(@"Cash is calculated");
 }
+
 
 @end
