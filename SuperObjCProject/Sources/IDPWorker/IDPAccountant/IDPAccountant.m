@@ -19,17 +19,21 @@
 @implementation IDPAccountant
 
 #pragma mark -
-#pragma mark Public Methods
+#pragma mark Overloaded Methods
 
-- (void)processObject:(IDPCarwasher *)washer {
+- (void)startProcessingObject:(id<IDPCashOwner>)object {
     self.state = IDPWorkerBusy;
-    
+}
+
+- (void)finishProcessingObject:(id<IDPCashOwner>)object {
+    self.state = IDPWorkerPending;
+}
+
+- (void)performWorkWithObject:(IDPCarwasher *)washer {
     [self receiveCashFromCashOwner:washer];
     washer.state = IDPWorkerFree;
     
     [self calculateProfit];
-    
-    self.state = IDPWorkerPending;
 }
 
 #pragma mark -

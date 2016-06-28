@@ -40,16 +40,42 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)processObject:(id<IDPCashOwner>) object {
-    self.state = IDPWorkerBusy;
-    
-    [self receiveCashFromCashOwner:object];
-    
-    self.state = IDPWorkerFree;
+- (void)processObject:(id<IDPCashOwner>)object {
+    @synchronized(object) {
+        [self performSelectorOnMainThread:@selector(startProcessingObject:) withObject:object waitUntilDone:YES];
+        
+        [self performWorkInBackgroundWithObject:object];
+        
+        [self performSelectorOnMainThread:@selector(finishProcessingObject:) withObject:object waitUntilDone:YES];
+    }
+}
+
+- (void)performWorkInBackgroundWithObject:(id<IDPCashOwner>)object {
+    [self performSelectorInBackground:@selector(performWorkWithObject:) withObject:object];
+}
+
+- (void)startProcessingObject:(id<IDPCashOwner>)object {
+    [self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)finishProcessingObject:(id<IDPCashOwner>)object {
+    [self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)performWorkWithObject:(id<IDPCashOwner>)object {
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 - (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object {
-    [self receiveCash:[object giveAllCash]];
+    float cash = 0;
+    
+    @synchronized(object) {
+        cash = [object giveAllCash];
+    }
+    
+    @synchronized(self) {
+        [self receiveCash:cash];
+    }
 }
 
 - (void)receiveCash:(float)cash {
@@ -67,6 +93,10 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     
     return cashToGive;
 }
+
+#pragma mark - Private
+
+
 
 #pragma mark -
 #pragma mark IDPWorkerDelegate

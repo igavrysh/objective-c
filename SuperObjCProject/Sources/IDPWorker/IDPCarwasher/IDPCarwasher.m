@@ -17,15 +17,19 @@
 @implementation IDPCarwasher
 
 #pragma mark -
-#pragma mark Public Methods
+#pragma mark Overloaded Methods
 
-- (void)processObject:(IDPCar *)car {
+- (void)startProcessingObject:(id<IDPCashOwner>)object {
     self.state = IDPWorkerBusy;
-    
+}
+
+- (void)finishProcessingObject:(id<IDPCashOwner>)object {
+    self.state = IDPWorkerPending;
+}
+
+- (void)performWorkWithObject:(IDPCar *)car {
     [self cleanCar:car];
     [self receiveCashFromCashOwner:car];
-    
-    self.state = IDPWorkerPending;
 }
 
 #pragma mark -

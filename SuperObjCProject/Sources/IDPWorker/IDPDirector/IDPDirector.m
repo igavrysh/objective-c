@@ -19,17 +19,21 @@
 @implementation IDPDirector
 
 #pragma mark -
-#pragma mark Public Methods
+#pragma mark Overloaded Methods
 
-- (void)processObject:(IDPAccountant *)accountant {
+- (void)startProcessingObject:(id<IDPCashOwner>)object {
     self.state = IDPWorkerBusy;
-    
+}
+
+- (void)finishProcessingObject:(id<IDPCashOwner>)object {
+    self.state = IDPWorkerFree;
+}
+
+- (void)performWorkWithObject:(IDPAccountant *)accountant {
     [self receiveCashFromCashOwner:accountant];
     
     accountant.state = IDPWorkerFree;
     [self makeProfit];
-    
-    self.state = IDPWorkerFree;
 }
 
 #pragma mark -
