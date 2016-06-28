@@ -25,7 +25,7 @@
     [self calculateProfit];
     [self receiveCashFromCashOwner:washer];
     
-    [self.workerDelegate workerDidFinishProcessingObject:self];
+    [self.delegate workerDidFinishProcessingObject:self];
 }
 
 #pragma mark -

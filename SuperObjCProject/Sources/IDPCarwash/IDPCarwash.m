@@ -74,12 +74,12 @@ const NSUInteger kIDPCarwashersCount = 10;
     
     self.carwashers = [[[NSArray objectsWithCount:kIDPCarwashersCount block:^id{
         IDPCarwasher *carwasher = [IDPCarwasher object];
-        carwasher.workerDelegate = accountant;
+        carwasher.delegate = accountant;
         
         return carwasher;
     }] mutableCopy] autorelease];
     
-    accountant.workerDelegate = director;
+    accountant.delegate = director;
     [self.accountants addObject:accountant];
     [self.directors addObject:director];
 }

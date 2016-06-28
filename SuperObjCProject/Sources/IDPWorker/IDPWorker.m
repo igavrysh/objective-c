@@ -24,6 +24,12 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark -
 #pragma mark Initializtions and Deallocations
 
+- (void)dealloc {
+    self.delegate = nil;
+    
+    [super dealloc];
+}
+
 - (id)init {
     self = [super init];
     
@@ -37,15 +43,15 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark -
 #pragma mark Accessors
 
-- (void)setWorkerDelegate:(IDPWorker *)workerDelegate {
-    if (_workerDelegate != workerDelegate) {
-        [workerDelegate retain];
+- (void)setDelegate:(IDPWorker *)delegate {
+    if (_delegate != delegate) {
+        [delegate retain];
         
-        if (!_workerDelegate) {
-            [_workerDelegate release];
+        if (!_delegate) {
+            [_delegate release];
         }
         
-        _workerDelegate = workerDelegate;
+        _delegate = delegate;
     }
 }
 

@@ -12,7 +12,7 @@
 #import "IDPWorkerDelegate.h"
 
 @interface IDPWorker : IDPCreature <IDPCashOwner, IDPWorkerDelegate>
-@property (nonatomic, retain) id<IDPWorkerDelegate> workerDelegate;
+@property (nonatomic, retain) id<IDPWorkerDelegate> delegate;
 
 @property (nonatomic, assign) float                 salary;
 @property (nonatomic, assign) float                 capital;

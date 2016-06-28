@@ -23,7 +23,7 @@
     [self cleanCar:car];
     [self receiveCashFromCashOwner:car];
     
-    [self.workerDelegate workerDidFinishProcessingObject:self];
+    [self.delegate workerDidFinishProcessingObject:self];
 }
 
 #pragma mark -
