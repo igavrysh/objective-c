@@ -14,13 +14,7 @@
 #import "IDPRandom.h"
 
 int main(int argc, const char * argv[]) {
-    @autoreleasepool {
-        /*
-        IDPCreatureTest *test = [[IDPCreatureTest new] autorelease];
-        
-        [test execute];
-        */
-        
+    @autoreleasepool {        
         IDPCarwashTest *test = [[IDPCarwashTest new] autorelease];
         
         [test execute];

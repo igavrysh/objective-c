@@ -9,8 +9,14 @@
 #import "IDPObservableObject.h"
 #import "IDPAssignReference.h"
 
+typedef void(^IDPObserverNotificationBlock)(id object);
+
 @interface IDPObservableObject ()
 @property (nonatomic, retain) NSMutableSet *mutableRefereceObserverSet;
+
+- (void)notifyOfStateChangeWithSelector:(SEL)selector;
+- (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object;
+- (void)notifyOfStateChangeWithSelector:(SEL)selector handler:(IDPObserverNotificationBlock)handler;
 
 @end
 
@@ -53,7 +59,7 @@
     if (state != _state) {
         _state = state;
         
-        [self notifyOfStateChangewithSelector:[self selectorForState:state]];
+        [self notifyOfStateChangeWithSelector:[self selectorForState:state]];
     }
 }
 
@@ -81,12 +87,29 @@
     return NULL;
 }
 
-- (void)notifyOfStateChangewithSelector:(SEL)selector {
+- (void)notifyOfStateChangeWithSelector:(SEL)selector {
+    [self notifyOfStateChangeWithSelector:selector handler:^(id observableObject) {
+        [observableObject performSelector:selector withObject:self];
+    }];
+}
+
+- (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object {
+    
+    [self notifyOfStateChangeWithSelector:selector handler:^(id observableObject) {
+        [observableObject performSelector:selector withObject:self withObject:object];
+    }];
+}
+
+- (void)notifyOfStateChangeWithSelector:(SEL)selector handler:(IDPObserverNotificationBlock)handler {
+    if (!handler) {
+        return;
+    }
+    
     NSMutableSet *observerSet = self.mutableRefereceObserverSet;
     for (IDPAssignReference *reference in observerSet) {
         id target = reference.target;
         if ([target respondsToSelector:selector]) {
-            [target performSelector:selector withObject:self];
+            handler(target);
         }
     }
 }

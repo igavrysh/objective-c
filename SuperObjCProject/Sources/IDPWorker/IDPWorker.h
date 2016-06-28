@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, IDPWorkerState) {
 };
 
 @protocol IDPWorkerObserver <NSObject>
+@optional
 - (void)workerDidBecomeFree:(IDPWorker *)worker;
 - (void)workerDidBecomeBusy:(IDPWorker *)worker;
 - (void)workerDidBecomePending:(IDPWorker *)worker;

@@ -36,5 +36,4 @@
     NSLog(@"Car is washed");
 }
 
-
 @end

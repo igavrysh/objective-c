@@ -50,19 +50,15 @@
 }
 
 - (BOOL)isEqual:(id)object {
-    if (nil == object) {
-        return NO;
-    }
-    
     if (self == object) {
         return  YES;
     }
     
-    if ([object isMemberOfClass:[self class]]) {
-        return [self isEqualToRefence:object];
+    if (!object || ![object isMemberOfClass:[self class]]) {
+        return NO;
     }
-         
-    return NO;
+    
+    return [self isEqualToRefence:object];
 }
 
 - (BOOL)isEqualToRefence:(IDPReference *)reference {

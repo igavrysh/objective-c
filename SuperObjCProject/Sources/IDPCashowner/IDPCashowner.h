@@ -11,6 +11,7 @@
 @protocol IDPCashOwner <NSObject>
 @property (nonatomic, readonly) float cash;
 
+@optional
 - (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object;
 - (void)receiveCash:(float)cash;
 - (float)giveAllCash;

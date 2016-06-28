@@ -42,12 +42,6 @@
 #pragma mark -
 #pragma mark Overloaded Methods
 
-- (void)workerDidBecomeFree:(IDPAccountant *)accountant {
-}
-
-- (void)workerDidBecomeBusy:(IDPAccountant *)accountant {
-}
-
 - (void)workerDidBecomePending:(IDPAccountant *)accountant {
     [self processObject:accountant];
     

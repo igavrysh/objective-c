@@ -42,14 +42,6 @@
 #pragma mark -
 #pragma mark Overloaded Methods
 
-- (void)workerDidBecomeFree:(IDPCarwasher *)carwasher {
-    
-}
-
-- (void)workerDidBecomeBusy:(IDPCarwasher *)carwasher {
-    
-}
-
 - (void)workerDidBecomePending:(IDPWorker *)carwasher {
     [self processObject:carwasher];
 }

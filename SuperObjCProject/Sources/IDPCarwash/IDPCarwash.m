@@ -30,7 +30,7 @@ const NSUInteger kIDPCarwashersCount = 10;
 - (void)initCarwashStructure;
 
 - (IDPWorker *)freeWorkerFromWorkers:(NSArray *)workers;
-- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher;
+- (void)assignWorkToCarwasher:(id)carwasher;
 @end
 
 @implementation IDPCarwash
@@ -97,7 +97,7 @@ const NSUInteger kIDPCarwashersCount = 10;
     [self.carsQueue enqueue:car];
     
     while (![self isQueueEmpty]) {
-        [self assignWorkToCarwasher:(IDPCarwasher *)[self freeWorkerFromWorkers:self.carwashers]];
+        [self assignWorkToCarwasher:[self freeWorkerFromWorkers:self.carwashers]];
     }
 }
 
@@ -105,7 +105,7 @@ const NSUInteger kIDPCarwashersCount = 10;
 #pragma mark Private Methods
 
 - (IDPWorker *)freeWorkerFromWorkers:(NSArray *)workers {
-    id freeWorkerFilter = ^BOOL(IDPWorker* worker, NSDictionary<NSString *,id> *bindings) {
+    id freeWorkerFilter = ^BOOL(IDPWorker *worker, NSDictionary<NSString *,id> *bindings) {
         return worker.state == IDPWorkerFree;
     };
     
@@ -114,7 +114,7 @@ const NSUInteger kIDPCarwashersCount = 10;
     return [freeWorkers count] ? freeWorkers[0] : nil;
 }
 
-- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher {
+- (void)assignWorkToCarwasher:(id)carwasher {
     IDPCar *currentCar = [self.carsQueue dequeue];
     
     if (!currentCar) {
@@ -129,12 +129,6 @@ const NSUInteger kIDPCarwashersCount = 10;
 
 - (void)workerDidBecomeFree:(IDPCarwasher *)carwasher {
     [self assignWorkToCarwasher:carwasher];
-}
-
-- (void)workerDidBecomeBusy:(IDPCarwasher *)carwasher {
-}
-
-- (void)workerDidBecomePending:(IDPWorker *)carwasher {
 }
 
 @end
