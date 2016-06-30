@@ -8,6 +8,8 @@
 
 #import "IDPCarwasher.h"
 
+#import "IDPRandom.h"
+
 @interface IDPCarwasher ()
 
 - (void)cleanCar:(IDPCar *)car;
@@ -19,14 +21,6 @@
 #pragma mark -
 #pragma mark Overloaded Methods
 
-- (void)startProcessingObject:(id<IDPCashOwner>)object {
-    self.state = IDPWorkerBusy;
-}
-
-- (void)finishProcessingObject:(id<IDPCashOwner>)object {
-    self.state = IDPWorkerPending;
-}
-
 - (void)performWorkWithObject:(IDPCar *)car {
     [self cleanCar:car];
     [self receiveCashFromCashOwner:car];
@@ -37,6 +31,9 @@
 
 - (void)cleanCar:(IDPCar *)car {
     car.dirty = NO;
+    
+    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(100, 200));
+    
     NSLog(@"Car is washed");
 }
 

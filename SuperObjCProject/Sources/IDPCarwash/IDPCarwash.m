@@ -9,7 +9,7 @@
 #import "IDPCarwash.h"
 
 #import "IDPRandom.h"
-#import "IDPQueue.h"
+#import "IDPThreadSafeQueue.h"
 #import "IDPCar.h"
 #import "IDPCarwasher.h"
 #import "IDPAccountant.h"
@@ -25,13 +25,11 @@ const NSUInteger kIDPCarwashersCount = 10;
 @property (nonatomic, retain) NSMutableArray *accountants;
 @property (nonatomic, retain) NSMutableArray *directors;
 
-@property (nonatomic, retain) NSMutableDictionary *workerLocks;
-
-@property (nonatomic, retain) IDPQueue *carsQueue;
+@property (nonatomic, retain) IDPThreadSafeQueue *carsQueue;
 
 - (void)initCarwashStructure;
 
-- (IDPWorker *)freeWorkerFromWorkers:(NSArray *)workers;
+- (id)freeWorkerFromWorkers:(NSArray *)workers;
 - (void)assignWorkToCarwasher:(id)carwasher;
 @end
 
@@ -47,14 +45,11 @@ const NSUInteger kIDPCarwashersCount = 10;
     [self.accountants removeAllObjects];
     [self.directors removeAllObjects];
     
-    [self.workerLocks removeAllObjects];
-    
     self.carwashers = nil;
     self.accountants = nil;
     self.directors = nil;
     
-    self.workerLocks = nil;
-    
+    [self.carsQueue dequeueAll];
     self.carsQueue = nil;
     
     [super dealloc];
@@ -63,12 +58,10 @@ const NSUInteger kIDPCarwashersCount = 10;
 - (id)init {
     self = [super init];
     
-    self.carsQueue = [IDPQueue object];
+    self.carsQueue = [IDPThreadSafeQueue object];
     self.accountants = [NSMutableArray object];
     self.carwashers = [NSMutableArray object];
     self.directors = [NSMutableArray object];
-    
-    self.workerLocks = [NSMutableDictionary object];
     
     [self initCarwashStructure];
     
@@ -77,8 +70,7 @@ const NSUInteger kIDPCarwashersCount = 10;
 
 - (void)initCarwashStructure {
     IDPDirector *director = [IDPDirector object];
-    self.workerLocks a
-    
+
     IDPAccountant *accountant = [IDPAccountant object];
     
     self.carwashers = [[[NSArray objectsWithCount:kIDPCarwashersCount block:^id{
@@ -104,19 +96,24 @@ const NSUInteger kIDPCarwashersCount = 10;
 #pragma mark Public Methods
 
 - (void)processCar:(IDPCar *)car {
-    @synchronized(self.carsQueue) {
+    @synchronized(car) {
         [self.carsQueue enqueue:car];
     }
     
-    while (![self isQueueEmpty]) {
-        [self assignWorkToCarwasher:[self freeWorkerFromWorkers:self.carwashers]];
+    
+    @synchronized(self.carwashers) {
+        IDPCarwasher *freeCarwasher = [self freeWorkerFromWorkers:self.carwashers];
+        
+        if (freeCarwasher) {
+            [self assignWorkToCarwasher:freeCarwasher];
+        }
     }
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
-- (IDPWorker *)freeWorkerFromWorkers:(NSArray *)workers {
+- (id)freeWorkerFromWorkers:(NSArray *)workers {
     id freeWorkerFilter = ^BOOL(IDPWorker *worker, NSDictionary<NSString *,id> *bindings) {
         return worker.state == IDPWorkerFree;
     };
@@ -128,15 +125,13 @@ const NSUInteger kIDPCarwashersCount = 10;
 
 - (void)assignWorkToCarwasher:(id)carwasher {
     IDPCar *currentCar = nil;
-    @synchronized(self.carsQueue) {
-        currentCar = [self.carsQueue dequeue];
-    }
+    currentCar = [self.carsQueue dequeue];
     
     if (!currentCar) {
         return;
     }
     
-    [carwasher processObject:currentCar];
+    [carwasher performSelectorInBackground:@selector(processObject:) withObject:currentCar];
 }
 
 #pragma mark -

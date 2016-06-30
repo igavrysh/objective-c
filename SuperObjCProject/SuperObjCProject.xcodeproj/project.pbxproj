@@ -82,6 +82,8 @@
 		85B960051D195AF700BAD068 /* IDPDynamicIndexSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B960041D195AF700BAD068 /* IDPDynamicIndexSet.m */; };
 		85B960061D195AF700BAD068 /* IDPDynamicIndexSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B960041D195AF700BAD068 /* IDPDynamicIndexSet.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		85B9600B1D1966D200BAD068 /* IDPDynamicIndexSetSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 85B9600A1D1966D200BAD068 /* IDPDynamicIndexSetSpec.m */; };
+		85CA1DA31D247D6100A611DE /* IDPThreadSafeQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CA1DA21D247D6100A611DE /* IDPThreadSafeQueue.m */; };
+		85CA1DA41D247D6100A611DE /* IDPThreadSafeQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CA1DA21D247D6100A611DE /* IDPThreadSafeQueue.m */; };
 		85CC6C761D21798500409854 /* IDPCashOwner.h in Sources */ = {isa = PBXBuildFile; fileRef = 850F83EF1D0F24910043472C /* IDPCashOwner.h */; };
 		85CC6C911D217E8200409854 /* IDPAssignReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CC6C8A1D217E8200409854 /* IDPAssignReference.m */; };
 		85CC6C921D217E8200409854 /* IDPAssignReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 85CC6C8A1D217E8200409854 /* IDPAssignReference.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -191,6 +193,8 @@
 		85B960031D195AF700BAD068 /* IDPDynamicIndexSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPDynamicIndexSet.h; sourceTree = "<group>"; };
 		85B960041D195AF700BAD068 /* IDPDynamicIndexSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPDynamicIndexSet.m; sourceTree = "<group>"; };
 		85B9600A1D1966D200BAD068 /* IDPDynamicIndexSetSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPDynamicIndexSetSpec.m; sourceTree = "<group>"; };
+		85CA1DA11D247D6100A611DE /* IDPThreadSafeQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPThreadSafeQueue.h; sourceTree = "<group>"; };
+		85CA1DA21D247D6100A611DE /* IDPThreadSafeQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPThreadSafeQueue.m; sourceTree = "<group>"; };
 		85CC6C891D217E8200409854 /* IDPAssignReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPAssignReference.h; sourceTree = "<group>"; };
 		85CC6C8A1D217E8200409854 /* IDPAssignReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPAssignReference.m; sourceTree = "<group>"; };
 		85CC6C8B1D217E8200409854 /* IDPCopyReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCopyReference.h; sourceTree = "<group>"; };
@@ -298,6 +302,8 @@
 			children = (
 				850F83571D0F17800043472C /* IDPQueue.h */,
 				850F83581D0F17800043472C /* IDPQueue.m */,
+				85CA1DA11D247D6100A611DE /* IDPThreadSafeQueue.h */,
+				85CA1DA21D247D6100A611DE /* IDPThreadSafeQueue.m */,
 			);
 			path = IDPQueue;
 			sourceTree = "<group>";
@@ -790,6 +796,7 @@
 				850F83C51D0F17800043472C /* IDPWorker.m in Sources */,
 				850C35061D1712AB00DE3A4F /* IDPRange.m in Sources */,
 				854B35961D11B8D1004B51A8 /* IDPLinkedListNode.m in Sources */,
+				85CA1DA41D247D6100A611DE /* IDPThreadSafeQueue.m in Sources */,
 				85ADBB601D12012D00ACFEF4 /* IDPLinkedListSetSpec.m in Sources */,
 				85A7431A1D19EE7400D2E46C /* IDPRangeAlphabet.m in Sources */,
 				85A7430C1D19EE7400D2E46C /* NSArray+IDPIndex.m in Sources */,
@@ -862,6 +869,7 @@
 				850C350D1D173AA500DE3A4F /* IDPCarwashTest.m in Sources */,
 				850F83EA1D0F22BF0043472C /* IDPFemaleCreature.m in Sources */,
 				850F83B21D0F17800043472C /* IDPCar.m in Sources */,
+				85CA1DA31D247D6100A611DE /* IDPThreadSafeQueue.m in Sources */,
 				85A743191D19EE7400D2E46C /* IDPRangeAlphabet.m in Sources */,
 				850F839C1D0F17800043472C /* IDPQueue.m in Sources */,
 				85CC6C911D217E8200409854 /* IDPAssignReference.m in Sources */,

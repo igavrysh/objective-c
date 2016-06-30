@@ -9,6 +9,7 @@
 #import "IDPAccountant.h"
 
 #import "IDPCarwasher.h"
+#import "IDPRandom.h"
 
 @interface IDPAccountant ()
 
@@ -25,10 +26,6 @@
     self.state = IDPWorkerBusy;
 }
 
-- (void)finishProcessingObject:(id<IDPCashOwner>)object {
-    self.state = IDPWorkerPending;
-}
-
 - (void)performWorkWithObject:(IDPCarwasher *)washer {
     [self receiveCashFromCashOwner:washer];
     washer.state = IDPWorkerFree;
@@ -40,6 +37,8 @@
 #pragma mark Private Methods
 
 - (void)calculateProfit {
+    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(100, 200));
+    
     NSLog(@"Cash is calculated");
 }
 

@@ -16,7 +16,6 @@ typedef void(^IDPObserverNotificationBlock)(id object);
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector;
 - (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object;
-- (void)notifyOfStateChangeWithSelector:(SEL)selector handler:(IDPObserverNotificationBlock)handler;
 
 @end
 
@@ -88,28 +87,15 @@ typedef void(^IDPObserverNotificationBlock)(id object);
 }
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector {
-    [self notifyOfStateChangeWithSelector:selector handler:^(id observableObject) {
-        [observableObject performSelector:selector withObject:self];
-    }];
+    [self notifyOfStateChangeWithSelector:@selector(selector) object:nil];
 }
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object {
-    
-    [self notifyOfStateChangeWithSelector:selector handler:^(id observableObject) {
-        [observableObject performSelector:selector withObject:self withObject:object];
-    }];
-}
-
-- (void)notifyOfStateChangeWithSelector:(SEL)selector handler:(IDPObserverNotificationBlock)handler {
-    if (!handler) {
-        return;
-    }
-    
     NSMutableSet *observerSet = self.mutableRefereceObserverSet;
     for (IDPAssignReference *reference in observerSet) {
         id target = reference.target;
         if ([target respondsToSelector:selector]) {
-            handler(target);
+            [target performSelector:selector withObject:self withObject:object];
         }
     }
 }

@@ -64,4 +64,10 @@
     return object;
 }
 
+- (void)dequeueAll {
+    while ([self count]) {
+        [self dequeue];
+    }
+}
+
 @end

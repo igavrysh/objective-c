@@ -9,6 +9,7 @@
 #import "IDPDirector.h"
 
 #import "IDPAccountant.h"
+#import "IDPRandom.h"
 
 @interface IDPDirector ()
 
@@ -21,12 +22,12 @@
 #pragma mark -
 #pragma mark Overloaded Methods
 
-- (void)startProcessingObject:(id<IDPCashOwner>)object {
-    self.state = IDPWorkerBusy;
-}
-
 - (void)finishProcessingObject:(id<IDPCashOwner>)object {
     self.state = IDPWorkerFree;
+}
+
+- (void)finishProcessing {
+    
 }
 
 - (void)performWorkWithObject:(IDPAccountant *)accountant {
@@ -40,6 +41,8 @@
 #pragma mark Private Methods
 
 - (void)makeProfit {
+    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(100, 200));
+    
     NSLog(@"Profit is made");
 }
 

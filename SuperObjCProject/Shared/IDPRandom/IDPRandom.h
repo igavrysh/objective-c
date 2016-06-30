@@ -62,6 +62,11 @@ NSUInteger IDPRandomUIntWithMaxValue(NSUInteger value) {
 }
 
 static inline
+NSUInteger IDPRandomUIntWithMinAndMaxValue(NSUInteger value1, NSUInteger value2) {
+    return IDPRandomIntWithinRange(IDPIntRangeCreate(value1, value2));
+}
+
+static inline
 BOOL IDPRandomBool() {
     return arc4random_uniform(1);
 }

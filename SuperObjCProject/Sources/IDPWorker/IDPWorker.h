@@ -32,9 +32,8 @@ typedef NS_ENUM(NSUInteger, IDPWorkerState) {
 
 - (void)processObject:(id<IDPCashOwner>)object;
 
-- (void)startProcessingObject:(id<IDPCashOwner>)object;
-- (void)finishProcessingObject:(id<IDPCashOwner>)object;
 - (void)performWorkWithObject:(id<IDPCashOwner>)object;
-
+- (void)finishProcessingObject:(id<IDPCashOwner>)object;
+- (void)finishProcessing;
 
 @end

@@ -12,6 +12,7 @@
 #import "IDPCar.h"
 
 #import "NSObject+IDPObject.h"
+#import "NSArray+IDPArrayEnumerator.h"
 
 static const NSUInteger kIDPCarwashTestCarsCount = 25;
 
@@ -28,9 +29,15 @@ static const NSUInteger kIDPCarwashTestCarsCount = 25;
 - (void)execute {
     self.carwash = [IDPCarwash new];
     
-    for (NSUInteger index = 0; index < kIDPCarwashTestCarsCount; index++) {
+    NSArray *cars = [NSArray objectsWithCount:kIDPCarwashTestCarsCount block:^id{
+        return [IDPCar object];
+    }];
+    
+    for (IDPCar *car in cars) {
         NSLog(@"->Car is being processed");
-        [self.carwash processCar:[IDPCar object]];
+        
+        [self.carwash performSelectorInBackground:@selector(processCar:) withObject:car];
+    
         NSLog(@"Car was processed->");
     }
     

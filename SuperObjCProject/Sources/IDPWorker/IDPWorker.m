@@ -9,6 +9,9 @@
 #import "IDPWorker.h"
 
 #import "IDPRandom.h"
+#import "IDPThreadSafeQueue.h"
+
+#import "NSObject+IDPObject.h"
 
 static float const kIDPWorkerMaxSalary = 100;
 static float const kIDPWorkerMaxCapital = 100000;
@@ -16,6 +19,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 @interface IDPWorker ()
 @property (nonatomic, assign) float cash;
+@property (nonatomic, retain) IDPThreadSafeQueue *objectsQueue;
 
 @end
 
@@ -24,12 +28,17 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark -
 #pragma mark Initializtions and Deallocations
 
+- (void)dealloc {
+    self.objectsQueue = nil;
+}
+
 - (id)init {
     self = [super init];
     
     self.salary = IDPRandomFloatWithMinAndMaxValue(0, kIDPWorkerMaxSalary);
     self.capital = IDPRandomFloatWithMinAndMaxValue(0, kIDPWorkerMaxCapital);
     self.experience = IDPRandomUIntWithMaxValue(kIDPWorkerMaxExperience);
+    self.objectsQueue = [IDPThreadSafeQueue object];
     
     return self;
 }
@@ -41,62 +50,79 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark Public Methods
 
 - (void)processObject:(id<IDPCashOwner>)object {
-    @synchronized(object) {
-        [self performSelectorOnMainThread:@selector(startProcessingObject:) withObject:object waitUntilDone:YES];
-        
-        [self performWorkInBackgroundWithObject:object];
-        
-        [self performSelectorOnMainThread:@selector(finishProcessingObject:) withObject:object waitUntilDone:YES];
+    @synchronized(self) {
+        if (IDPWorkerFree != self.state) {
+            [self.objectsQueue enqueue:object];
+        } else {
+            self.state = IDPWorkerBusy;
+            
+            [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:object];
+        }
     }
 }
 
 - (void)performWorkInBackgroundWithObject:(id<IDPCashOwner>)object {
-    [self performSelectorInBackground:@selector(performWorkWithObject:) withObject:object];
-}
-
-- (void)startProcessingObject:(id<IDPCashOwner>)object {
-    [self doesNotRecognizeSelector:_cmd];
-}
-
-- (void)finishProcessingObject:(id<IDPCashOwner>)object {
-    [self doesNotRecognizeSelector:_cmd];
+    [self performWorkWithObject:object];
+    
+    [self performSelectorOnMainThread:@selector(finishProcessingObject:) withObject:object waitUntilDone:NO];
 }
 
 - (void)performWorkWithObject:(id<IDPCashOwner>)object {
     [self doesNotRecognizeSelector:_cmd];
 }
 
+- (void)finishProcessingObject:(id<IDPCashOwner>)object {
+    @synchronized(object) {
+        if ([object respondsToSelector:@selector(finishProcessing)]) {
+            [object finishProcessing];
+        }
+    }
+    
+    @synchronized(self.objectsQueue) {
+        IDPThreadSafeQueue *objectsQueue = self.objectsQueue;
+        if ([objectsQueue count] > 0 ) {
+            id object = [objectsQueue dequeue];
+            
+            [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:object];
+        } else {
+            self.state = IDPWorkerPending;
+        }
+    }
+}
+
+- (void)finishProcessing {
+    self.state = IDPWorkerFree;
+}
+
 - (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object {
     float cash = 0;
     
-    @synchronized(object) {
-        cash = [object giveAllCash];
-    }
+    cash = [object giveAllCash];
     
-    @synchronized(self) {
-        [self receiveCash:cash];
-    }
+    [self receiveCash:cash];
 }
 
 - (void)receiveCash:(float)cash {
-    self.cash += cash;
+    @synchronized(self) {
+        self.cash += cash;
+    }
 }
 
 - (float)giveAllCash {
-    return [self giveCash:self.cash];
+    @synchronized(self) {
+        return [self giveCash:self.cash];
+    }
 }
 
 - (float)giveCash:(float)cash {
-    float cashOwned = self.cash;
-    float cashToGive = cashOwned > cash ? cash : cashOwned;
-    self.cash = cashOwned - cashToGive;
-    
-    return cashToGive;
+    @synchronized(self) {
+        float cashOwned = self.cash;
+        float cashToGive = cashOwned > cash ? cash : cashOwned;
+        self.cash = cashOwned - cashToGive;
+        
+        return cashToGive;
+    }
 }
-
-#pragma mark - Private
-
-
 
 #pragma mark -
 #pragma mark IDPWorkerDelegate
