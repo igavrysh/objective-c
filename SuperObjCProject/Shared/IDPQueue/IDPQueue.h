@@ -14,6 +14,5 @@
 - (void)enqueue:(id)object;
 
 - (id)dequeue;
-- (void)dequeueAll;
 
 @end

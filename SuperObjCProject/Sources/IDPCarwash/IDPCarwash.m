@@ -45,7 +45,6 @@ const NSUInteger kIDPCarwashersCount = 3;
     [self.carwashers removeAllObjects];
     [self.accountants removeAllObjects];
     [self.directors removeAllObjects];
-    [self.carsQueue dequeueAll];
     
     self.carwashers = nil;
     self.accountants = nil;

@@ -7,14 +7,14 @@
 //
 
 #import "IDPObservableObject.h"
-#import "IDPAssignReference.h"
 
 typedef void(^IDPObserverNotificationBlock)(id object);
 
 @interface IDPObservableObject ()
-@property (nonatomic, retain) NSMutableSet *mutableRefereceObserverSet;
+@property (nonatomic, retain) NSHashTable   *observers;
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector;
+
 - (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object;
 
 @end
@@ -27,7 +27,7 @@ typedef void(^IDPObserverNotificationBlock)(id object);
 #pragma mark Initializations and Deallocations
 
 - (void)dealloc {
-    self.mutableRefereceObserverSet = nil;
+    self.observers = nil;
     
     [super dealloc];
 }
@@ -35,7 +35,7 @@ typedef void(^IDPObserverNotificationBlock)(id object);
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.mutableRefereceObserverSet = [NSMutableSet set];
+        self.observers = [NSHashTable weakObjectsHashTable];
     }
     
     return self;
@@ -45,10 +45,10 @@ typedef void(^IDPObserverNotificationBlock)(id object);
 #pragma mark Accessors
 
 - (NSSet *)observerSet {
-    NSMutableSet *observerSet = self.mutableRefereceObserverSet;
-    NSMutableSet *result = [NSMutableSet setWithCapacity:[observerSet count]];
-    for (IDPReference *reference in observerSet) {
-        [result addObject:reference.target];
+    NSHashTable *observers = self.observers;
+    NSMutableSet *result = [NSMutableSet setWithCapacity:[observers count]];
+    for (id object in observers) {
+        [result addObject:object];
     }
     
     return [[result copy] autorelease];
@@ -66,15 +66,15 @@ typedef void(^IDPObserverNotificationBlock)(id object);
 #pragma mark Public
 
 - (void)addObserver:(id)observer {
-    [self.mutableRefereceObserverSet addObject:[IDPAssignReference referenceWithTarget:observer]];
+    [self.observers addObject:observer];
 }
 
 - (void)removeObserver:(id)observer {
-    [self.mutableRefereceObserverSet removeObject:[IDPAssignReference referenceWithTarget:observer]];
+    [self.observers removeObject:observer];
 }
 
 - (BOOL)isObservedByObject:(id)observer {
-    return [self.mutableRefereceObserverSet containsObject:[IDPAssignReference referenceWithTarget:observer]];
+    return [self.observers containsObject:observer];
 }
 
 #pragma mark -
@@ -87,15 +87,14 @@ typedef void(^IDPObserverNotificationBlock)(id object);
 }
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector {
-    [self notifyOfStateChangeWithSelector:@selector(selector) object:nil];
+    [self notifyOfStateChangeWithSelector:selector object:nil];
 }
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object {
-    NSMutableSet *observerSet = self.mutableRefereceObserverSet;
-    for (IDPAssignReference *reference in observerSet) {
-        id target = reference.target;
-        if ([target respondsToSelector:selector]) {
-            [target performSelector:selector withObject:self withObject:object];
+    NSHashTable *observers = self.observers;
+    for (id object in observers) {
+        if ([object respondsToSelector:selector]) {
+            [object performSelector:selector withObject:self withObject:object];
         }
     }
 }

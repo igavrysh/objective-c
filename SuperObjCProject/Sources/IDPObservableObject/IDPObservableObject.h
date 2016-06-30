@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface IDPObservableObject : NSObject
-@property (nonatomic, assign)   NSUInteger  state;
-@property (nonatomic, readonly) NSSet       *observerSet;
+@property (nonatomic, assign)   NSUInteger      state;
+@property (nonatomic, readonly) NSSet           *observerSet;
 
 - (void)addObserver:(id)observer;
 - (void)removeObserver:(id)observer;

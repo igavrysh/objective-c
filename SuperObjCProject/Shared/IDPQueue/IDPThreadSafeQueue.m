@@ -34,10 +34,4 @@
     }
 }
 
-- (void)dequeueAll {
-    @synchronized(self) {
-        [super dequeueAll];
-    }
-}
-
 @end
