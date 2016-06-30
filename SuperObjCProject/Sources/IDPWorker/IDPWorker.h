@@ -6,6 +6,7 @@
 //  Copyright (c) 2016 1mlndollarsasset. All rights reserved.
 //
 
+#import "IDPThreadSafeObservableObject.h"
 #import "IDPObservableObject.h"
 #import "IDPCashOwner.h"
 
@@ -33,6 +34,7 @@ typedef NS_ENUM(NSUInteger, IDPWorkerState) {
 - (void)processObject:(id<IDPCashOwner>)object;
 
 - (void)performWorkWithObject:(id<IDPCashOwner>)object;
+- (void)reserveWorker;
 - (void)finishProcessingObject:(id<IDPCashOwner>)object;
 - (void)finishProcessing;
 

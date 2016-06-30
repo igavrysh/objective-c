@@ -21,6 +21,8 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 @property (nonatomic, assign) float cash;
 @property (nonatomic, retain) IDPThreadSafeQueue *objectsQueue;
 
+- (void)finishProcessingObjectOnMainThread:(id<IDPCashOwner>)object;
+
 @end
 
 @implementation IDPWorker
@@ -56,7 +58,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
         if (IDPWorkerFree != self.state) {
             [self.objectsQueue enqueue:object];
         } else {
-            self.state = IDPWorkerBusy;
+            [self performSelectorOnMainThread:@selector(reserveWorker) withObject:nil waitUntilDone:YES];
             
             [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:object];
         }
@@ -66,14 +68,10 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 - (void)performWorkInBackgroundWithObject:(id<IDPCashOwner>)object {
     [self performWorkWithObject:object];
     
-    [self performSelectorOnMainThread:@selector(finishProcessingObject:) withObject:object waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:) withObject:object waitUntilDone:NO];
 }
 
-- (void)performWorkWithObject:(id<IDPCashOwner>)object {
-    [self doesNotRecognizeSelector:_cmd];
-}
-
-- (void)finishProcessingObject:(id<IDPCashOwner>)object {
+- (void)finishProcessingObjectOnMainThread:(id<IDPCashOwner>)object {
     @synchronized(object) {
         if ([object respondsToSelector:@selector(finishProcessing)]) {
             [(IDPWorker *)object finishProcessing];
@@ -87,13 +85,25 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
             
             [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:object];
         } else {
-            self.state = IDPWorkerPending;
+            [self finishProcessing];
         }
     }
 }
 
+- (void)performWorkWithObject:(id<IDPCashOwner>)object {
+    [self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)finishProcessingObject:(id<IDPCashOwner>)object {
+    self.state = IDPWorkerPending;
+}
+
 - (void)finishProcessing {
     self.state = IDPWorkerFree;
+}
+
+- (void)reserveWorker {
+    self.state = IDPWorkerBusy;
 }
 
 - (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object {

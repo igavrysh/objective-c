@@ -22,10 +22,6 @@
 #pragma mark -
 #pragma mark Overloaded Methods
 
-- (void)startProcessingObject:(id<IDPCashOwner>)object {
-    self.state = IDPWorkerBusy;
-}
-
 - (void)performWorkWithObject:(IDPCarwasher *)washer {
     NSLog(@"Accountant: %@ started processing carwasher: %@", self, washer);
     [self receiveCashFromCashOwner:washer];
