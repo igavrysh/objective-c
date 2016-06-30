@@ -27,8 +27,8 @@
 }
 
 - (void)performWorkWithObject:(IDPCarwasher *)washer {
+    NSLog(@"Accountant: %@ started processing carwasher: %@", self, washer);
     [self receiveCashFromCashOwner:washer];
-    washer.state = IDPWorkerFree;
     
     [self calculateProfit];
 }
@@ -37,7 +37,7 @@
 #pragma mark Private Methods
 
 - (void)calculateProfit {
-    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(100, 200));
+    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(1, 3));
     
     NSLog(@"Cash is calculated");
 }

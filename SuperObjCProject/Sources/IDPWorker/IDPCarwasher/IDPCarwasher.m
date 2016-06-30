@@ -22,7 +22,10 @@
 #pragma mark Overloaded Methods
 
 - (void)performWorkWithObject:(IDPCar *)car {
+    NSLog(@"Carwasher: %@ started cleaning car: %@", self, car);
     [self cleanCar:car];
+    
+    NSLog(@"Carwasher: %@ is getting money from car: %@", self, car);
     [self receiveCashFromCashOwner:car];
 }
 
@@ -30,11 +33,11 @@
 #pragma mark Private Methods
 
 - (void)cleanCar:(IDPCar *)car {
+    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(1, 3));
+    
     car.dirty = NO;
     
-    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(100, 200));
-    
-    NSLog(@"Car is washed");
+    NSLog(@"Carwasher: %@ finished cleaning car: %@", self, car);
 }
 
 @end

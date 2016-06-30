@@ -30,6 +30,8 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 - (void)dealloc {
     self.objectsQueue = nil;
+    
+    [super dealloc];
 }
 
 - (id)init {
@@ -74,7 +76,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 - (void)finishProcessingObject:(id<IDPCashOwner>)object {
     @synchronized(object) {
         if ([object respondsToSelector:@selector(finishProcessing)]) {
-            [object finishProcessing];
+            [(IDPWorker *)object finishProcessing];
         }
     }
     

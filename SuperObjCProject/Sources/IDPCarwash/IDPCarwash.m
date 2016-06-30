@@ -18,7 +18,7 @@
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 
-const NSUInteger kIDPCarwashersCount = 10;
+const NSUInteger kIDPCarwashersCount = 3;
 
 @interface IDPCarwash ()
 @property (nonatomic, retain) NSMutableArray *carwashers;
@@ -30,7 +30,8 @@ const NSUInteger kIDPCarwashersCount = 10;
 - (void)initCarwashStructure;
 
 - (id)freeWorkerFromWorkers:(NSArray *)workers;
-- (void)assignWorkToCarwasher:(id)carwasher;
+- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher;
+
 @end
 
 @implementation IDPCarwash
@@ -44,12 +45,11 @@ const NSUInteger kIDPCarwashersCount = 10;
     [self.carwashers removeAllObjects];
     [self.accountants removeAllObjects];
     [self.directors removeAllObjects];
+    [self.carsQueue dequeueAll];
     
     self.carwashers = nil;
     self.accountants = nil;
     self.directors = nil;
-    
-    [self.carsQueue dequeueAll];
     self.carsQueue = nil;
     
     [super dealloc];
@@ -58,10 +58,10 @@ const NSUInteger kIDPCarwashersCount = 10;
 - (id)init {
     self = [super init];
     
-    self.carsQueue = [IDPThreadSafeQueue object];
     self.accountants = [NSMutableArray object];
     self.carwashers = [NSMutableArray object];
     self.directors = [NSMutableArray object];
+    self.carsQueue = [IDPThreadSafeQueue object];
     
     [self initCarwashStructure];
     
@@ -76,6 +76,7 @@ const NSUInteger kIDPCarwashersCount = 10;
     self.carwashers = [[[NSArray objectsWithCount:kIDPCarwashersCount block:^id{
         IDPCarwasher *carwasher = [IDPCarwasher object];
         [carwasher addObserver:accountant];
+        [carwasher addObserver:self];
         
         return carwasher;
     }] mutableCopy] autorelease];
@@ -100,7 +101,6 @@ const NSUInteger kIDPCarwashersCount = 10;
         [self.carsQueue enqueue:car];
     }
     
-    
     @synchronized(self.carwashers) {
         IDPCarwasher *freeCarwasher = [self freeWorkerFromWorkers:self.carwashers];
         
@@ -113,6 +113,17 @@ const NSUInteger kIDPCarwashersCount = 10;
 #pragma mark -
 #pragma mark Private Methods
 
+- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher {
+    IDPCar *currentCar = [self.carsQueue dequeue];
+    if (!currentCar) {
+        return;
+    }
+    
+    NSLog(@"Carwasher:%@ was assigned with car: %@", carwasher, currentCar);
+    
+    [carwasher performSelectorInBackground:@selector(processObject:) withObject:currentCar];
+}
+
 - (id)freeWorkerFromWorkers:(NSArray *)workers {
     id freeWorkerFilter = ^BOOL(IDPWorker *worker, NSDictionary<NSString *,id> *bindings) {
         return worker.state == IDPWorkerFree;
@@ -123,22 +134,52 @@ const NSUInteger kIDPCarwashersCount = 10;
     return [freeWorkers count] ? freeWorkers[0] : nil;
 }
 
-- (void)assignWorkToCarwasher:(id)carwasher {
-    IDPCar *currentCar = nil;
-    currentCar = [self.carsQueue dequeue];
-    
-    if (!currentCar) {
-        return;
-    }
-    
-    [carwasher performSelectorInBackground:@selector(processObject:) withObject:currentCar];
-}
-
 #pragma mark -
 #pragma mark Overloaded Methods
 
-- (void)workerDidBecomeFree:(IDPCarwasher *)carwasher {
-    [self assignWorkToCarwasher:carwasher];
+- (void)workerDidBecomeFree:(id)worker {
+    if ([worker isMemberOfClass:[IDPCarwasher class]]) {
+        [self assignWorkToCarwasher:worker];
+        
+        NSLog(@"Carswasher %@ did finished washing car", worker);
+    }
+    
+    if ([worker isMemberOfClass:[IDPAccountant class]]) {
+        NSLog(@"Accountant %@ did finished processing workers and calculating profits", worker);
+    }
+    
+    if ([worker isMemberOfClass:[IDPDirector class]]) {
+        NSLog(@"Director %@ did finished processing accountants and making profits", worker);
+    }
 }
+
+- (void)workerDidBecomeBusy:(IDPWorker *)worker {
+    if ([worker isMemberOfClass:[IDPCarwasher class]]) {
+        NSLog(@"Carswasher %@ busy", worker);
+    }
+    
+    if ([worker isMemberOfClass:[IDPAccountant class]]) {
+        NSLog(@"Accountant %@ busy", worker);
+    }
+    
+    if ([worker isMemberOfClass:[IDPDirector class]]) {
+        NSLog(@"Director %@ busy", worker);
+    }
+}
+
+- (void)workerDidBecomePending:(IDPWorker *)worker {
+    if ([worker isMemberOfClass:[IDPCarwasher class]]) {
+        NSLog(@"Carswasher %@ pending", worker);
+    }
+    
+    if ([worker isMemberOfClass:[IDPAccountant class]]) {
+        NSLog(@"Accountant %@ pending", worker);
+    }
+    
+    if ([worker isMemberOfClass:[IDPDirector class]]) {
+        NSLog(@"Director %@ pending", worker);
+    }
+}
+
 
 @end

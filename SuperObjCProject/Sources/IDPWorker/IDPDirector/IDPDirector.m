@@ -41,7 +41,7 @@
 #pragma mark Private Methods
 
 - (void)makeProfit {
-    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(100, 200));
+    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(1, 3));
     
     NSLog(@"Profit is made");
 }

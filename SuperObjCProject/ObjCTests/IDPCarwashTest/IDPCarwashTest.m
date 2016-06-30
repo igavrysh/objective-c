@@ -34,14 +34,13 @@ static const NSUInteger kIDPCarwashTestCarsCount = 25;
     }];
     
     for (IDPCar *car in cars) {
-        NSLog(@"->Car is being processed");
+        //[self.carwash performSelectorOnMainThread:@selector(processCar:)  withObject:car waitUntilDone:NO];
         
         [self.carwash performSelectorInBackground:@selector(processCar:) withObject:car];
-    
-        NSLog(@"Car was processed->");
     }
     
-    self.carwash = nil;
+    [[NSRunLoop mainRunLoop] run];
+
 }
 
 @end
