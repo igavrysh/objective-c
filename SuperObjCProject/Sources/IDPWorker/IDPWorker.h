@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, IDPWorkerState) {
 
 @end
 
-@interface IDPWorker : IDPObservableObject <IDPCashOwner>
+@interface IDPWorker : IDPObservableObject <IDPCashOwner, IDPWorkerObserver>
 @property (nonatomic, assign) float                 salary;
 @property (nonatomic, assign) float                 capital;
 @property (nonatomic, assign) NSUInteger            experience;
