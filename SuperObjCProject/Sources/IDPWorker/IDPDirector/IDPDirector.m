@@ -22,12 +22,8 @@
 #pragma mark -
 #pragma mark Overloaded Methods
 
-- (void)finishProcessingObject:(id<IDPCashOwner>)object {
-    self.state = IDPWorkerFree;
-}
-
 - (void)finishProcessing {
-    
+    self.state = IDPWorkerFree;
 }
 
 - (void)performWorkWithObject:(IDPAccountant *)accountant {
@@ -43,15 +39,8 @@
 - (void)makeProfit {
     sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(1, 3));
     
-    NSLog(@"Profit is made");
+    [self log:@"profit is made"];
 }
 
-#pragma mark -
-#pragma mark Overloaded Methods
-
-- (void)workerDidBecomePending:(IDPAccountant *)accountant {
-    [self processObject:accountant];
-    
-}
 
 @end

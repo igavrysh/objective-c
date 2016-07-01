@@ -16,4 +16,6 @@
 
 - (id)randomObject;
 
+- (NSArray *)filteredArrayUsingBlock:(BOOL (^)(id object))block;
+
 @end

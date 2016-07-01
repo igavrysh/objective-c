@@ -118,67 +118,36 @@ const NSUInteger kIDPCarwashersCount = 3;
         return;
     }
     
-    NSLog(@"Carwasher:%@ was assigned with car: %@", carwasher, currentCar);
+    [carwasher log:@"was assigned" withObject:currentCar];
     
     [carwasher performSelectorInBackground:@selector(processObject:) withObject:currentCar];
 }
 
 - (id)freeWorkerFromWorkers:(NSArray *)workers {
-    id freeWorkerFilter = ^BOOL(IDPWorker *worker, NSDictionary<NSString *,id> *bindings) {
+    NSArray *freeWorkers = [workers filteredArrayUsingBlock:^BOOL(IDPWorker *worker) {
         return worker.state == IDPWorkerFree;
-    };
+    }];
     
-    NSArray *freeWorkers = [workers filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:freeWorkerFilter]];
-    
-    return [freeWorkers count] ? freeWorkers[0] : nil;
+    return [freeWorkers firstObject];
 }
 
 #pragma mark -
 #pragma mark Overloaded Methods
 
-- (void)workerDidBecomeFree:(id)worker {
+- (void)workerDidBecomeFree:(IDPWorker *)worker {
     if ([worker isMemberOfClass:[IDPCarwasher class]]) {
-        [self assignWorkToCarwasher:worker];
-        
-        NSLog(@"Carswasher %@ did finished washing car", worker);
+        [self assignWorkToCarwasher:(IDPCarwasher *)worker];
     }
     
-    if ([worker isMemberOfClass:[IDPAccountant class]]) {
-        NSLog(@"Accountant %@ did finished processing workers and calculating profits", worker);
-    }
-    
-    if ([worker isMemberOfClass:[IDPDirector class]]) {
-        NSLog(@"Director %@ did finished processing accountants and making profits", worker);
-    }
+    [worker log:@"did become free"];
 }
 
 - (void)workerDidBecomeBusy:(IDPWorker *)worker {
-    if ([worker isMemberOfClass:[IDPCarwasher class]]) {
-        NSLog(@"Carswasher %@ busy", worker);
-    }
-    
-    if ([worker isMemberOfClass:[IDPAccountant class]]) {
-        NSLog(@"Accountant %@ busy", worker);
-    }
-    
-    if ([worker isMemberOfClass:[IDPDirector class]]) {
-        NSLog(@"Director %@ busy", worker);
-    }
+    [worker log:@"did become busy"];
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {
-    if ([worker isMemberOfClass:[IDPCarwasher class]]) {
-        NSLog(@"Carswasher %@ pending", worker);
-    }
-    
-    if ([worker isMemberOfClass:[IDPAccountant class]]) {
-        NSLog(@"Accountant %@ pending", worker);
-    }
-    
-    if ([worker isMemberOfClass:[IDPDirector class]]) {
-        NSLog(@"Director %@ pending", worker);
-    }
+    [worker log:@"did become pending"];
 }
-
 
 @end

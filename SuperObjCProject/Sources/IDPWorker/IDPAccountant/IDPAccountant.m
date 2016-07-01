@@ -23,7 +23,8 @@
 #pragma mark Overloaded Methods
 
 - (void)performWorkWithObject:(IDPCarwasher *)washer {
-    NSLog(@"Accountant: %@ started processing carwasher: %@", self, washer);
+    [self log:@"started processing" withObject:washer];
+    
     [self receiveCashFromCashOwner:washer];
     
     [self calculateProfit];
@@ -35,14 +36,7 @@
 - (void)calculateProfit {
     sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(1, 3));
     
-    NSLog(@"Cash is calculated");
-}
-
-#pragma mark -
-#pragma mark Overloaded Methods
-
-- (void)workerDidBecomePending:(IDPWorker *)carwasher {
-    [self processObject:carwasher];
+    [self log:@"cash is calculated"];
 }
 
 @end

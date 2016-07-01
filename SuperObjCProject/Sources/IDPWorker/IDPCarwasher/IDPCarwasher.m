@@ -22,10 +22,10 @@
 #pragma mark Overloaded Methods
 
 - (void)performWorkWithObject:(IDPCar *)car {
-    NSLog(@"Carwasher: %@ started cleaning car: %@", self, car);
+    [self log:@"started cleaning" withObject:car];
     [self cleanCar:car];
     
-    NSLog(@"Carwasher: %@ is getting money from car: %@", self, car);
+    [self log:@"is getting money from" withObject:car];
     [self receiveCashFromCashOwner:car];
 }
 
@@ -37,7 +37,7 @@
     
     car.dirty = NO;
     
-    NSLog(@"Carwasher: %@ finished cleaning car: %@", self, car);
+    [self log:@"finished clearing" withObject:car];
 }
 
 @end

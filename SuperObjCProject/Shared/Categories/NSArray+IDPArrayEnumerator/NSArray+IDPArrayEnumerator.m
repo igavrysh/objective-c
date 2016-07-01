@@ -49,4 +49,19 @@
     return [self objectAtIndex:IDPRandomUIntWithMaxValue(count - 1)];
 }
 
+- (NSArray *)filteredArrayUsingBlock:(BOOL (^)(id object))block {
+    if (!block) {
+        return nil;
+    }
+    
+    id arrayFilter = ^BOOL(id object, NSDictionary<NSString *,id> *bindings) {
+        return block(object);
+    };
+    
+    NSArray *result = [self filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:arrayFilter]];
+    
+    return result;
+}
+
+
 @end

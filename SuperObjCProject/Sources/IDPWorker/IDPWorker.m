@@ -73,9 +73,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 - (void)finishProcessingObjectOnMainThread:(id<IDPCashOwner>)object {
     @synchronized(object) {
-        if ([object respondsToSelector:@selector(finishProcessing)]) {
-            [(IDPWorker *)object finishProcessing];
-        }
+        [self finishProcessingObject:object];
     }
     
     @synchronized(self.objectsQueue) {
@@ -95,11 +93,13 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 }
 
 - (void)finishProcessingObject:(id<IDPCashOwner>)object {
-    self.state = IDPWorkerPending;
+    if ([object isMemberOfClass:[IDPWorker class]]) {
+       ((IDPObservableObject *)object).state = IDPWorkerFree;
+    }
 }
 
 - (void)finishProcessing {
-    self.state = IDPWorkerFree;
+    self.state = IDPWorkerPending;
 }
 
 - (void)reserveWorker {
@@ -136,11 +136,12 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     }
 }
 
-#pragma mark -
-#pragma mark IDPWorkerDelegate
+- (void)log:(NSString *)info {
+    NSLog(@"%@ :%@  %@", [self class], self, info);
+}
 
-- (void)workerDidFinishProcessingObject:(IDPWorker *)worker {
-    [self processObject:worker];
+- (void)log:(NSString *)info withObject:(id)object {
+    NSLog(@"%@ :%@ %@ %@: %@ ", [self class], self, info, [object class], object);
 }
 
 #pragma mark -
