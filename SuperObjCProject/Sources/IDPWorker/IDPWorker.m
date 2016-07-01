@@ -13,8 +13,8 @@
 
 #import "NSObject+IDPObject.h"
 
-static float const kIDPWorkerMaxSalary = 100;
-static float const kIDPWorkerMaxCapital = 100000;
+static float const kIDPWorkerMaxSalary          = 100;
+static float const kIDPWorkerMaxCapital         = 100000;
 static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 @interface IDPWorker ()

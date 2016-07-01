@@ -21,9 +21,9 @@
 const NSUInteger kIDPCarwashersCount = 3;
 
 @interface IDPCarwash ()
-@property (nonatomic, retain) NSMutableArray *carwashers;
-@property (nonatomic, retain) NSMutableArray *accountants;
-@property (nonatomic, retain) NSMutableArray *directors;
+@property (nonatomic, retain) NSArray *carwashers;
+@property (nonatomic, retain) NSArray *accountants;
+@property (nonatomic, retain) NSArray *directors;
 
 @property (nonatomic, retain) IDPThreadSafeQueue *carsQueue;
 
@@ -42,10 +42,6 @@ const NSUInteger kIDPCarwashersCount = 3;
 #pragma mark Initializtions and Deallocations
 
 - (void) dealloc {
-    [self.carwashers removeAllObjects];
-    [self.accountants removeAllObjects];
-    [self.directors removeAllObjects];
-    
     self.carwashers = nil;
     self.accountants = nil;
     self.directors = nil;
@@ -56,10 +52,7 @@ const NSUInteger kIDPCarwashersCount = 3;
 
 - (id)init {
     self = [super init];
-    
-    self.accountants = [NSMutableArray object];
-    self.carwashers = [NSMutableArray object];
-    self.directors = [NSMutableArray object];
+
     self.carsQueue = [IDPThreadSafeQueue object];
     
     [self initCarwashStructure];
@@ -72,17 +65,20 @@ const NSUInteger kIDPCarwashersCount = 3;
 
     IDPAccountant *accountant = [IDPAccountant object];
     
-    self.carwashers = [[[NSArray objectsWithCount:kIDPCarwashersCount block:^id{
+    id washerFactory = ^id{
         IDPCarwasher *carwasher = [IDPCarwasher object];
         [carwasher addObserver:accountant];
         [carwasher addObserver:self];
         
         return carwasher;
-    }] mutableCopy] autorelease];
+    };
+    
+    self.carwashers = [[[NSArray objectsWithCount:kIDPCarwashersCount block:washerFactory] mutableCopy] autorelease];
     
     [accountant addObserver:director];
-    [self.accountants addObject:accountant];
-    [self.directors addObject:director];
+    
+    self.accountants = @[accountant];
+    self.directors = @[director];
 }
 
 #pragma mark -

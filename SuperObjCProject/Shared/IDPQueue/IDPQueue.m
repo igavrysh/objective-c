@@ -13,8 +13,6 @@
 @interface IDPQueue ()
 @property (nonatomic, retain) NSMutableArray  *objects;
 
-- (void)dequeueAll;
-
 @end
 
 @implementation IDPQueue
@@ -25,7 +23,6 @@
 #pragma mark Initializtions and Deallocations
 
 - (void)dealloc {
-    [self dequeueAll];
     self.objects = nil;
     
     [super dealloc];
@@ -65,12 +62,6 @@
     [self.objects removeObjectAtIndex:0];
     
     return object;
-}
-
-- (void)dequeueAll {
-    while ([self count]) {
-        [self dequeue];
-    }
 }
 
 @end
