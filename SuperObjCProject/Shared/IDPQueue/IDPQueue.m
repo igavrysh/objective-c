@@ -61,7 +61,7 @@
         return nil;
     }
     
-    id object = [[self.objects[0] retain] autorelease];
+    id object = [self.objects firstObject];
     [self.objects removeObjectAtIndex:0];
     
     return object;

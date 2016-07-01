@@ -96,9 +96,7 @@ const NSUInteger kIDPCarwashersCount = 3;
 #pragma mark Public Methods
 
 - (void)processCar:(IDPCar *)car {
-    @synchronized(car) {
-        [self.carsQueue enqueue:car];
-    }
+    [self.carsQueue enqueue:car];
     
     @synchronized(self.carwashers) {
         IDPCarwasher *freeCarwasher = [self freeWorkerFromWorkers:self.carwashers];

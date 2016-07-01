@@ -34,9 +34,9 @@ static const NSUInteger kIDPCarwashTestCarsCount = 25;
     }];
     
     for (IDPCar *car in cars) {
-        [self.carwash performSelectorOnMainThread:@selector(processCar:)  withObject:car waitUntilDone:NO];
+        //[self.carwash performSelectorOnMainThread:@selector(processCar:)  withObject:car waitUntilDone:YES];
         
-        //[self.carwash performSelectorInBackground:@selector(processCar:)  withObject:car];
+        [self.carwash performSelectorInBackground:@selector(processCar:)  withObject:car];
     }
     
     [[NSRunLoop mainRunLoop] run];

@@ -94,7 +94,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 - (void)finishProcessingObject:(id<IDPCashOwner>)object {
     if ([object isKindOfClass:[IDPWorker class]]) {
-       ((IDPObservableObject *)object).state = IDPWorkerFree;
+       ((IDPWorker *)object).state = IDPWorkerFree;
     }
 }
 
@@ -170,7 +170,8 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {
-    [self performSelectorOnMainThread:@selector(processObject:) withObject:worker waitUntilDone:NO];
+    //[self performSelectorOnMainThread:@selector(processObject:) withObject:worker waitUntilDone:NO];
+    [self performSelectorInBackground:@selector(processObject:) withObject:worker];
 }
 
 @end
