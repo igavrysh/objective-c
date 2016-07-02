@@ -40,7 +40,6 @@ static const NSUInteger kIDPCarwashTestCarsCount = 25;
     }
     
     [[NSRunLoop mainRunLoop] run];
-
 }
 
 @end

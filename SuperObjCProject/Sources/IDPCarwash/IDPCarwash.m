@@ -61,20 +61,18 @@ const NSUInteger kIDPCarwashersCount = 3;
 }
 
 - (void)initCarwashStructure {
-    IDPDirector *director = [IDPDirector object];
-
     IDPAccountant *accountant = [IDPAccountant object];
     
-    id washerFactory = ^id{
+    id washerFactory = ^id {
         IDPCarwasher *carwasher = [IDPCarwasher object];
         [carwasher addObserver:accountant];
         [carwasher addObserver:self];
         
         return carwasher;
     };
+    self.carwashers = [NSArray objectsWithCount:kIDPCarwashersCount block:washerFactory];
     
-    self.carwashers = [[[NSArray objectsWithCount:kIDPCarwashersCount block:washerFactory] mutableCopy] autorelease];
-    
+    IDPDirector *director = [IDPDirector object];
     [accountant addObserver:director];
     
     self.accountants = @[accountant];
@@ -118,8 +116,8 @@ const NSUInteger kIDPCarwashersCount = 3;
 }
 
 - (id)freeWorkerFromWorkers:(NSArray *)workers {
-    NSArray *freeWorkers = [workers filteredArrayUsingBlock:^BOOL(IDPWorker *worker) {
-        return worker.state == IDPWorkerFree;
+    NSArray *freeWorkers = [workers filteredArrayUsingBlock:^(IDPWorker *worker) {
+        return (BOOL)(worker.state == IDPWorkerFree);
     }];
     
     return [freeWorkers firstObject];

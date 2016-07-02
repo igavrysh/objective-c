@@ -8,8 +8,6 @@
 
 #import "IDPObservableObject.h"
 
-typedef void(^IDPObserverNotificationBlock)(id object);
-
 @interface IDPObservableObject ()
 @property (nonatomic, retain) NSHashTable   *observers;
 
@@ -45,13 +43,7 @@ typedef void(^IDPObserverNotificationBlock)(id object);
 #pragma mark Accessors
 
 - (NSSet *)observerSet {
-    NSHashTable *observers = self.observers;
-    NSMutableSet *result = [NSMutableSet setWithCapacity:[observers count]];
-    for (id object in observers) {
-        [result addObject:object];
-    }
-    
-    return [[result copy] autorelease];
+    return [self.observers setRepresentation];
 }
 
 - (void)setState:(NSUInteger)state {

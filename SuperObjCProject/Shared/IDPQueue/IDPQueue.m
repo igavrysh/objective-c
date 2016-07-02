@@ -58,8 +58,9 @@
         return nil;
     }
     
-    id object = [self.objects firstObject];
-    [self.objects removeObjectAtIndex:0];
+    NSMutableArray *objects = self.objects;
+    id object = [objects firstObject];
+    [objects removeObject:object];
     
     return object;
 }

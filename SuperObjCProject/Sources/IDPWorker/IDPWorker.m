@@ -15,6 +15,7 @@
 
 static float const kIDPWorkerMaxSalary          = 100;
 static float const kIDPWorkerMaxCapital         = 100000;
+
 static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 @interface IDPWorker ()
@@ -76,7 +77,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
         [self finishProcessingObject:object];
     }
     
-    @synchronized(self.objectsQueue) {
+    @synchronized(self) {
         IDPThreadSafeQueue *objectsQueue = self.objectsQueue;
         if ([objectsQueue count] > 0 ) {
             id object = [objectsQueue dequeue];
@@ -107,11 +108,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 }
 
 - (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object {
-    float cash = 0;
-    
-    cash = [object giveAllCash];
-    
-    [self receiveCash:cash];
+    [self receiveCash:[object giveAllCash]];
 }
 
 - (void)receiveCash:(float)cash {
