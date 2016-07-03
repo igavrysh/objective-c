@@ -8,6 +8,8 @@
 
 #import "IDPObservableObject.h"
 
+#import "NSArray+IDPArrayEnumerator.h"
+
 @interface IDPObservableObject ()
 @property (nonatomic, retain) NSHashTable   *observers;
 
@@ -63,6 +65,12 @@
 
 - (void)removeObserver:(id)observer {
     [self.observers removeObject:observer];
+}
+
+- (void)removeObservers:(NSArray *)observers {
+    [observers performBlockWithEachObject:^(id object) {
+        [self removeObserver:object];
+    }];
 }
 
 - (BOOL)isObservedByObject:(id)observer {

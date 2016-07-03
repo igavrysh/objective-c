@@ -14,6 +14,7 @@
 
 - (void)addObserver:(id)observer;
 - (void)removeObserver:(id)observer;
+- (void)removeObservers:(NSArray *)observers;
 - (BOOL)isObservedByObject:(id)observer;
 
 // This method is itended for subclassing

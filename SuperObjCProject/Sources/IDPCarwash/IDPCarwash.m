@@ -28,6 +28,7 @@ const NSUInteger kIDPCarwashersCount = 3;
 @property (nonatomic, retain) IDPThreadSafeQueue *carsQueue;
 
 - (void)initCarwashStructure;
+- (void)cleanUpCarwashStructure;
 
 - (id)freeWorkerFromWorkers:(NSArray *)workers;
 - (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher;
@@ -42,9 +43,8 @@ const NSUInteger kIDPCarwashersCount = 3;
 #pragma mark Initializtions and Deallocations
 
 - (void) dealloc {
-    self.carwashers = nil;
-    self.accountants = nil;
-    self.directors = nil;
+    [self cleanUpCarwashStructure];
+    
     self.carsQueue = nil;
     
     [super dealloc];
@@ -77,6 +77,16 @@ const NSUInteger kIDPCarwashersCount = 3;
     
     self.accountants = @[accountant];
     self.directors = @[director];
+}
+
+- (void)cleanUpCarwashStructure {
+    [self.carwashers performBlockWithEachObject:^(IDPCarwasher *washer) {
+        [washer removeObservers:@[self.accountants, self]];
+    }];
+    
+    [self.accountants performBlockWithEachObject:^(IDPAccountant *accountant) {
+        [accountant removeObservers:@[self.directors]];
+    }];
 }
 
 #pragma mark -
