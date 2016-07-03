@@ -18,7 +18,7 @@
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 
-const NSUInteger kIDPCarwashersCount = 3;
+const NSUInteger kIDPCarwashersCount = 2;
 
 @interface IDPCarwash ()
 @property (nonatomic, retain) NSArray *carwashers;
@@ -31,7 +31,7 @@ const NSUInteger kIDPCarwashersCount = 3;
 - (void)cleanUpCarwashStructure;
 
 - (id)freeWorkerFromWorkers:(NSArray *)workers;
-- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher;
+- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher checkForState:(BOOL)checkForState;
 
 @end
 
@@ -104,9 +104,13 @@ const NSUInteger kIDPCarwashersCount = 3;
     
     @synchronized(self.carwashers) {
         IDPCarwasher *freeCarwasher = [self freeWorkerFromWorkers:self.carwashers];
-        
+    
         if (freeCarwasher) {
-            [self assignWorkToCarwasher:freeCarwasher];
+            [freeCarwasher performSelectorOnMainThread:@selector(reserveWorker) withObject:nil waitUntilDone:YES];
+            
+            if (IDPWorkerBusy == freeCarwasher.state) {
+                [self assignWorkToCarwasher:freeCarwasher checkForState:NO];
+            }
         }
     }
 }
@@ -114,20 +118,24 @@ const NSUInteger kIDPCarwashersCount = 3;
 #pragma mark -
 #pragma mark Private Methods
 
-- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher {
-    IDPCar *currentCar = [self.carsQueue dequeue];
-    if (!currentCar) {
-        return;
+- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher checkForState:(BOOL)checkForState {
+    @synchronized(carwasher) {
+        if (IDPWorkerFree == carwasher.state || !checkForState) {
+            IDPCar *currentCar = [self.carsQueue dequeue];
+            if (!currentCar) {
+                return;
+            }
+            
+            [carwasher log:@"was assigned" withObject:currentCar];
+            
+            [carwasher performSelectorInBackground:@selector(processObject:) withObject:currentCar];
+        }
     }
-    
-    [carwasher log:@"was assigned" withObject:currentCar];
-    
-    [carwasher performSelectorInBackground:@selector(processObject:) withObject:currentCar];
 }
 
 - (id)freeWorkerFromWorkers:(NSArray *)workers {
     NSArray *freeWorkers = [workers filteredArrayUsingBlock:^(IDPWorker *worker) {
-        return (BOOL)(worker.state == IDPWorkerFree);
+        return (BOOL)(IDPWorkerFree == worker.state);
     }];
     
     return [freeWorkers firstObject];
@@ -138,18 +146,14 @@ const NSUInteger kIDPCarwashersCount = 3;
 
 - (void)workerDidBecomeFree:(IDPWorker *)worker {
     if ([worker isMemberOfClass:[IDPCarwasher class]]) {
-        [self assignWorkToCarwasher:(IDPCarwasher *)worker];
+        [self assignWorkToCarwasher:(IDPCarwasher *)worker checkForState:YES];
     }
-    
-    [worker log:@"did become free"];
 }
 
 - (void)workerDidBecomeBusy:(IDPWorker *)worker {
-    [worker log:@"did become busy"];
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {
-    [worker log:@"did become pending"];
 }
 
 @end

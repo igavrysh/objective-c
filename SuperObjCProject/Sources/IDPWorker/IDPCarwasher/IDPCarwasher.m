@@ -11,6 +11,7 @@
 #import "IDPRandom.h"
 
 @interface IDPCarwasher ()
+@property (nonatomic, assign)   NSUInteger  carsWashed;
 
 - (void)cleanCar:(IDPCar *)car;
 
@@ -33,9 +34,11 @@
 #pragma mark Private Methods
 
 - (void)cleanCar:(IDPCar *)car {
-    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(1, 3));
+    //usleep((unsigned int) (5 * IDPRandomUIntWithMinAndMaxValue(1, 3)));
+    usleep(10);
     
     car.dirty = NO;
+    self.carsWashed += 1;
     
     [self log:@"finished clearing" withObject:car];
 }

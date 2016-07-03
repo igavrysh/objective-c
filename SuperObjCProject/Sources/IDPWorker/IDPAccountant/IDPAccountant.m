@@ -23,8 +23,7 @@
 #pragma mark Overloaded Methods
 
 - (void)performWorkWithObject:(IDPCarwasher *)washer {
-    [self log:@"started processing" withObject:washer];
-    
+    [self log:@"started receiving money form" withObject:washer];
     [self receiveCashFromCashOwner:washer];
     
     [self calculateProfit];
@@ -34,7 +33,11 @@
 #pragma mark Private Methods
 
 - (void)calculateProfit {
-    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(1, 3));
+    [self log:@"cash started calculating"];
+    
+    //usleep((unsigned int) (1 * IDPRandomUIntWithMinAndMaxValue(1, 3)));
+    
+    usleep(20);
     
     [self log:@"cash is calculated"];
 }

@@ -27,6 +27,8 @@
 }
 
 - (void)performWorkWithObject:(IDPAccountant *)accountant {
+    [self log:@"started receiving money form" withObject:accountant];
+    
     [self receiveCashFromCashOwner:accountant];
     
     accountant.state = IDPWorkerFree;
@@ -37,7 +39,11 @@
 #pragma mark Private Methods
 
 - (void)makeProfit {
-    sleep((unsigned int)IDPRandomUIntWithMinAndMaxValue(1, 3));
+    [self log:@"profit is going to be made"];
+    
+    //usleep((unsigned int) (1 * IDPRandomUIntWithMinAndMaxValue(1, 3)));
+    
+    usleep(25);
     
     [self log:@"profit is made"];
 }
