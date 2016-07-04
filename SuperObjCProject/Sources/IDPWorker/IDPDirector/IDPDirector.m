@@ -41,9 +41,9 @@
 - (void)makeProfit {
     [self log:@"profit is going to be made"];
     
-    //usleep((unsigned int) (1 * IDPRandomUIntWithMinAndMaxValue(1, 3)));
+    usleep((unsigned int) (1 * IDPRandomUIntWithMinAndMaxValue(1, 3)));
     
-    usleep(25);
+    //usleep(25);
     
     [self log:@"profit is made"];
 }

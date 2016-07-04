@@ -35,9 +35,9 @@
 - (void)calculateProfit {
     [self log:@"cash started calculating"];
     
-    //usleep((unsigned int) (1 * IDPRandomUIntWithMinAndMaxValue(1, 3)));
+    usleep((unsigned int) (1 * IDPRandomUIntWithMinAndMaxValue(1, 3)));
     
-    usleep(20);
+    //usleep(20);
     
     [self log:@"cash is calculated"];
 }

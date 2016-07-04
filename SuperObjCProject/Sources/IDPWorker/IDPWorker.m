@@ -43,6 +43,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     self.salary = IDPRandomFloatWithMinAndMaxValue(0, kIDPWorkerMaxSalary);
     self.capital = IDPRandomFloatWithMinAndMaxValue(0, kIDPWorkerMaxCapital);
     self.experience = IDPRandomUIntWithMaxValue(kIDPWorkerMaxExperience);
+    
     self.objectsQueue = [IDPThreadSafeQueue object];
     
     return self;
@@ -51,12 +52,32 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark -
 #pragma mark Accessors
 
+- (void)setState:(NSUInteger)state {
+    @synchronized(self) {
+        if (state == IDPWorkerFree && [self.objectsQueue count] > 0) {
+            super.state = IDPWorkerBusy;
+            
+            [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:) withObject:nil waitUntilDone:NO];
+        } else {
+            super.state = state;
+        }
+    }
+}
+
 #pragma mark -
 #pragma mark Public Methods
 
 - (void)processObject:(id<IDPCashOwner>)object {
     @synchronized(self) {
-        [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:object];
+        if (IDPWorkerFree != self.state) {
+            [self.objectsQueue enqueue:object];
+            
+            [self log:[NSString stringWithFormat:@"%lu objects in a queue, worker state: %lu", [self.objectsQueue count], self.state]];
+        } else {
+            self.state = IDPWorkerBusy;
+            
+            [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:object];
+        }
     }
 }
 
@@ -73,7 +94,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     
     @synchronized(self) {
         IDPThreadSafeQueue *objectsQueue = self.objectsQueue;
-        if ([objectsQueue count] > 0 ) {
+        if ([objectsQueue count] > 0) {
             id object = [objectsQueue dequeue];
             
             [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:object];
@@ -95,10 +116,6 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 - (void)finishProcessing {
     self.state = IDPWorkerPending;
-}
-
-- (void)reserveWorker {
-    self.state = IDPWorkerBusy;
 }
 
 - (void)receiveCashFromCashOwner:(id<IDPCashOwner>)object {
@@ -136,7 +153,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 }
 
 #pragma mark -
-#pragma mark Overloaded Methods
+#pragma mark IDPObservableObject
 
 - (SEL)selectorForState:(NSUInteger)state {
     switch (state) {
@@ -154,6 +171,9 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     }
 }
 
+#pragma mark -
+#pragma mark IDPWorkerObserver
+
 - (void)workerDidBecomeFree:(IDPWorker *)worker {
     [worker log:@"did become free"];
 }
@@ -163,19 +183,9 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {
-    [worker log:@"did become pending"];
+    [self performSelectorInBackground:@selector(processObject:) withObject:worker];
     
-    @synchronized(self) {
-        if (IDPWorkerFree != self.state) {
-            [self.objectsQueue enqueue:worker];
-            
-            [self log:[NSString stringWithFormat:@"%lu objects in a queue, worker state: %lu", [self.objectsQueue count], self.state]];
-        } else {
-            [self reserveWorker];
-         
-            [self performSelectorInBackground:@selector(processObject:) withObject:worker];
-        }
-    }
+    [worker log:@"did become pending"];
 }
 
 @end

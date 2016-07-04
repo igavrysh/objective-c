@@ -34,8 +34,8 @@
 #pragma mark Private Methods
 
 - (void)cleanCar:(IDPCar *)car {
-    //usleep((unsigned int) (5 * IDPRandomUIntWithMinAndMaxValue(1, 3)));
-    usleep(10);
+    usleep((unsigned int) (5 * IDPRandomUIntWithMinAndMaxValue(1, 3)));
+    //usleep(10);
     
     car.dirty = NO;
     self.carsWashed += 1;
