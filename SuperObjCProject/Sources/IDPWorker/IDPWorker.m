@@ -55,11 +55,13 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 - (void)setState:(NSUInteger)state {
     @synchronized(self) {
         if (state == IDPWorkerFree && [self.objectsQueue count] > 0) {
-            super.state = IDPWorkerBusy;
+            [super setState:IDPWorkerBusy];
             
-            [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:) withObject:nil waitUntilDone:NO];
+            [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:)
+                                   withObject:nil
+                                waitUntilDone:NO];
         } else {
-            super.state = state;
+            [super setState:state];
         }
     }
 }
@@ -76,7 +78,8 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
         } else {
             self.state = IDPWorkerBusy;
             
-            [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:object];
+            [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
+                                   withObject:object];
         }
     }
 }
@@ -84,7 +87,9 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 - (void)performWorkInBackgroundWithObject:(id<IDPCashOwner>)object {
     [self performWorkWithObject:object];
     
-    [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:) withObject:object waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:)
+                           withObject:object
+                        waitUntilDone:NO];
 }
 
 - (void)finishProcessingObjectOnMainThread:(id<IDPCashOwner>)object {
@@ -97,7 +102,8 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
         if ([objectsQueue count] > 0) {
             id object = [objectsQueue dequeue];
             
-            [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:object];
+            [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
+                                   withObject:object];
         } else {
             [self finishProcessing];
         }

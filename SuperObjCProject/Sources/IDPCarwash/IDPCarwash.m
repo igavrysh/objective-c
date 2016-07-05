@@ -21,7 +21,7 @@
 const NSUInteger kIDPCarwashersCount = 2;
 
 @interface IDPCarwash ()
-@property (nonatomic, retain) NSArray *carwashers;
+@property (nonatomic, retain) NSArray *washers;
 @property (nonatomic, retain) NSArray *accountants;
 @property (nonatomic, retain) NSArray *directors;
 
@@ -30,8 +30,9 @@ const NSUInteger kIDPCarwashersCount = 2;
 - (void)initCarwashStructure;
 - (void)cleanUpCarwashStructure;
 
+- (IDPCarwasher *)reservedFreeWasher;
 - (id)freeWorkerFromWorkers:(NSArray *)workers;
-- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher checkForState:(BOOL)checkForState;
+- (void)assignWorkToCarwasher:(IDPCarwasher *)washer;
 
 @end
 
@@ -45,7 +46,7 @@ const NSUInteger kIDPCarwashersCount = 2;
 - (void)dealloc {
     [self cleanUpCarwashStructure];
     
-    self.carwashers = nil;
+    self.washers = nil;
     self.accountants = nil;
     self.directors = nil;
     
@@ -68,14 +69,14 @@ const NSUInteger kIDPCarwashersCount = 2;
     IDPAccountant *accountant = [IDPAccountant object];
     
     id washerFactory = ^id {
-        IDPCarwasher *carwasher = [IDPCarwasher object];
-        [carwasher addObserver:accountant];
-        [carwasher addObserver:self];
+        IDPCarwasher *washer = [IDPCarwasher object];
+        [washer addObserver:accountant];
+        [washer addObserver:self];
         
-        return carwasher;
+        return washer;
     };
     
-    self.carwashers = [NSArray objectsWithCount:kIDPCarwashersCount block:washerFactory];
+    self.washers = [NSArray objectsWithCount:kIDPCarwashersCount block:washerFactory];
     
     IDPDirector *director = [IDPDirector object];
     [accountant addObserver:director];
@@ -85,7 +86,7 @@ const NSUInteger kIDPCarwashersCount = 2;
 }
 
 - (void)cleanUpCarwashStructure {
-    [self.carwashers performBlockWithEachObject:^(IDPCarwasher *washer) {
+    [self.washers performBlockWithEachObject:^(IDPCarwasher *washer) {
         [washer removeObservers:@[self.accountants, self]];
     }];
     
@@ -107,12 +108,7 @@ const NSUInteger kIDPCarwashersCount = 2;
 - (void)processCar:(IDPCar *)car {
     [self.carsQueue enqueue:car];
     
-    IDPCarwasher *freeCarwasher = nil;
-    
-    @synchronized(self.carwashers) {
-        freeCarwasher = [self freeWorkerFromWorkers:self.carwashers];
-        freeCarwasher.state = IDPWorkerBusy;
-    }
+    IDPCarwasher *freeCarwasher = [self reservedFreeWasher];
     
     if (freeCarwasher) {
         [self assignWorkToCarwasher:freeCarwasher checkForState:NO];
@@ -123,19 +119,25 @@ const NSUInteger kIDPCarwashersCount = 2;
 #pragma mark Private Methods
 
 - (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher checkForState:(BOOL)checkForState {
-    @synchronized(carwasher) {
-        if (IDPWorkerFree == carwasher.state || !checkForState) {
-            carwasher.state = IDPWorkerBusy;
-            
-            IDPCar *currentCar = [self.carsQueue dequeue];
-            if (!currentCar) {
-                return;
-            }
-            
-            [carwasher log:@"was assigned" withObject:currentCar];
-            
-            [carwasher performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:currentCar];
+    @synchronized(self.washers) {
+        IDPCar *currentCar = [self.carsQueue dequeue];
+        if (!currentCar) {
+            return;
         }
+        
+        [carwasher log:@"was assigned" withObject:currentCar];
+        
+        [carwasher performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:currentCar];
+    }
+}
+
+- (IDPCarwasher *)reservedFreeWasher {
+    @synchronized(self.washers) {
+        IDPCarwasher *washer = [self freeWorkerFromWorkers:self.washers];
+        
+        washer.state = IDPWorkerBusy;
+        
+        return washer;
     }
 }
 
@@ -150,8 +152,14 @@ const NSUInteger kIDPCarwashersCount = 2;
 #pragma mark -
 #pragma mark IDPWorkerObserver
 
-- (void)workerDidBecomeFree:(IDPWorker *)worker {
-    [self assignWorkToCarwasher:(IDPCarwasher *)worker checkForState:YES];
+- (void)workerDidBecomeFree:(IDPCarwasher *)washer {
+    @synchronized(self.washers) {
+        if ([self.carsQueue count] > 0) {
+            washer.state = IDPWorkerBusy;
+            
+            [self assignWorkToCarwasher:(IDPCarwasher *)washer checkForState:YES];
+        }
+    }
 }
 
 @end
