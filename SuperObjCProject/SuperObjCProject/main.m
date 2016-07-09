@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "IDPCreatureTest.h"
 #import "IDPCarwashTest.h"
 
 #import "IDPRandom.h"
