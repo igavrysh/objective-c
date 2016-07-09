@@ -111,14 +111,14 @@ const NSUInteger kIDPCarwashersCount = 2;
     IDPCarwasher *freeCarwasher = [self reservedFreeWasher];
     
     if (freeCarwasher) {
-        [self assignWorkToCarwasher:freeCarwasher checkForState:NO];
+        [self assignWorkToCarwasher:freeCarwasher];
     }
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
-- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher checkForState:(BOOL)checkForState {
+- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher {
     @synchronized(self.washers) {
         IDPCar *currentCar = [self.carsQueue dequeue];
         if (!currentCar) {
@@ -127,7 +127,8 @@ const NSUInteger kIDPCarwashersCount = 2;
         
         [carwasher log:@"was assigned" withObject:currentCar];
         
-        [carwasher performSelectorInBackground:@selector(performWorkInBackgroundWithObject:) withObject:currentCar];
+        [carwasher performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
+                                    withObject:currentCar];
     }
 }
 
@@ -157,7 +158,7 @@ const NSUInteger kIDPCarwashersCount = 2;
         if ([self.carsQueue count] > 0) {
             washer.state = IDPWorkerBusy;
             
-            [self assignWorkToCarwasher:(IDPCarwasher *)washer checkForState:YES];
+            [self assignWorkToCarwasher:(IDPCarwasher *)washer];
         }
     }
 }
