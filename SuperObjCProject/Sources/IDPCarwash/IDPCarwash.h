@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#include "IDPBuilding.h"
+
 @protocol IDPWorkerObserver;
 
 @class IDPCar;
