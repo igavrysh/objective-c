@@ -14,16 +14,23 @@
 #import "IDPCarwasher.h"
 #import "IDPAccountant.h"
 #import "IDPDirector.h"
+#import "IDPWorkerDispatcher.h"
 
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 
-const NSUInteger kIDPCarwashersCount = 2;
+const NSUInteger kIDPCarwashersCount = 3;
+const NSUInteger kIDPAccountantsCount = 2;
+const NSUInteger kIDPDirectorsCount = 1;
 
 @interface IDPCarwash ()
-@property (nonatomic, retain) NSArray *washers;
-@property (nonatomic, retain) NSArray *accountants;
-@property (nonatomic, retain) NSArray *directors;
+//@property (nonatomic, retain) NSArray *washers;
+//@property (nonatomic, retain) NSArray *accountants;
+//@property (nonatomic, retain) NSArray *directors;
+
+@property (nonatomic, retain) IDPWorkerDispatcher *washersDispatcher;
+@property (nonatomic, retain) IDPWorkerDispatcher *accountantsDispatcher;
+@property (nonatomic, retain) IDPWorkerDispatcher *directorsDispatcher;
 
 @property (nonatomic, retain) IDPThreadSafeQueue *carsQueue;
 
@@ -31,7 +38,6 @@ const NSUInteger kIDPCarwashersCount = 2;
 - (void)cleanUpCarwashStructure;
 
 - (IDPCarwasher *)reservedFreeWasher;
-- (id)freeWorkerFromWorkers:(NSArray *)workers;
 - (void)assignWorkToCarwasher:(IDPCarwasher *)washer;
 
 @end
@@ -46,9 +52,9 @@ const NSUInteger kIDPCarwashersCount = 2;
 - (void)dealloc {
     [self cleanUpCarwashStructure];
     
-    self.washers = nil;
-    self.accountants = nil;
-    self.directors = nil;
+    self.washersDispatcher = nil;
+    self.accountantsDispatcher = nil;
+    self.directorsDispatcher = nil;
     
     self.carsQueue = nil;
     
@@ -68,21 +74,25 @@ const NSUInteger kIDPCarwashersCount = 2;
 - (void)initCarwashStructure {
     IDPAccountant *accountant = [IDPAccountant object];
     
-    id washerFactory = ^id {
-        IDPCarwasher *washer = [IDPCarwasher object];
-        [washer addObserver:accountant];
-        [washer addObserver:self];
+    IDPWorker *(^workerFactory)(Class class, id<IDPWorkerObserver> observer) = ^id(Class class, id<IDPWorkerObserver> observer) {
+        IDPWorker *worker = [class object];
+        [worker addObserver:accountant];
+        [worker addObserver:self];
         
-        return washer;
+        return worker;
     };
     
-    self.washers = [NSArray objectsWithCount:kIDPCarwashersCount block:washerFactory];
+    self.directorsDispatcher =
+    [IDPWorkerDispatcher dispatcherWithWorkerCount:kIDPDirectorsCount
+                                           factory:^id { return workerFactory([IDPDirector class], self); }];
     
-    IDPDirector *director = [IDPDirector object];
-    [accountant addObserver:director];
+    self.accountantsDispatcher =
+    [IDPWorkerDispatcher dispatcherWithWorkerCount:kIDPAccountantsCount
+                                           factory:^id { return workerFactory([IDPAccountant class], self.directorsDispatcher); }];
     
-    self.accountants = @[accountant];
-    self.directors = @[director];
+    self.washersDispatcher =
+    [IDPWorkerDispatcher dispatcherWithWorkerCount:kIDPCarwashersCount
+                                           factory:^id { return workerFactory([IDPCarwasher class], self.accountantsDispatcher); }];
 }
 
 - (void)cleanUpCarwashStructure {
@@ -130,24 +140,6 @@ const NSUInteger kIDPCarwashersCount = 2;
         [carwasher performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
                                     withObject:currentCar];
     }
-}
-
-- (IDPCarwasher *)reservedFreeWasher {
-    @synchronized(self.washers) {
-        IDPCarwasher *washer = [self freeWorkerFromWorkers:self.washers];
-        
-        washer.state = IDPWorkerBusy;
-        
-        return washer;
-    }
-}
-
-- (id)freeWorkerFromWorkers:(NSArray *)workers {
-    NSArray *freeWorkers = [workers filteredArrayUsingBlock:^(IDPWorker *worker) {
-        return (BOOL)(IDPWorkerFree == worker.state);
-    }];
-    
-    return [freeWorkers firstObject];
 }
 
 #pragma mark -

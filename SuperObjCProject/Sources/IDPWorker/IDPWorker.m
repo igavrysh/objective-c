@@ -69,20 +69,6 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)processObject:(id<IDPCashOwner>)object {
-    @synchronized(self) {
-        if (IDPWorkerFree != self.state) {
-            [self.objectsQueue enqueue:object];
-            
-            [self log:[NSString stringWithFormat:@"%lu objects in a queue, worker state: %lu", [self.objectsQueue count], self.state]];
-        } else {
-            self.state = IDPWorkerBusy;
-            
-            [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
-                                   withObject:object];
-        }
-    }
-}
 
 - (void)performWorkInBackgroundWithObject:(id<IDPCashOwner>)object {
     [self performWorkWithObject:object];
@@ -98,15 +84,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     }
     
     @synchronized(self) {
-        IDPThreadSafeQueue *objectsQueue = self.objectsQueue;
-        if ([objectsQueue count] > 0) {
-            id object = [objectsQueue dequeue];
-            
-            [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
-                                   withObject:object];
-        } else {
-            [self finishProcessing];
-        }
+        [self finishProcessing];
     }
 }
 
