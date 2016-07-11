@@ -12,8 +12,7 @@
 
 @interface IDPWorkerDispatcher : NSObject <IDPWorkerObserver>
 
-+ (instancetype)dispatcherWithWorkerCount:(NSUInteger)count
-                                  factory:(id(^)(void))factory;
++ (instancetype)dispatcherWithWorkers:(NSArray *)workers;
 
 - (instancetype)initWithWorkers:(NSArray *)workers;
 

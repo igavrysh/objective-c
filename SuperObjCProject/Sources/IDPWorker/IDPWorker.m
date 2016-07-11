@@ -69,6 +69,12 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark -
 #pragma mark Public Methods
 
+- (void)processObject:(id<IDPCashOwner>)object {
+    @synchronized(self) {
+        [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
+                               withObject:object];
+    }
+}
 
 - (void)performWorkInBackgroundWithObject:(id<IDPCashOwner>)object {
     [self performWorkWithObject:object];
@@ -88,13 +94,13 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     }
 }
 
-- (void)performWorkWithObject:(id<IDPCashOwner>)object {
+- (void)performWorkWithObject:(IDPWorker *)worker {
     [self doesNotRecognizeSelector:_cmd];
 }
 
-- (void)finishProcessingObject:(id<IDPCashOwner>)object {
-    if ([object isKindOfClass:[IDPWorker class]]) {
-       ((IDPWorker *)object).state = IDPWorkerFree;
+- (void)finishProcessingObject:(IDPWorker *)worker {
+    if ([worker isKindOfClass:[IDPWorker class]]) {
+       worker.state = IDPWorkerFree;
     }
 }
 

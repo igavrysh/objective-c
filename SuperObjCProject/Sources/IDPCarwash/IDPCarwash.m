@@ -18,15 +18,13 @@
 
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
+#import "NSArray+IDPIndex.h"
 
 const NSUInteger kIDPCarwashersCount = 3;
 const NSUInteger kIDPAccountantsCount = 2;
 const NSUInteger kIDPDirectorsCount = 1;
 
 @interface IDPCarwash ()
-//@property (nonatomic, retain) NSArray *washers;
-//@property (nonatomic, retain) NSArray *accountants;
-//@property (nonatomic, retain) NSArray *directors;
 
 @property (nonatomic, retain) IDPWorkerDispatcher *washersDispatcher;
 @property (nonatomic, retain) IDPWorkerDispatcher *accountantsDispatcher;
@@ -82,17 +80,21 @@ const NSUInteger kIDPDirectorsCount = 1;
         return worker;
     };
     
+    NSArray *(^workersFactory)(Class class, NSUInteger count, id<IDPWorkerObserver> observer) =
+    ^id(Class class, NSUInteger count, id<IDPWorkerObserver> observer) {
+        return [[NSArray objectsWithCount:count block:^id{
+            return workerFactory(class, observer);
+        }] autorelease];
+    };
+    
     self.directorsDispatcher =
-    [IDPWorkerDispatcher dispatcherWithWorkerCount:kIDPDirectorsCount
-                                           factory:^id { return workerFactory([IDPDirector class], self); }];
+    [IDPWorkerDispatcher dispatcherWithWorkers:workersFactory([IDPDirector class], kIDPDirectorsCount, self)];
     
     self.accountantsDispatcher =
-    [IDPWorkerDispatcher dispatcherWithWorkerCount:kIDPAccountantsCount
-                                           factory:^id { return workerFactory([IDPAccountant class], self.directorsDispatcher); }];
+    [IDPWorkerDispatcher dispatcherWithWorkers:workersFactory([IDPAccountant class], kIDPAccountantsCount, self.directorsDispatcher)];
     
     self.washersDispatcher =
-    [IDPWorkerDispatcher dispatcherWithWorkerCount:kIDPCarwashersCount
-                                           factory:^id { return workerFactory([IDPCarwasher class], self.accountantsDispatcher); }];
+    [IDPWorkerDispatcher dispatcherWithWorkers:workersFactory([IDPCarwasher class], kIDPCarwashersCount, self.accountantsDispatcher)];
 }
 
 - (void)cleanUpCarwashStructure {

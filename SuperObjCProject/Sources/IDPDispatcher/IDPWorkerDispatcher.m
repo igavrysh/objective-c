@@ -29,12 +29,8 @@
 #pragma mark -
 #pragma mark Class Methods
 
-+ (instancetype)dispatcherWithWorkerCount:(NSUInteger)count
-                                  factory:(id(^)(void))factory
-{
-    NSArray *workers = [NSArray objectsWithCount:count block:factory];
-    
-    return [[[IDPWorkerDispatcher alloc] initWithWorkers:workers] autorelease];
++ (instancetype)dispatcherWithWorkers:(NSArray *)workers {    
+    return [[[self alloc] initWithWorkers:workers] autorelease];
 }
 
 #pragma mark -
@@ -53,6 +49,7 @@
         self.objectsQueue = [IDPThreadSafeQueue object];
         self.workers = [[workers copy] autorelease];
     }
+    
     return self;
 }
 
@@ -101,7 +98,7 @@
         
         [worker log:@"was assigned" withObject:object];
         
-        [worker performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
+        [worker performSelectorInBackground:@selector(processObject:)
                                  withObject:object];
     }
 }
@@ -110,8 +107,11 @@
 #pragma mark IDPWorkerObserver
 
 - (void)workerDidBecomeFree:(IDPWorker *)worker {
-    @synchronized(self) {
-        if ([self isWorkerInProcessors:worker] && [self.objectsQueue count] > 0) {
+    @synchronized(self.workers) {
+        if (IDPWorkerFree == worker.state
+            && [self isWorkerInProcessors:worker]
+            && [self.objectsQueue count] > 0)
+        {
             worker.state = IDPWorkerBusy;
             
             [self assignWorkToWorker:worker];
@@ -120,10 +120,12 @@
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {
-    if (![self isWorkerInProcessors:worker]) {
-        [self performSelectorInBackground:@selector(processObject:) withObject:worker];
-        
-        [worker log:@"did become pending"];
+    @synchronized(self.workers) {  // WHY? DON't UNDERSTAND the reason
+        if (![self isWorkerInProcessors:worker]) {
+            [self performSelectorInBackground:@selector(processObject:) withObject:worker];
+            
+            [worker log:@"did become pending"];
+        }
     }
 }
 
