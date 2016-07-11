@@ -110,17 +110,13 @@
 #pragma mark IDPWorkerObserver
 
 - (void)workerDidBecomeFree:(IDPWorker *)worker {
-    @synchronized(self.workers) {
+    @synchronized(self) {
         if ([self isWorkerInProcessors:worker] && [self.objectsQueue count] > 0) {
             worker.state = IDPWorkerBusy;
             
             [self assignWorkToWorker:worker];
         }
     }
-}
-
-- (void)workerDidBecomeBusy:(IDPWorker *)worker {
-    
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {

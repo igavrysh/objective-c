@@ -96,6 +96,8 @@ const NSUInteger kIDPDirectorsCount = 1;
 }
 
 - (void)cleanUpCarwashStructure {
+    
+    /*
     [self.washers performBlockWithEachObject:^(IDPCarwasher *washer) {
         [washer removeObservers:@[self.accountants, self]];
     }];
@@ -103,6 +105,8 @@ const NSUInteger kIDPDirectorsCount = 1;
     [self.accountants performBlockWithEachObject:^(IDPAccountant *accountant) {
         [accountant removeObservers:@[self.directors]];
     }];
+     */
+    // TO DO
 }
 
 #pragma mark -
