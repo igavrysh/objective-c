@@ -173,8 +173,6 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {
-    [self performSelectorInBackground:@selector(processObject:) withObject:worker];
-    
     [worker log:@"did become pending"];
 }
 

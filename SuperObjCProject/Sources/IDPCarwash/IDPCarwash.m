@@ -35,14 +35,9 @@ const NSUInteger kIDPDirectorsCount = 1;
 - (void)initCarwashStructure;
 - (void)cleanUpCarwashStructure;
 
-- (IDPCarwasher *)reservedFreeWasher;
-- (void)assignWorkToCarwasher:(IDPCarwasher *)washer;
-
 @end
 
 @implementation IDPCarwash
-
-@dynamic queueEmpty;
 
 #pragma mark -
 #pragma mark Initializtions and Deallocations
@@ -88,7 +83,7 @@ const NSUInteger kIDPDirectorsCount = 1;
     };
     
     self.directorsDispatcher =
-    [IDPWorkerDispatcher dispatcherWithWorkers:workersFactory([IDPDirector class], kIDPDirectorsCount, self)];
+    [IDPWorkerDispatcher dispatcherWithWorkers:workersFactory([IDPDirector class], kIDPDirectorsCount, nil)];
     
     self.accountantsDispatcher =
     [IDPWorkerDispatcher dispatcherWithWorkers:workersFactory([IDPAccountant class], kIDPAccountantsCount, self.directorsDispatcher)];
@@ -111,54 +106,12 @@ const NSUInteger kIDPDirectorsCount = 1;
     // TO DO
 }
 
-#pragma mark -
-#pragma mark Accessors Methods
-
-- (BOOL)isQueueEmpty {
-    return self.carsQueue.count == 0;
-}
 
 #pragma mark -
 #pragma mark Public Methods
 
 - (void)processCar:(IDPCar *)car {
-    [self.carsQueue enqueue:car];
-    
-    IDPCarwasher *freeCarwasher = [self reservedFreeWasher];
-    
-    if (freeCarwasher) {
-        [self assignWorkToCarwasher:freeCarwasher];
-    }
-}
-
-#pragma mark -
-#pragma mark Private Methods
-
-- (void)assignWorkToCarwasher:(IDPCarwasher *)carwasher {
-    @synchronized(self.washers) {
-        IDPCar *currentCar = [self.carsQueue dequeue];
-        if (!currentCar) {
-            return;
-        }
-        
-        [carwasher log:@"was assigned" withObject:currentCar];
-        
-        [carwasher performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
-                                    withObject:currentCar];
-    }
-}
-
-#pragma mark -
-#pragma mark IDPWorkerObserver
-
-- (void)workerDidBecomeFree:(IDPCarwasher *)washer {
-    @synchronized(self.washers) {
-        if ([self.carsQueue count] > 0) {
-            washer.state = IDPWorkerBusy;
-            
-            [self assignWorkToCarwasher:(IDPCarwasher *)washer];
-        }
-    }
+    [self.washersDispatcher processObject:car];
 }
 
 @end

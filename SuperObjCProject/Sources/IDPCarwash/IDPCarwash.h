@@ -12,8 +12,7 @@
 
 @class IDPCar;
 
-@interface IDPCarwash : NSObject <IDPWorkerObserver>
-@property (nonatomic, readonly, getter=isQueueEmpty) BOOL queueEmpty;
+@interface IDPCarwash : NSObject
 
 - (void)processCar:(IDPCar *)car;
 

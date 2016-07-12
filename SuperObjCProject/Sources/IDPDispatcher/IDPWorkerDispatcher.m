@@ -15,8 +15,9 @@
 #import "IDPWorker.h"
 
 @interface IDPWorkerDispatcher()
-@property (nonatomic, retain)   IDPThreadSafeQueue  *objectsQueue;
-@property (nonatomic, retain)   NSArray             *workers;
+@property (nonatomic, retain)                           IDPThreadSafeQueue  *objectsQueue;
+@property (nonatomic, retain)                           NSArray             *workers;
+@property (nonatomic, readonly, getter=isQueueEmpty)    BOOL                queueEmpty;
 
 - (IDPWorker *)freeWorker;
 - (IDPWorker *)reservedWorker;
@@ -26,11 +27,20 @@
 
 @implementation IDPWorkerDispatcher
 
+@dynamic queueEmpty;
+
 #pragma mark -
 #pragma mark Class Methods
 
 + (instancetype)dispatcherWithWorkers:(NSArray *)workers {    
     return [[[self alloc] initWithWorkers:workers] autorelease];
+}
+
+#pragma mark -
+#pragma mark Accessors Methods
+
+- (BOOL)isQueueEmpty {
+    return self.objectsQueue.count == 0;
 }
 
 #pragma mark -
@@ -61,6 +71,8 @@
     
     if (worker) {
         [self assignWorkToWorker:worker];
+    } else {
+        [self.objectsQueue enqueue:object];
     }
 }
 
