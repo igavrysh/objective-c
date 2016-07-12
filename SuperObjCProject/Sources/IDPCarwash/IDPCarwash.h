@@ -12,7 +12,7 @@
 
 @class IDPCar;
 
-@interface IDPCarwash : NSObject
+@interface IDPCarwash : NSObject<IDPWorkerObserver>
 
 - (void)processCar:(IDPCar *)car;
 

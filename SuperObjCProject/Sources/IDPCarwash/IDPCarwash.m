@@ -30,8 +30,6 @@ const NSUInteger kIDPDirectorsCount = 1;
 @property (nonatomic, retain) IDPWorkerDispatcher *accountantsDispatcher;
 @property (nonatomic, retain) IDPWorkerDispatcher *directorsDispatcher;
 
-@property (nonatomic, retain) IDPThreadSafeQueue *carsQueue;
-
 - (void)initCarwashStructure;
 - (void)cleanUpCarwashStructure;
 
@@ -49,15 +47,11 @@ const NSUInteger kIDPDirectorsCount = 1;
     self.accountantsDispatcher = nil;
     self.directorsDispatcher = nil;
     
-    self.carsQueue = nil;
-    
     [super dealloc];
 }
 
 - (id)init {
     self = [super init];
-
-    self.carsQueue = [IDPThreadSafeQueue object];
     
     [self initCarwashStructure];
     
@@ -110,6 +104,21 @@ const NSUInteger kIDPDirectorsCount = 1;
 
 - (void)processCar:(IDPCar *)car {
     [self.washersDispatcher processObject:car];
+}
+
+#pragma mark -
+#pragma mark IDPWorkerObserver
+
+- (void)workerDidBecomeBusy:(IDPWorker *)worker {
+    [worker log:@"did become busy"];
+}
+
+- (void)workerDidBecomePending:(IDPWorker *)worker {
+    [worker log:@"did become pending"];
+}
+
+- (void)workerDidBecomeFree:(IDPWorker *)worker {
+    [worker log:@"did become free"];
 }
 
 @end

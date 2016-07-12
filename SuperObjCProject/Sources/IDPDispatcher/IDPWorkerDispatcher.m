@@ -14,6 +14,10 @@
 #import "NSArray+IDPArrayEnumerator.h"
 #import "IDPWorker.h"
 
+#import "IDPDirector.h"
+#import "IDPAccountant.h"
+#import "IDPCarwasher.h"
+
 @interface IDPWorkerDispatcher()
 @property (nonatomic, retain)                           IDPThreadSafeQueue  *objectsQueue;
 @property (nonatomic, retain)                           NSArray             *workers;
@@ -58,6 +62,10 @@
     if (self) {
         self.objectsQueue = [IDPThreadSafeQueue object];
         self.workers = [[workers copy] autorelease];
+        
+        [self.workers performBlockWithEachObject:^(IDPWorker *worker) {
+            [worker addObserver:self];
+        }];
     }
     
     return self;
@@ -102,12 +110,12 @@
 }
 
 - (void)assignWorkToWorker:(IDPWorker *)worker {
+    id object = [self.objectsQueue dequeue];
+    if (!object) {
+        return;
+    }
+    
     @synchronized(self.workers) {
-        id object = [self.objectsQueue dequeue];
-        if (!object) {
-            return;
-        }
-        
         [worker log:@"was assigned" withObject:object];
         
         [worker performSelectorInBackground:@selector(processObject:)
@@ -118,9 +126,7 @@
 #pragma mark -
 #pragma mark IDPWorkerObserver
 
-- (void)workerDidBecomeFree:(IDPWorker *)worker {
-    [worker log:@"did become free"];
-    
+- (void)workerDidBecomeFree:(IDPWorker *)worker {    
     @synchronized(self.workers) {
         if (IDPWorkerFree == worker.state
             && [self isWorkerInProcessors:worker]
@@ -134,9 +140,7 @@
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {
-    [worker log:@"did become pending"];
-    
-    @synchronized(self.workers) {  // WHY? DON't UNDERSTAND the reason
+    @synchronized(self.workers) {
         if (IDPWorkerPending == worker.state
             && ![self isWorkerInProcessors:worker])
         {
@@ -145,8 +149,6 @@
     }
 }
 
-- (void)workerDidBecomeBusy:(IDPWorker *)worker {
-    [worker log:@"did become busy"];
-}
+
 
 @end
