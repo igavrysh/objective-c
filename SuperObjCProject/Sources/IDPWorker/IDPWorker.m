@@ -45,30 +45,11 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 }
 
 #pragma mark -
-#pragma mark Accessors
-
-//- (void)setState:(NSUInteger)state {
-//    @synchronized(self) {
-//        if (state == IDPWorkerFree) {
-//            [super setState:IDPWorkerBusy];
-//            
-//            [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:)
-//                                   withObject:nil
-//                                waitUntilDone:NO];
-//        } else {
-//            [super setState:state];
-//        }
-//    }
-//}
-
-#pragma mark -
 #pragma mark Public Methods
 
 - (void)processObject:(id<IDPCashOwner>)object {
-    @synchronized(self) {
-        [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
-                               withObject:object];
-    }
+    [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
+                           withObject:object];
 }
 
 - (void)performWorkInBackgroundWithObject:(id<IDPCashOwner>)object {
@@ -155,20 +136,5 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
             return [super selectorForState:state];
     }
 }
-
-//#pragma mark -
-//#pragma mark IDPWorkerObserver
-//
-//- (void)workerDidBecomeFree:(IDPWorker *)worker {
-//    [worker log:@"did become free"];
-//}
-//
-//- (void)workerDidBecomeBusy:(IDPWorker *)worker {
-//    [worker log:@"did become busy"];
-//}
-//
-//- (void)workerDidBecomePending:(IDPWorker *)worker {
-//    [worker log:@"did become pending"];
-//}
 
 @end

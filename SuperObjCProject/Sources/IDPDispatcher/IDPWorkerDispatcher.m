@@ -140,15 +140,9 @@
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {
-    @synchronized(self.workers) {
-        if (IDPWorkerPending == worker.state
-            && ![self isWorkerInProcessors:worker])
-        {
-            [self performSelectorInBackground:@selector(processObject:) withObject:worker];
-        }
+    if (![self isWorkerInProcessors:worker]) {
+        [self processObject:worker];
     }
 }
-
-
 
 @end
