@@ -67,12 +67,12 @@
 #pragma mark Public Methods
 
 - (void)processObject:(id<IDPCashOwner>)object {
+    [self.objectsQueue enqueue:object];
+    
     IDPWorker *worker = [self reservedWorker];
     
     if (worker) {
         [self assignWorkToWorker:worker];
-    } else {
-        [self.objectsQueue enqueue:object];
     }
 }
 
@@ -119,10 +119,12 @@
 #pragma mark IDPWorkerObserver
 
 - (void)workerDidBecomeFree:(IDPWorker *)worker {
+    [worker log:@"did become free"];
+    
     @synchronized(self.workers) {
         if (IDPWorkerFree == worker.state
             && [self isWorkerInProcessors:worker]
-            && [self.objectsQueue count] > 0)
+            && ![self isQueueEmpty])
         {
             worker.state = IDPWorkerBusy;
             
@@ -132,13 +134,19 @@
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {
+    [worker log:@"did become pending"];
+    
     @synchronized(self.workers) {  // WHY? DON't UNDERSTAND the reason
-        if (![self isWorkerInProcessors:worker]) {
+        if (IDPWorkerPending == worker.state
+            && ![self isWorkerInProcessors:worker])
+        {
             [self performSelectorInBackground:@selector(processObject:) withObject:worker];
-            
-            [worker log:@"did become pending"];
         }
     }
+}
+
+- (void)workerDidBecomeBusy:(IDPWorker *)worker {
+    [worker log:@"did become busy"];
 }
 
 @end

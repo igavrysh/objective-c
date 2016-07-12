@@ -20,7 +20,6 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 @interface IDPWorker ()
 @property (nonatomic, assign) float cash;
-@property (nonatomic, retain) IDPThreadSafeQueue *objectsQueue;
 
 - (void)finishProcessingObjectOnMainThread:(id<IDPCashOwner>)object;
 
@@ -32,8 +31,6 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark Initializtions and Deallocations
 
 - (void)dealloc {
-    self.objectsQueue = nil;
-    
     [super dealloc];
 }
 
@@ -44,27 +41,25 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     self.capital = IDPRandomFloatWithMinAndMaxValue(0, kIDPWorkerMaxCapital);
     self.experience = IDPRandomUIntWithMaxValue(kIDPWorkerMaxExperience);
     
-    self.objectsQueue = [IDPThreadSafeQueue object];
-    
     return self;
 }
 
 #pragma mark -
 #pragma mark Accessors
 
-- (void)setState:(NSUInteger)state {
-    @synchronized(self) {
-        if (state == IDPWorkerFree && [self.objectsQueue count] > 0) {
-            [super setState:IDPWorkerBusy];
-            
-            [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:)
-                                   withObject:nil
-                                waitUntilDone:NO];
-        } else {
-            [super setState:state];
-        }
-    }
-}
+//- (void)setState:(NSUInteger)state {
+//    @synchronized(self) {
+//        if (state == IDPWorkerFree) {
+//            [super setState:IDPWorkerBusy];
+//            
+//            [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:)
+//                                   withObject:nil
+//                                waitUntilDone:NO];
+//        } else {
+//            [super setState:state];
+//        }
+//    }
+//}
 
 #pragma mark -
 #pragma mark Public Methods
@@ -161,19 +156,19 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     }
 }
 
-#pragma mark -
-#pragma mark IDPWorkerObserver
-
-- (void)workerDidBecomeFree:(IDPWorker *)worker {
-    [worker log:@"did become free"];
-}
-
-- (void)workerDidBecomeBusy:(IDPWorker *)worker {
-    [worker log:@"did become busy"];
-}
-
-- (void)workerDidBecomePending:(IDPWorker *)worker {
-    [worker log:@"did become pending"];
-}
+//#pragma mark -
+//#pragma mark IDPWorkerObserver
+//
+//- (void)workerDidBecomeFree:(IDPWorker *)worker {
+//    [worker log:@"did become free"];
+//}
+//
+//- (void)workerDidBecomeBusy:(IDPWorker *)worker {
+//    [worker log:@"did become busy"];
+//}
+//
+//- (void)workerDidBecomePending:(IDPWorker *)worker {
+//    [worker log:@"did become pending"];
+//}
 
 @end

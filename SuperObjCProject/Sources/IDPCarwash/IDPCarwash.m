@@ -65,11 +65,9 @@ const NSUInteger kIDPDirectorsCount = 1;
 }
 
 - (void)initCarwashStructure {
-    IDPAccountant *accountant = [IDPAccountant object];
-    
     IDPWorker *(^workerFactory)(Class class, id<IDPWorkerObserver> observer) = ^id(Class class, id<IDPWorkerObserver> observer) {
         IDPWorker *worker = [class object];
-        [worker addObserver:accountant];
+        [worker addObserver:observer];
         [worker addObserver:self];
         
         return worker;
