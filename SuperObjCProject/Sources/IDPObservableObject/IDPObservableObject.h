@@ -13,8 +13,11 @@
 @property (nonatomic, readonly) NSSet           *observerSet;
 
 - (void)addObserver:(id)observer;
-- (void)removeObserver:(id)observer;
+
+- (void)removeAllObservers;
 - (void)removeObservers:(NSArray *)observers;
+- (void)removeObserver:(id)observer;
+
 - (BOOL)isObservedByObject:(id)observer;
 
 // This method is itended for subclassing

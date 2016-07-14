@@ -63,14 +63,18 @@
     [self.observers addObject:observer];
 }
 
-- (void)removeObserver:(id)observer {
-    [self.observers removeObject:observer];
+- (void)removeAllObservers {
+    [self removeObservers:self.observers.setRepresentation.allObjects];
 }
 
 - (void)removeObservers:(NSArray *)observers {
     [observers performBlockWithEachObject:^(id object) {
         [self removeObserver:object];
     }];
+}
+
+- (void)removeObserver:(id)observer {
+    [self.observers removeObject:observer];
 }
 
 - (BOOL)isObservedByObject:(id)observer {
@@ -91,10 +95,12 @@
 }
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object {
-    NSHashTable *observers = self.observers;
-    for (id object in observers) {
-        if ([object respondsToSelector:selector]) {
-            [object performSelector:selector withObject:self withObject:object];
+    @synchronized(self.observers) {
+        NSHashTable *observers = self.observers;
+        for (id object in observers) {
+            if ([object respondsToSelector:selector]) {
+                [object performSelector:selector withObject:self withObject:object];
+            }
         }
     }
 }

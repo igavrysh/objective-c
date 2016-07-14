@@ -34,6 +34,18 @@
     }
 }
 
+- (void)removeAllObservers {
+    @synchronized(self) {
+        [super removeAllObservers];
+    }
+}
+
+- (void)removeObservers:(NSArray *)observers {
+    @synchronized(self) {
+        [super removeObservers:observers];
+    }
+}
+
 - (void)removeObserver:(id)observer {
     @synchronized(self) {
         [super removeObserver:observer];
