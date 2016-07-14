@@ -23,6 +23,8 @@
 @property (nonatomic, retain)                           NSArray             *workers;
 @property (nonatomic, readonly, getter=isQueueEmpty)    BOOL                queueEmpty;
 
+- (void)cleanUpWorkersObservers;
+
 - (IDPWorker *)freeWorker;
 - (IDPWorker *)reservedWorker;
 - (void)assignWorkToWorker:(IDPWorker *)worker;
@@ -52,6 +54,8 @@
 
 - (void)dealloc {
     self.objectsQueue = nil;
+    
+    [self cleanUpWorkersObservers];
     self.workers = nil;
     
     [super dealloc];
@@ -121,6 +125,12 @@
         [worker performSelectorInBackground:@selector(processObject:)
                                  withObject:object];
     }
+}
+
+- (void)cleanUpWorkersObservers {
+    [self.workers performBlockWithEachObject:^(IDPWorker *worker) {
+        [worker removeAllObservers];
+    }];
 }
 
 #pragma mark -

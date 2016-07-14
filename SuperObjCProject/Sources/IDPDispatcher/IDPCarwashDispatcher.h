@@ -10,4 +10,7 @@
 
 @interface IDPCarwashDispatcher : NSObject
 
+- (void)start;
+- (void)stop;
+
 @end

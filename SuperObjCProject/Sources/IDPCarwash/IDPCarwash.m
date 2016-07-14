@@ -45,10 +45,6 @@ typedef  NSArray *(^WorkersFactory)(Class class, NSUInteger count, id<IDPWorkerO
 - (void)dealloc {
     [self cleanUpCarwashStructure];
     
-    self.washersDispatcher = nil;
-    self.accountantsDispatcher = nil;
-    self.directorsDispatcher = nil;
-    
     [super dealloc];
 }
 
@@ -85,19 +81,10 @@ typedef  NSArray *(^WorkersFactory)(Class class, NSUInteger count, id<IDPWorkerO
 }
 
 - (void)cleanUpCarwashStructure {
-    
-    /*
-    [self.washers performBlockWithEachObject:^(IDPCarwasher *washer) {
-        [washer removeObservers:@[self.accountants, self]];
-    }];
-    
-    [self.accountants performBlockWithEachObject:^(IDPAccountant *accountant) {
-        [accountant removeObservers:@[self.directors]];
-    }];
-     */
-    // TO DO
+    self.washersDispatcher = nil;
+    self.accountantsDispatcher = nil;
+    self.directorsDispatcher = nil;
 }
-
 
 #pragma mark -
 #pragma mark Public Methods

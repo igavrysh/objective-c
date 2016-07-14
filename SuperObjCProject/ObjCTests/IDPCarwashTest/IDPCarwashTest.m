@@ -8,16 +8,12 @@
 
 #import "IDPCarwashTest.h"
 
-#import "IDPCarwash.h"
-#import "IDPCar.h"
+#import "IDPCarwashDispatcher.h"
 
 #import "NSObject+IDPObject.h"
-#import "NSArray+IDPArrayEnumerator.h"
-
-static const NSUInteger kIDPCarwashTestCarsCount = 25;
 
 @interface IDPCarwashTest ()
-@property (nonatomic, retain) IDPCarwash *carwash;
+@property (nonatomic, retain) IDPCarwashDispatcher *carwashDispatcher;
 
 @end
 
@@ -27,17 +23,9 @@ static const NSUInteger kIDPCarwashTestCarsCount = 25;
 #pragma mark Public Methods
 
 - (void)execute {
-    self.carwash = [IDPCarwash new];
+    self.carwashDispatcher = [IDPCarwashDispatcher object];
     
-    NSArray *cars = [NSArray objectsWithCount:kIDPCarwashTestCarsCount block:^id{
-        return [IDPCar object];
-    }];
-    
-    for (IDPCar *car in cars) {
-        //[self.carwash processCar:car];
-        
-        [self.carwash performSelectorInBackground:@selector(processCar:)  withObject:car];
-    }
+    [self.carwashDispatcher start];
     
     [[NSRunLoop mainRunLoop] run];
 }
