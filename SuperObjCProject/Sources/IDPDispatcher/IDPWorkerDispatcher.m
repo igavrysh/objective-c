@@ -83,9 +83,7 @@
     
     IDPWorker *worker = [self reservedWorker];
     
-    if (worker) {
-        [self assignWorkToWorker:worker];
-    }
+    [self assignWorkToWorker:worker];
 }
 
 - (BOOL)isWorkerInProcessors:(IDPWorker *)worker {
@@ -114,16 +112,24 @@
 }
 
 - (void)assignWorkToWorker:(IDPWorker *)worker {
-    id object = [self.objectsQueue dequeue];
-    if (!object) {
-        return;
-    }
-    
     @synchronized(self.workers) {
-        [worker log:@"was assigned" withObject:object];
+        id object = [self.objectsQueue dequeue];
         
-        [worker performSelectorInBackground:@selector(processObject:)
-                                 withObject:object];
+        @synchronized(worker) {
+            if (!object) {
+                worker.state = IDPWorkerFree;
+                return;
+            }
+        }
+        
+        if (worker) {
+            [worker log:@"was assigned" withObject:object];
+            
+            [worker performSelectorInBackground:@selector(processObject:)
+                                     withObject:object];
+        } else {
+            [self.objectsQueue enqueue:object];
+        }
     }
 }
 
@@ -137,14 +143,14 @@
 #pragma mark IDPWorkerObserver
 
 - (void)workerDidBecomeFree:(IDPWorker *)worker {    
-    @synchronized(self.workers) {
+    @synchronized(self) {
         if (IDPWorkerFree == worker.state
             && [self isWorkerInProcessors:worker]
             && ![self isQueueEmpty])
         {
             worker.state = IDPWorkerBusy;
             
-            [self assignWorkToWorker:worker];
+            [self performSelectorInBackground:@selector(assignWorkToWorker:) withObject:worker];
         }
     }
 }
