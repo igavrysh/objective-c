@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@class IDPCarwash;
+
 @interface IDPCarwashDispatcher : NSObject
 @property (nonatomic, readonly, getter=isRunning)   BOOL    running;
+
++ (instancetype)dispatcherWithCarwash:(IDPCarwash *)carwash;
+- (instancetype)initWithCarwash:(IDPCarwash *)carwash;
 
 - (void)start;
 - (void)stop;

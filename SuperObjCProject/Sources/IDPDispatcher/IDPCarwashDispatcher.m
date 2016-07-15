@@ -38,6 +38,13 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
 
 @dynamic carsDelivered;
 
+#pragma mark -
+#pragma mark Class methods
+
++ (instancetype)dispatcherWithCarwash:(IDPCarwash *)carwash {
+    return [[[self alloc] initWithCarwash:carwash] autorelease];
+}
+
 #pragma mark - 
 #pragma mark Initializations and Deallocations
 
@@ -50,10 +57,10 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
     [super dealloc];
 }
 
-- (instancetype)init {
+- (instancetype)initWithCarwash:(IDPCarwash *)carwash {
     self = [super init];
     
-    self.carwash = [IDPCarwash object];
+    self.carwash = carwash;
     self.cars = [NSMutableArray object];
     
     return self;

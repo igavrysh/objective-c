@@ -9,6 +9,7 @@
 #import "IDPCarwashTest.h"
 
 #import "IDPCarwashDispatcher.h"
+#import "IDPCarwash.h"
 
 #import "NSObject+IDPObject.h"
 
@@ -23,7 +24,7 @@
 #pragma mark Public Methods
 
 - (void)execute {
-    self.carwashDispatcher = [IDPCarwashDispatcher object];
+    self.carwashDispatcher = [IDPCarwashDispatcher dispatcherWithCarwash:[IDPCarwash object]];
     
     [self.carwashDispatcher start];
     
