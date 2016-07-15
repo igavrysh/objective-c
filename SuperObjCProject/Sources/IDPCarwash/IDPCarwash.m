@@ -24,7 +24,7 @@ const NSUInteger kIDPCarwashersCount = 3;
 const NSUInteger kIDPAccountantsCount = 2;
 const NSUInteger kIDPDirectorsCount = 1;
 
-typedef  NSArray *(^WorkersFactory)(Class class, NSUInteger count, id<IDPWorkerObserver> observer);
+typedef  NSArray *(^IDPWorkersFactory)(Class class, NSUInteger count, id<IDPWorkerObserver> observer);
 
 @interface IDPCarwash ()
 
@@ -57,7 +57,7 @@ typedef  NSArray *(^WorkersFactory)(Class class, NSUInteger count, id<IDPWorkerO
 }
 
 - (void)initCarwashStructure {
-    WorkersFactory workersFactory = ^id(Class class, NSUInteger count, id<IDPWorkerObserver> observer) {
+    IDPWorkersFactory workersFactory = ^id(Class class, NSUInteger count, id<IDPWorkerObserver> observer) {
         return [[NSArray objectsWithCount:count block:^id{
             IDPWorker *worker = [class object];
             [worker addObserver:observer];

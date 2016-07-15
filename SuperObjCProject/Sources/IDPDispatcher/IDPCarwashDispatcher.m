@@ -15,15 +15,17 @@
 #import "NSArray+IDPArrayEnumerator.h"
 
 static const NSUInteger kIDPCarwashDispatcherCarsCount = 25;
+static const NSTimeInterval kIDPCarsDeliveryWaitTime = 0.5;
 
 @interface IDPCarwashDispatcher ()
 @property (nonatomic, retain)   IDPCarwash  *carwash;
 @property (nonatomic, retain)   NSArray     *cars;
 @property (nonatomic, assign)   NSTimer     *timer;
+@property (nonatomic, assign, getter=isRunning)   BOOL    running;
 
 - (void)start;
 - (void)stop;
-- (void)run:(NSTimer *)timer;
+- (void)onTimer:(NSTimer *)timer;
 
 - (void)deliverCar;
 - (IDPCar *)dirtyCar;
@@ -54,31 +56,41 @@ static const NSUInteger kIDPCarwashDispatcherCarsCount = 25;
 }
 
 #pragma mark -
+#pragma mark Accessors
+
+- (void)setTimer:(NSTimer *)timer {
+    if (_timer == timer) {
+        return;
+    }
+    
+    if (_timer && [_timer isValid]) {
+        self.running = NO;
+        [_timer invalidate];
+    }
+    
+    _timer = timer;
+}
+
+#pragma mark -
 #pragma mark Public Methods
 
 - (void)start {
-    if (!self.timer) {
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0
-                                                      target:self
-                                                    selector:@selector(run:)
-                                                    userInfo:nil
-                                                     repeats:YES];
-    }
+    self.running = YES;
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:kIDPCarsDeliveryWaitTime
+                                                  target:self
+                                                selector:@selector(onTimer:)
+                                                userInfo:nil
+                                                 repeats:YES];
 }
 
 - (void)stop {
-    NSTimer *timer = self.timer;
-    if (timer && [timer isValid]) {
-        [timer invalidate];
-    }
-    
     self.timer = nil;
 }
 
 #pragma mark -
 #pragma mark Private Methods
 
-- (void)run:(NSTimer *)timer {
+- (void)onTimer:(NSTimer *)timer {
     [self deliverCar];
 }
 

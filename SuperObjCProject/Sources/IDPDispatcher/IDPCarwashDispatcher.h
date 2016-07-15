@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface IDPCarwashDispatcher : NSObject
+@property (nonatomic, readonly, getter=isRunning)   BOOL    running;
 
 - (void)start;
 - (void)stop;
