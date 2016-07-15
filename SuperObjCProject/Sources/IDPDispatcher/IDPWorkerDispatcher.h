@@ -11,6 +11,7 @@
 #import "IDPWorker.h"
 
 @interface IDPWorkerDispatcher : NSObject <IDPWorkerObserver>
+@property (nonatomic, readonly) NSArray *workers;
 
 + (instancetype)dispatcherWithWorkers:(NSArray *)workers;
 

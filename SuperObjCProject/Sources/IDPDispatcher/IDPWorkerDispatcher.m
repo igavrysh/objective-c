@@ -135,7 +135,7 @@
 
 - (void)cleanUpWorkersObservers {
     [self.workers performBlockWithEachObject:^(IDPWorker *worker) {
-        [worker removeAllObservers];
+        [worker removeObserver:self];
     }];
 }
 

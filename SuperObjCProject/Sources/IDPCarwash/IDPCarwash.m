@@ -81,6 +81,18 @@ typedef  NSArray *(^IDPWorkersFactory)(Class class, NSUInteger count, id<IDPWork
 }
 
 - (void)cleanUpCarwashStructure {
+    void (^observersCleaner)(NSArray *observableObjects, NSArray *observers) = ^void(NSArray *observableObjects, NSArray *observers) {
+        [observableObjects performBlockWithEachObject:^(IDPWorker *worker) {
+            [worker removeObservers:observers];
+        }];
+    };
+    
+    observersCleaner(self.washersDispatcher.workers, @[self, self.accountantsDispatcher]);
+
+    observersCleaner(self.accountantsDispatcher.workers, @[self, self.directorsDispatcher]);
+    
+    observersCleaner(self.directorsDispatcher.workers, @[self]);
+    
     self.washersDispatcher = nil;
     self.accountantsDispatcher = nil;
     self.directorsDispatcher = nil;
