@@ -15,6 +15,8 @@
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector;
 
+- (void)notifyOfState:(NSUInteger)state withObject:(id)object;
+
 - (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object;
 
 @end
@@ -45,14 +47,18 @@
 #pragma mark Accessors
 
 - (NSSet *)observerSet {
-    return [self.observers setRepresentation];
+    @synchronized(self.observers) {
+        return [self.observers setRepresentation];
+    }
 }
 
 - (void)setState:(NSUInteger)state {
-    if (state != _state) {
-        _state = state;
-        
-        [self notifyOfStateChangeWithSelector:[self selectorForState:state]];
+    @synchronized(self) {
+        if (state != _state) {
+            _state = state;
+            
+            [self notifyOfState:_state withObject:nil];
+        }
     }
 }
 
@@ -60,38 +66,50 @@
 #pragma mark Public
 
 - (void)addObserver:(id)observer {
-    [self.observers addObject:observer];
+    @synchronized(self.observers) {
+        [self.observers addObject:observer];
+    }
 }
 
 - (void)removeAllObservers {
-    [self removeObservers:self.observers.setRepresentation.allObjects];
+    @synchronized(self.observers) {
+        [self removeObservers:self.observers.setRepresentation.allObjects];
+    }
 }
 
 - (void)removeObservers:(NSArray *)observers {
-    [observers performBlockWithEachObject:^(id object) {
-        [self removeObserver:object];
-    }];
+    @synchronized(self.observers) {
+        [observers performBlockWithEachObject:^(id object) {
+            [self removeObserver:object];
+        }];
+    }
 }
 
 - (void)removeObserver:(id)observer {
-    [self.observers removeObject:observer];
+    @synchronized(self.observers) {
+        [self.observers removeObject:observer];
+    }
 }
 
 - (BOOL)isObservedByObject:(id)observer {
-    return [self.observers containsObject:observer];
+    @synchronized(self.observers) {
+        return [self.observers containsObject:observer];
+    }
 }
 
 #pragma mark -
 #pragma mark Private
 
 - (SEL)selectorForState:(NSUInteger)state {
-    [self doesNotRecognizeSelector:_cmd];
-    
     return NULL;
 }
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector {
     [self notifyOfStateChangeWithSelector:selector object:nil];
+}
+
+- (void)notifyOfState:(NSUInteger)state withObject:(id)object {
+    [self notifyOfStateChangeWithSelector:[self selectorForState:state] object:nil];
 }
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object {

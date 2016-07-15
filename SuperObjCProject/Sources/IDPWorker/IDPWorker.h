@@ -6,7 +6,6 @@
 //  Copyright (c) 2016 1mlndollarsasset. All rights reserved.
 //
 
-#import "IDPThreadSafeObservableObject.h"
 #import "IDPObservableObject.h"
 #import "IDPCashOwner.h"
 
@@ -26,7 +25,7 @@ typedef NS_ENUM(NSUInteger, IDPWorkerState) {
 
 @end
 
-@interface IDPWorker : IDPThreadSafeObservableObject <IDPCashOwner, IDPWorkerObserver>
+@interface IDPWorker : IDPObservableObject <IDPCashOwner, IDPWorkerObserver>
 @property (nonatomic, assign) float                 salary;
 @property (nonatomic, assign) float                 capital;
 @property (nonatomic, assign) NSUInteger            experience;
