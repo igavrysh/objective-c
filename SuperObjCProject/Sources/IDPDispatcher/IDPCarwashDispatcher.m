@@ -14,25 +14,29 @@
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 
-static const NSUInteger kIDPCarwashDispatcherCarsCount = 25;
-static const NSTimeInterval kIDPCarsDeliveryWaitTime = 0.5;
+static const NSUInteger kIDPCarwashDispatcherCarsCount  = 25;
+static const NSUInteger kIDPCarsInBatch                 = 10;
+static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
 
 @interface IDPCarwashDispatcher ()
-@property (nonatomic, retain)   IDPCarwash  *carwash;
-@property (nonatomic, retain)   NSArray     *cars;
-@property (nonatomic, assign)   NSTimer     *timer;
-@property (nonatomic, assign, getter=isRunning)   BOOL    running;
+@property (nonatomic, retain)   IDPCarwash      *carwash;
+@property (nonatomic, retain)   NSMutableArray  *cars;
+@property (nonatomic, readonly) NSUInteger      carsDelivered;
+@property (nonatomic, assign)   NSTimer         *timer;
+@property (nonatomic, assign, getter=isRunning) BOOL    running;
 
 - (void)start;
 - (void)stop;
 - (void)onTimer:(NSTimer *)timer;
 
 - (void)deliverCar;
-- (IDPCar *)dirtyCar;
+- (NSArray *)dirtyCars;
 
 @end
 
 @implementation IDPCarwashDispatcher
+
+@dynamic carsDelivered;
 
 #pragma mark - 
 #pragma mark Initializations and Deallocations
@@ -50,7 +54,7 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime = 0.5;
     self = [super init];
     
     self.carwash = [IDPCarwash object];
-    self.cars = [NSArray objectsWithCount:kIDPCarwashDispatcherCarsCount block:^id { return [IDPCar object]; }];
+    self.cars = [NSMutableArray object];
     
     return self;
 }
@@ -69,6 +73,10 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime = 0.5;
     }
     
     _timer = timer;
+}
+
+- (NSUInteger)carsDelivered {
+    return [self.cars count];
 }
 
 #pragma mark -
@@ -95,16 +103,21 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime = 0.5;
 }
 
 - (void)deliverCar {
-    IDPCar *car = [self dirtyCar];
-    if (car) {
-        [self.carwash performSelectorInBackground:@selector(processCar:) withObject:car];
+    NSArray *cars = [self dirtyCars];
+    if (cars) {
+        [cars performBlockWithEachObject:^(IDPCar *car) {
+            [self.carwash performSelectorInBackground:@selector(processCar:) withObject:car];
+            [self.cars addObject:car];
+        }];
     } else {
         [self stop];
     }
 }
 
-- (IDPCar *)dirtyCar {
-    return [[self.cars filteredArrayUsingBlock:^BOOL(IDPCar *car) { return car.isDirty; }] firstObject];
+- (NSArray *)dirtyCars {
+    NSUInteger count = MIN(kIDPCarsInBatch, kIDPCarwashDispatcherCarsCount - self.carsDelivered);
+    
+    return [NSArray objectsWithCount:count block:^id { return [IDPCar object]; }];
 }
 
 @end
