@@ -23,7 +23,6 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
 @property (nonatomic, retain)   NSMutableArray  *cars;
 @property (nonatomic, readonly) NSUInteger      carsDelivered;
 @property (nonatomic, assign)   NSTimer         *timer;
-@property (nonatomic, assign, getter=isRunning) BOOL    running;
 
 - (void)start;
 - (void)stop;
@@ -37,6 +36,7 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
 @implementation IDPCarwashDispatcher
 
 @dynamic carsDelivered;
+@dynamic running;
 
 #pragma mark -
 #pragma mark Class methods
@@ -75,7 +75,6 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
     }
     
     if (_timer && [_timer isValid]) {
-        self.running = NO;
         [_timer invalidate];
     }
     
@@ -86,11 +85,14 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
     return [self.cars count];
 }
 
+- (BOOL)isRunning {
+    return self.timer;
+}
+
 #pragma mark -
 #pragma mark Public Methods
 
 - (void)start {
-    self.running = YES;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:kIDPCarsDeliveryWaitTime
                                                   target:self
                                                 selector:@selector(onTimer:)

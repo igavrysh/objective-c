@@ -58,13 +58,13 @@ typedef  NSArray *(^IDPWorkersFactory)(Class class, NSUInteger count, id<IDPWork
 
 - (void)initCarwashStructure {
     IDPWorkersFactory workersFactory = ^id(Class class, NSUInteger count, id<IDPWorkerObserver> observer) {
-        return [[NSArray objectsWithCount:count block:^id{
+        return [NSArray objectsWithCount:count block:^id{
             IDPWorker *worker = [class object];
             [worker addObserver:observer];
             [worker addObserver:self];
             
             return worker;
-        }] autorelease];
+        }];
     };
     
     self.directorsDispatcher = [IDPWorkerDispatcher dispatcherWithWorkers:workersFactory([IDPDirector class],

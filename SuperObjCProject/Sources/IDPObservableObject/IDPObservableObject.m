@@ -13,10 +13,10 @@
 @interface IDPObservableObject ()
 @property (nonatomic, retain) NSHashTable   *observers;
 
+- (void)setState:(NSUInteger)state object:(id)object;
+
 - (void)notifyOfStateChangeWithSelector:(SEL)selector;
-
-- (void)notifyOfState:(NSUInteger)state withObject:(id)object;
-
+- (void)notifyOfState:(NSUInteger)state object:(id)object;
 - (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object;
 
 @end
@@ -54,16 +54,30 @@
 
 - (void)setState:(NSUInteger)state {
     @synchronized(self) {
+        [self setState:state object:nil];
+    }
+}
+
+- (void)setState:(NSUInteger)state object:(id)object {
+    @synchronized(self) {
         if (state != _state) {
             _state = state;
             
-            [self notifyOfState:_state withObject:nil];
+            [self notifyOfState:_state object:object];
         }
     }
 }
 
 #pragma mark - 
 #pragma mark Public
+
+- (void)addObservers:(NSArray *)observers {
+    @synchronized(self.observers) {
+        [observers performBlockWithEachObject:^(id object) {
+            [self addObserver:object];
+        }];
+    }
+}
 
 - (void)addObserver:(id)observer {
     @synchronized(self.observers) {
@@ -108,7 +122,7 @@
     [self notifyOfStateChangeWithSelector:selector object:nil];
 }
 
-- (void)notifyOfState:(NSUInteger)state withObject:(id)object {
+- (void)notifyOfState:(NSUInteger)state object:(id)object {
     [self notifyOfStateChangeWithSelector:[self selectorForState:state] object:nil];
 }
 
