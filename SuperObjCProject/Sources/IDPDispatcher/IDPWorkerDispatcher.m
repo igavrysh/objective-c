@@ -29,6 +29,8 @@
 - (IDPWorker *)reservedWorker;
 - (void)assignWorkToWorker:(IDPWorker *)worker;
 
+- (void)workerInterimProcessing:(IDPWorker *)worker;
+
 @end
 
 @implementation IDPWorkerDispatcher
@@ -112,25 +114,20 @@
 }
 
 - (void)assignWorkToWorker:(IDPWorker *)worker {
-    @synchronized(self.workers) {
-        id object = [self.objectsQueue dequeue];
-        
-        @synchronized(worker) {
-            if (!object) {
-                worker.state = IDPWorkerFree;
-                return;
-            }
-        }
-        
-        if (worker) {
-            [worker log:@"was assigned" withObject:object];
-            
-            [worker performSelectorInBackground:@selector(processObject:)
-                                     withObject:object];
-        } else {
-            [self.objectsQueue enqueue:object];
-        }
+    if (!worker) {
+        return;
     }
+    
+    id object = [self.objectsQueue dequeue];
+    
+    if (!object) {
+        worker.state = IDPWorkerFree;
+        return;
+    }
+    
+    [worker log:@"was assigned" withObject:object];
+    
+    [worker processObject:object];
 }
 
 - (void)cleanUpWorkersObservers {
@@ -139,18 +136,24 @@
     }];
 }
 
+- (void)workerInterimProcessing:(IDPWorker *)worker {
+    @synchronized(self.workers) {
+        if (IDPWorkerFree == worker.state) {
+            worker.state = IDPWorkerBusy;
+            
+            [self assignWorkToWorker:worker];
+        }
+    }
+}
+
 #pragma mark -
 #pragma mark IDPWorkerObserver
 
 - (void)workerDidBecomeFree:(IDPWorker *)worker {    
-    @synchronized(self) {
-        if (IDPWorkerFree == worker.state
-            && [self isWorkerInProcessors:worker]
-            && ![self isQueueEmpty])
-        {
-            worker.state = IDPWorkerBusy;
-            
-            [self performSelectorInBackground:@selector(assignWorkToWorker:) withObject:worker];
+    @synchronized(worker) {
+        if ([self isWorkerInProcessors:worker]
+            && ![self isQueueEmpty]) {
+            [self performSelectorInBackground:@selector(workerInterimProcessing:) withObject:worker];
         }
     }
 }

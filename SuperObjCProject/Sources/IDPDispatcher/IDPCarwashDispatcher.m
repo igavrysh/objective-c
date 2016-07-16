@@ -86,7 +86,7 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
 }
 
 - (BOOL)isRunning {
-    return self.timer;
+    return (BOOL)self.timer;
 }
 
 #pragma mark -
