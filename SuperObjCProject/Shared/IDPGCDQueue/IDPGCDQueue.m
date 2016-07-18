@@ -15,6 +15,17 @@
 
 @implementation IDPGCDQueue
 
+#pragma mark - 
+#pragma mark Public Methods
+
++ (instancetype)gcdSerialQueueWithName:(NSString *)name {
+    return [[self alloc] initSerialWithName:name];
+}
+
++ (instancetype)gcdConcurrentQueueWithName:(NSString *)name {
+    return [[self alloc] initComcurrentWithName:name];
+}
+
 #pragma mark -
 #pragma mark Initializations and Deallocations
 

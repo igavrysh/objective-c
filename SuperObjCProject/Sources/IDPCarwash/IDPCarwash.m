@@ -24,8 +24,8 @@ const NSUInteger kIDPCarwashersCount = 3;
 const NSUInteger kIDPAccountantsCount = 2;
 const NSUInteger kIDPDirectorsCount = 1;
 
-static NSString * const kIDPWasherDispatecherExecutionQueue = @"kIDPWasherDispatecherExecutionQueue";
-static NSString * const kIDPAccountantDispatecherExecutionQueue = @"kIDPAccountantDispatecherExecutionQueue";
+static NSString * const kIDPWasherDispatecherExecutionQueue = @"kIDPWasherDispatcherExecutionQueue";
+static NSString * const kIDPAccountantDispatcherExecutionQueue = @"kIDPAccountantDispatcherExecutionQueue";
 static NSString * const kIDPDirectorDispatcherExecutionQueue = @"kIDPDirectorDispatcherExecutionQueue";
 
 typedef  NSArray *(^IDPWorkersFactory)(Class class, NSUInteger count, id<IDPWorkerObserver> observer);
@@ -76,7 +76,7 @@ typedef  NSArray *(^IDPWorkersFactory)(Class class, NSUInteger count, id<IDPWork
                                                                                       kIDPDirectorsCount,
                                                                                       nil)];
     
-    self.accountantsDispatcher = [IDPWorkerDispatcher dispatcherWithName:kIDPAccountantDispatecherExecutionQueue
+    self.accountantsDispatcher = [IDPWorkerDispatcher dispatcherWithName:kIDPAccountantDispatcherExecutionQueue
                                                                  workers:workersFactory([IDPAccountant class],
                                                                                         kIDPAccountantsCount,
                                                                                         self.directorsDispatcher)];

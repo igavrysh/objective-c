@@ -22,16 +22,14 @@
 @interface IDPWorkerDispatcher()
 @property (nonatomic, retain)                           IDPThreadSafeQueue  *objectsQueue;
 @property (nonatomic, retain)                           NSArray             *workers;
-@property (nonatomic, retain)                           IDPGCDQueue         *gcdQueue;
 @property (nonatomic, readonly, getter=isQueueEmpty)    BOOL                queueEmpty;
+@property (nonatomic, retain)                           IDPGCDQueue         *gcdQueue;
 
 - (void)cleanUpWorkersObservers;
 
 - (IDPWorker *)freeWorker;
 - (IDPWorker *)reservedWorker;
 - (void)assignWorkToWorker:(IDPWorker *)worker;
-
-- (void)workerInterimProcessing:(IDPWorker *)worker;
 
 @end
 
@@ -75,7 +73,7 @@
             [worker addObserver:self];
         }];
         
-        self.gcdQueue = [[IDPGCDQueue alloc] initSerialWithName:name];
+        self.gcdQueue = [IDPGCDQueue gcdSerialQueueWithName:name];
     }
     
     return self;

@@ -10,9 +10,12 @@
 
 #import "IDPCarwash.h"
 #import "IDPCar.h"
+#import "IDPGCDQueue.h"
 
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
+
+static NSString * const kIDPCarwashDispatcherExecutionQueue  =  @"kIDPCarwashDispatcherExecutionQueue";
 
 static const NSUInteger kIDPCarwashDispatcherCarsCount  = 25;
 static const NSUInteger kIDPCarsInBatch                 = 10;
@@ -23,6 +26,7 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
 @property (nonatomic, retain)   NSMutableArray  *cars;
 @property (nonatomic, readonly) NSUInteger      carsDelivered;
 @property (nonatomic, assign)   NSTimer         *timer;
+@property (nonatomic, retain)   IDPGCDQueue     *gcdQueue;
 
 - (void)start;
 - (void)stop;
@@ -62,6 +66,7 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
     
     self.carwash = carwash;
     self.cars = [NSMutableArray object];
+    self.gcdQueue = [IDPGCDQueue gcdConcurrentQueueWithName:kIDPCarwashDispatcherExecutionQueue];
     
     return self;
 }
@@ -115,8 +120,10 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
     NSArray *cars = [self dirtyCars];
     if (cars) {
         [cars performBlockWithEachObject:^(IDPCar *car) {
-            [self.carwash performSelectorInBackground:@selector(processCar:) withObject:car];
-            [self.cars addObject:car];
+            [self.gcdQueue executeWithBlock:^{
+                [self.carwash processCar:car];
+                [self.cars addObject:car];
+            }];       
         }];
     } else {
         [self stop];

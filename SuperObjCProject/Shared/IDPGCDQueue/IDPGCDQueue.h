@@ -12,6 +12,9 @@ typedef  void (^IDPGCDQueueBlock)(void);
 
 @interface IDPGCDQueue : NSObject
 
++ (instancetype)gcdSerialQueueWithName:(NSString *)name;
++ (instancetype)gcdConcurrentQueueWithName:(NSString *)name;
+
 - (instancetype)initSerialWithName:(NSString *)name;
 - (instancetype)initComcurrentWithName:(NSString *)name;
 - (instancetype)initWithName:(NSString *)name attribute:(dispatch_queue_attr_t)attribute;

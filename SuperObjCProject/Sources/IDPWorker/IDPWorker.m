@@ -10,8 +10,10 @@
 
 #import "IDPRandom.h"
 #import "IDPThreadSafeQueue.h"
+#import "IDPGCDQueue.h"
 
 #import "NSObject+IDPObject.h"
+#import "NSString+IDPRandomName.h"
 
 static float const kIDPWorkerMaxSalary          = 100;
 static float const kIDPWorkerMaxCapital         = 100000;
@@ -19,9 +21,8 @@ static float const kIDPWorkerMaxCapital         = 100000;
 static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 @interface IDPWorker ()
-@property (nonatomic, assign) float cash;
-
-- (void)finishProcessingObjectOnMainThread:(id<IDPCashOwner>)object;
+@property (nonatomic, assign)   float       cash;
+@property (nonatomic, retain)   IDPGCDQueue *gcdQueue;
 
 @end
 
@@ -31,6 +32,8 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark Initializtions and Deallocations
 
 - (void)dealloc {
+    self.gcdQueue = nil;
+    
     [super dealloc];
 }
 
@@ -40,6 +43,7 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
     self.salary = IDPRandomFloatWithMinAndMaxValue(0, kIDPWorkerMaxSalary);
     self.capital = IDPRandomFloatWithMinAndMaxValue(0, kIDPWorkerMaxCapital);
     self.experience = IDPRandomUIntWithMaxValue(kIDPWorkerMaxExperience);
+    self.gcdQueue = [IDPGCDQueue gcdSerialQueueWithName:[NSString randomName]];
     
     return self;
 }
@@ -48,26 +52,12 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark Public Methods
 
 - (void)processObject:(id<IDPCashOwner>)object {
-    [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
-                           withObject:object];
-}
-
-- (void)performWorkInBackgroundWithObject:(id<IDPCashOwner>)object {
-    [self performWorkWithObject:object];
-    
-    [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:)
-                           withObject:object
-                        waitUntilDone:NO];
-}
-
-- (void)finishProcessingObjectOnMainThread:(id<IDPCashOwner>)object {
-    @synchronized(object) {
+    [self.gcdQueue executeWithBlock:^{
+        [self performWorkWithObject:object];
+    } finishBlock:^{
         [self finishProcessingObject:object];
-    }
-    
-    @synchronized(self) {
         [self finishProcessing];
-    }
+    }];
 }
 
 - (void)performWorkWithObject:(IDPWorker *)worker {
@@ -89,15 +79,11 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 }
 
 - (void)receiveCash:(float)cash {
-    @synchronized(self) {
-        self.cash += cash;
-    }
+    self.cash += cash;
 }
 
 - (float)giveAllCash {
-    @synchronized(self) {
-        return [self giveCash:self.cash];
-    }
+    return [self giveCash:self.cash];
 }
 
 - (float)giveCash:(float)cash {
