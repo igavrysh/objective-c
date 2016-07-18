@@ -24,6 +24,10 @@ const NSUInteger kIDPCarwashersCount = 3;
 const NSUInteger kIDPAccountantsCount = 2;
 const NSUInteger kIDPDirectorsCount = 1;
 
+static NSString * const kIDPWasherDispatecherExecutionQueue = @"kIDPWasherDispatecherExecutionQueue";
+static NSString * const kIDPAccountantDispatecherExecutionQueue = @"kIDPAccountantDispatecherExecutionQueue";
+static NSString * const kIDPDirectorDispatcherExecutionQueue = @"kIDPDirectorDispatcherExecutionQueue";
+
 typedef  NSArray *(^IDPWorkersFactory)(Class class, NSUInteger count, id<IDPWorkerObserver> observer);
 
 @interface IDPCarwash ()
@@ -67,17 +71,20 @@ typedef  NSArray *(^IDPWorkersFactory)(Class class, NSUInteger count, id<IDPWork
         }];
     };
     
-    self.directorsDispatcher = [IDPWorkerDispatcher dispatcherWithWorkers:workersFactory([IDPDirector class],
-                                                                                         kIDPDirectorsCount,
-                                                                                         nil)];
+    self.directorsDispatcher = [IDPWorkerDispatcher dispatcherWithName:kIDPDirectorDispatcherExecutionQueue
+                                                               workers:workersFactory([IDPDirector class],
+                                                                                      kIDPDirectorsCount,
+                                                                                      nil)];
     
-    self.accountantsDispatcher = [IDPWorkerDispatcher dispatcherWithWorkers:workersFactory([IDPAccountant class],
-                                                                                           kIDPAccountantsCount,
-                                                                                           self.directorsDispatcher)];
+    self.accountantsDispatcher = [IDPWorkerDispatcher dispatcherWithName:kIDPAccountantDispatecherExecutionQueue
+                                                                 workers:workersFactory([IDPAccountant class],
+                                                                                        kIDPAccountantsCount,
+                                                                                        self.directorsDispatcher)];
     
-    self.washersDispatcher = [IDPWorkerDispatcher dispatcherWithWorkers:workersFactory([IDPCarwasher class],
-                                                                                       kIDPCarwashersCount,
-                                                                                       self.accountantsDispatcher)];
+    self.washersDispatcher = [IDPWorkerDispatcher dispatcherWithName:kIDPWasherDispatecherExecutionQueue
+                                                             workers:workersFactory([IDPCarwasher class],
+                                                                                    kIDPCarwashersCount,
+                                                                                    self.accountantsDispatcher)];
 }
 
 - (void)cleanUpCarwashStructure {

@@ -13,9 +13,9 @@
 @interface IDPWorkerDispatcher : NSObject <IDPWorkerObserver>
 @property (nonatomic, readonly) NSArray *workers;
 
-+ (instancetype)dispatcherWithWorkers:(NSArray *)workers;
++ (instancetype)dispatcherWithName:(NSString *)name workers:(NSArray *)workers;
 
-- (instancetype)initWithWorkers:(NSArray *)workers;
+- (instancetype)initWithName:(NSString *)name workers:(NSArray *)workers;
 
 - (void)processObject:(id<IDPCashOwner>)object;
 

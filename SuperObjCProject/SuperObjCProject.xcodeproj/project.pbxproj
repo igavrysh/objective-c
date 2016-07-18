@@ -31,6 +31,8 @@
 		850F83DC1D0F22440043472C /* IDPDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83DB1D0F22440043472C /* IDPDirector.m */; };
 		850F83DD1D0F22440043472C /* IDPDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 850F83DB1D0F22440043472C /* IDPDirector.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		85253BCD1D129635000E19C2 /* IDPBinaryTreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 85253BCC1D129635000E19C2 /* IDPBinaryTreeNode.m */; };
+		853A14E41D3BBC80001CE65E /* IDPGCDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 853A14E31D3BBC80001CE65E /* IDPGCDQueue.m */; };
+		853A14E51D3BBC80001CE65E /* IDPGCDQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 853A14E31D3BBC80001CE65E /* IDPGCDQueue.m */; };
 		854162821D1D9B7000D2690A /* IDPObservableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 854162811D1D9B7000D2690A /* IDPObservableObject.m */; };
 		854162831D1D9B7000D2690A /* IDPObservableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 854162811D1D9B7000D2690A /* IDPObservableObject.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		854B35951D11B8D1004B51A8 /* IDPLinkedListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 854B35941D11B8D1004B51A8 /* IDPLinkedListNode.m */; };
@@ -130,6 +132,8 @@
 		850F83EF1D0F24910043472C /* IDPCashOwner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPCashOwner.h; sourceTree = "<group>"; };
 		85253BCB1D129635000E19C2 /* IDPBinaryTreeNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPBinaryTreeNode.h; sourceTree = "<group>"; };
 		85253BCC1D129635000E19C2 /* IDPBinaryTreeNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPBinaryTreeNode.m; sourceTree = "<group>"; };
+		853A14E21D3BBC80001CE65E /* IDPGCDQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPGCDQueue.h; sourceTree = "<group>"; };
+		853A14E31D3BBC80001CE65E /* IDPGCDQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPGCDQueue.m; sourceTree = "<group>"; };
 		854162801D1D9B7000D2690A /* IDPObservableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPObservableObject.h; sourceTree = "<group>"; };
 		854162811D1D9B7000D2690A /* IDPObservableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDPObservableObject.m; sourceTree = "<group>"; };
 		854B35931D11B8D1004B51A8 /* IDPLinkedListNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDPLinkedListNode.h; sourceTree = "<group>"; };
@@ -256,6 +260,7 @@
 		850F83551D0F17800043472C /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				853A14E11D3BBC80001CE65E /* IDPGCDQueue */,
 				85A742EA1D19EE7400D2E46C /* Categories */,
 				85833D681D11488F0045154D /* IDPComparison */,
 				85B516241D10AD87004CDB85 /* IDPSet */,
@@ -372,6 +377,15 @@
 				850F83EF1D0F24910043472C /* IDPCashOwner.h */,
 			);
 			path = IDPCashOwner;
+			sourceTree = "<group>";
+		};
+		853A14E11D3BBC80001CE65E /* IDPGCDQueue */ = {
+			isa = PBXGroup;
+			children = (
+				853A14E21D3BBC80001CE65E /* IDPGCDQueue.h */,
+				853A14E31D3BBC80001CE65E /* IDPGCDQueue.m */,
+			);
+			path = IDPGCDQueue;
 			sourceTree = "<group>";
 		};
 		8541627F1D1D9AC200D2690A /* IDPObservableObject */ = {
@@ -725,6 +739,7 @@
 				850F83B51D0F17800043472C /* IDPCarwash.m in Sources */,
 				85A743121D19EE7400D2E46C /* NSObject+IDPObject.m in Sources */,
 				85CC6C981D217E8200409854 /* IDPRetainReference.m in Sources */,
+				853A14E51D3BBC80001CE65E /* IDPGCDQueue.m in Sources */,
 				850C350E1D173AA500DE3A4F /* IDPCarwashTest.m in Sources */,
 				85CA788C1D32F46F00CD4746 /* IDPWorkerDispatcher.m in Sources */,
 				85833D6D1D1179CB0045154D /* IDPLinkedListSet.m in Sources */,
@@ -794,6 +809,7 @@
 				85CA788B1D32F46F00CD4746 /* IDPWorkerDispatcher.m in Sources */,
 				85CC6C971D217E8200409854 /* IDPRetainReference.m in Sources */,
 				85A743111D19EE7400D2E46C /* NSObject+IDPObject.m in Sources */,
+				853A14E41D3BBC80001CE65E /* IDPGCDQueue.m in Sources */,
 				85A7431D1D19EE7400D2E46C /* NSString+IDPRandomName.m in Sources */,
 				85A743091D19EE7400D2E46C /* NSArray+IDPArrayEnumerator.m in Sources */,
 				850F83C41D0F17800043472C /* IDPWorker.m in Sources */,

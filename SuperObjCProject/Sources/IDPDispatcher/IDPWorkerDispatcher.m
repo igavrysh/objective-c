@@ -12,8 +12,9 @@
 
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
-#import "IDPWorker.h"
+#import "IDPGCDQueue.h"
 
+#import "IDPWorker.h"
 #import "IDPDirector.h"
 #import "IDPAccountant.h"
 #import "IDPCarwasher.h"
@@ -21,6 +22,7 @@
 @interface IDPWorkerDispatcher()
 @property (nonatomic, retain)                           IDPThreadSafeQueue  *objectsQueue;
 @property (nonatomic, retain)                           NSArray             *workers;
+@property (nonatomic, retain)                           IDPGCDQueue         *gcdQueue;
 @property (nonatomic, readonly, getter=isQueueEmpty)    BOOL                queueEmpty;
 
 - (void)cleanUpWorkersObservers;
@@ -40,8 +42,8 @@
 #pragma mark -
 #pragma mark Class Methods
 
-+ (instancetype)dispatcherWithWorkers:(NSArray *)workers {    
-    return [[[self alloc] initWithWorkers:workers] autorelease];
++ (instancetype)dispatcherWithName:(NSString *)name workers:(NSArray *)workers {
+    return [[[self alloc] initWithName:name workers:workers] autorelease];
 }
 
 #pragma mark -
@@ -63,7 +65,7 @@
     [super dealloc];
 }
 
-- (instancetype)initWithWorkers:(NSArray *)workers {
+- (instancetype)initWithName:(NSString *)name workers:(NSArray *)workers {
     self = [super init];
     if (self) {
         self.objectsQueue = [IDPThreadSafeQueue object];
@@ -72,6 +74,8 @@
         [self.workers performBlockWithEachObject:^(IDPWorker *worker) {
             [worker addObserver:self];
         }];
+        
+        self.gcdQueue = [[IDPGCDQueue alloc] initSerialWithName:name];
     }
     
     return self;
@@ -81,11 +85,13 @@
 #pragma mark Public Methods
 
 - (void)processObject:(id<IDPCashOwner>)object {
-    [self.objectsQueue enqueue:object];
-    
-    IDPWorker *worker = [self reservedWorker];
-    
-    [self assignWorkToWorker:worker];
+    [self.gcdQueue executeWithBlock:^{
+        [self.objectsQueue enqueue:object];
+        
+        IDPWorker *worker = [self reservedWorker];
+        
+        [self assignWorkToWorker:worker];
+    }];
 }
 
 - (BOOL)isWorkerInProcessors:(IDPWorker *)worker {
@@ -104,13 +110,11 @@
 }
 
 - (IDPWorker *)reservedWorker {
-    @synchronized(self.workers) {
-        IDPWorker *worker = [self freeWorker];
-        
-        worker.state = IDPWorkerBusy;
-        
-        return worker;
-    }
+    IDPWorker *worker = [self freeWorker];
+    
+    worker.state = IDPWorkerBusy;
+    
+    return worker;
 }
 
 - (void)assignWorkToWorker:(IDPWorker *)worker {
@@ -136,26 +140,20 @@
     }];
 }
 
-- (void)workerInterimProcessing:(IDPWorker *)worker {
-    @synchronized(self.workers) {
-        if (IDPWorkerFree == worker.state) {
+#pragma mark -
+#pragma mark IDPWorkerObserver
+
+- (void)workerDidBecomeFree:(IDPWorker *)worker {
+    [self.gcdQueue executeWithBlock:^{
+        if ([self isWorkerInProcessors:worker]
+            && ![self isQueueEmpty]
+            && IDPWorkerFree == worker.state)
+        {
             worker.state = IDPWorkerBusy;
             
             [self assignWorkToWorker:worker];
         }
-    }
-}
-
-#pragma mark -
-#pragma mark IDPWorkerObserver
-
-- (void)workerDidBecomeFree:(IDPWorker *)worker {    
-    @synchronized(worker) {
-        if ([self isWorkerInProcessors:worker]
-            && ![self isQueueEmpty]) {
-            [self performSelectorInBackground:@selector(workerInterimProcessing:) withObject:worker];
-        }
-    }
+    }];
 }
 
 - (void)workerDidBecomePending:(IDPWorker *)worker {
