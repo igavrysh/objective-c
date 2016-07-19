@@ -24,7 +24,8 @@ const NSUInteger kIDPCarwashersCount = 3;
 const NSUInteger kIDPAccountantsCount = 2;
 const NSUInteger kIDPDirectorsCount = 1;
 
-typedef  NSArray *(^IDPWorkersFactory)(Class class, NSUInteger count, id<IDPWorkerObserver> observer);
+typedef NSArray *(^IDPWorkersFactory)(Class class, NSUInteger count, id<IDPWorkerObserver> observer);
+typedef void (^IDPWorkerObserversCleaner)(NSArray *observableObjects, NSArray *observers);
 
 @interface IDPCarwash ()
 
@@ -81,7 +82,7 @@ typedef  NSArray *(^IDPWorkersFactory)(Class class, NSUInteger count, id<IDPWork
 }
 
 - (void)cleanUpCarwashStructure {
-    void (^observersCleaner)(NSArray *observableObjects, NSArray *observers) = ^void(NSArray *observableObjects, NSArray *observers) {
+    IDPWorkerObserversCleaner observersCleaner = ^void(NSArray *observableObjects, NSArray *observers) {
         [observableObjects performBlockWithEachObject:^(IDPWorker *worker) {
             [worker removeObservers:observers];
         }];

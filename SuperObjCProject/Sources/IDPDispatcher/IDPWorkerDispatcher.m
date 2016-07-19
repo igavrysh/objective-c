@@ -26,7 +26,6 @@
 - (void)cleanUpWorkersObservers;
 
 - (IDPWorker *)freeWorker;
-- (IDPWorker *)reservedWorker;
 - (void)assignWorkToWorker:(IDPWorker *)worker;
 
 - (void)workerInterimProcessing:(IDPWorker *)worker;
@@ -83,9 +82,7 @@
 - (void)processObject:(id<IDPCashOwner>)object {
     [self.objectsQueue enqueue:object];
     
-    IDPWorker *worker = [self reservedWorker];
-    
-    [self assignWorkToWorker:worker];
+    [self assignWorkToWorker:[self freeWorker]];
 }
 
 - (BOOL)isWorkerInProcessors:(IDPWorker *)worker {
@@ -95,6 +92,12 @@
 #pragma mark -
 #pragma mark Private Methods
 
+- (void)cleanUpWorkersObservers {
+    [self.workers performBlockWithEachObject:^(IDPWorker *worker) {
+        [worker removeObserver:self];
+    }];
+}
+
 - (IDPWorker *)freeWorker {
     NSArray *freeWorkers = [self.workers filteredArrayUsingBlock:^(IDPWorker *worker) {
         return (BOOL)(IDPWorkerFree == worker.state);
@@ -103,19 +106,13 @@
     return [freeWorkers firstObject];
 }
 
-- (IDPWorker *)reservedWorker {
+- (void)assignWorkToWorker:(IDPWorker *)worker {
     @synchronized(self.workers) {
-        IDPWorker *worker = [self freeWorker];
+        if (!worker || IDPWorkerFree != worker.state) {
+            return;
+        }
         
         worker.state = IDPWorkerBusy;
-        
-        return worker;
-    }
-}
-
-- (void)assignWorkToWorker:(IDPWorker *)worker {
-    if (!worker) {
-        return;
     }
     
     id object = [self.objectsQueue dequeue];
@@ -130,17 +127,11 @@
     [worker processObject:object];
 }
 
-- (void)cleanUpWorkersObservers {
-    [self.workers performBlockWithEachObject:^(IDPWorker *worker) {
-        [worker removeObserver:self];
-    }];
-}
-
 - (void)workerInterimProcessing:(IDPWorker *)worker {
     @synchronized(self.workers) {
-        if (IDPWorkerFree == worker.state) {
-            worker.state = IDPWorkerBusy;
-            
+        if (IDPWorkerFree == worker.state
+            && ![self isQueueEmpty])
+        {
             [self assignWorkToWorker:worker];
         }
     }
@@ -149,12 +140,9 @@
 #pragma mark -
 #pragma mark IDPWorkerObserver
 
-- (void)workerDidBecomeFree:(IDPWorker *)worker {    
-    @synchronized(worker) {
-        if ([self isWorkerInProcessors:worker]
-            && ![self isQueueEmpty]) {
-            [self performSelectorInBackground:@selector(workerInterimProcessing:) withObject:worker];
-        }
+- (void)workerDidBecomeFree:(IDPWorker *)worker {
+    if ([self isWorkerInProcessors:worker]) {
+        [self performSelectorInBackground:@selector(workerInterimProcessing:) withObject:worker];
     }
 }
 
