@@ -10,6 +10,7 @@
 
 #import "IDPRandom.h"
 #import "IDPThreadSafeQueue.h"
+#import "IDPGCDQueue.h"
 
 #import "NSObject+IDPObject.h"
 
@@ -20,8 +21,6 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 
 @interface IDPWorker ()
 @property (nonatomic, assign) float cash;
-
-- (void)finishProcessingObjectOnMainThread:(id<IDPCashOwner>)object;
 
 @end
 
@@ -48,26 +47,14 @@ static NSUInteger const kIDPWorkerMaxExperience = 10;
 #pragma mark Public Methods
 
 - (void)processObject:(id<IDPCashOwner>)object {
-    [self performSelectorInBackground:@selector(performWorkInBackgroundWithObject:)
-                           withObject:object];
-}
-
-- (void)performWorkInBackgroundWithObject:(id<IDPCashOwner>)object {
-    [self performWorkWithObject:object];
-    
-    [self performSelectorOnMainThread:@selector(finishProcessingObjectOnMainThread:)
-                           withObject:object
-                        waitUntilDone:NO];
-}
-
-- (void)finishProcessingObjectOnMainThread:(id<IDPCashOwner>)object {
-    @synchronized(object) {
-        [self finishProcessingObject:object];
-    }
-    
-    @synchronized(self) {
-        [self finishProcessing];
-    }
+    IDPAsyncPerformInBackgroundQueue(^{
+        [self performWorkWithObject:object];
+        
+        IDPAsyncPerformInMainQueue(^{
+            [self finishProcessingObject:object];
+            [self finishProcessing];
+        });
+    });
 }
 
 - (void)performWorkWithObject:(IDPWorker *)worker {

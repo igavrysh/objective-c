@@ -10,7 +10,6 @@
 
 typedef void (^IDPGCDExecutionBlock)(void);
 
-
 typedef enum {
     IDPQueuePriorityTypeHigh        = DISPATCH_QUEUE_PRIORITY_HIGH,
     IDPQueuePriorityTypeDefault     = DISPATCH_QUEUE_PRIORITY_DEFAULT,

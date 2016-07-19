@@ -10,6 +10,7 @@
 
 #import "IDPCarwash.h"
 #import "IDPCar.h"
+#import "IDPGCDQueue.h"
 
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
@@ -115,8 +116,10 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
     NSArray *cars = [self dirtyCars];
     if (cars) {
         [cars performBlockWithEachObject:^(IDPCar *car) {
-            [self.carwash performSelectorInBackground:@selector(processCar:) withObject:car];
-            [self.cars addObject:car];
+            IDPAsyncPerformInBackgroundQueue(^{
+                [self.carwash processCar:car];
+                [self.cars addObject:car];
+            });
         }];
     } else {
         [self stop];

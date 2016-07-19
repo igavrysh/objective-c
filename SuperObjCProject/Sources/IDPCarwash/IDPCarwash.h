@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol IDPWorkerObserver;
+#import "IDPWorker.h"
 
 @class IDPCar;
 

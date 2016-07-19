@@ -13,6 +13,7 @@
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
 #import "IDPWorker.h"
+#import "IDPGCDQueue.h"
 
 #import "IDPDirector.h"
 #import "IDPAccountant.h"
@@ -107,13 +108,11 @@
 }
 
 - (void)assignWorkToWorker:(IDPWorker *)worker {
-    @synchronized(self.workers) {
-        if (!worker || IDPWorkerFree != worker.state) {
-            return;
-        }
-        
-        worker.state = IDPWorkerBusy;
+    if (!worker || IDPWorkerFree != worker.state) {
+        return;
     }
+    
+    worker.state = IDPWorkerBusy;
     
     id object = [self.objectsQueue dequeue];
     
@@ -128,12 +127,10 @@
 }
 
 - (void)workerInterimProcessing:(IDPWorker *)worker {
-    @synchronized(self.workers) {
-        if (IDPWorkerFree == worker.state
-            && ![self isQueueEmpty])
-        {
-            [self assignWorkToWorker:worker];
-        }
+    if (IDPWorkerFree == worker.state
+        && ![self isQueueEmpty])
+    {
+        [self assignWorkToWorker:worker];
     }
 }
 
@@ -142,7 +139,9 @@
 
 - (void)workerDidBecomeFree:(IDPWorker *)worker {
     if ([self isWorkerInProcessors:worker]) {
-        [self performSelectorInBackground:@selector(workerInterimProcessing:) withObject:worker];
+        IDPAsyncPerformInBackgroundQueue(^{
+            [self workerInterimProcessing:worker];
+        });
     }
 }
 
