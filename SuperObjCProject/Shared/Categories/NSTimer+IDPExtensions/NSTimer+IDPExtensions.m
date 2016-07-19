@@ -8,6 +8,10 @@
 
 #import "NSTimer+IDPExtensions.h"
 
+#import <objc/runtime.h>
+
+NSString * const kIDPTimerHelper = @"kIDPTimerHelper";
+
 @interface NSTimer ()
 @property (nonatomic, retain) IDPTimerHelper *helper;
 
@@ -15,8 +19,12 @@
 
 @implementation NSTimer (IDPExtensions)
 
-- (void)setHelper:(IDPTimerHelper *)helper {
-    
+- (void)setHelper:(IDPTimerHelper *)helper {    
+    objc_setAssociatedObject(self, kIDPTimerHelper, helper, OBJC_ASSOCIATION_RETAIN);
+}
+
+- (IDPTimerHelper *)helper {
+    return objc_getAssociatedObject(self, kIDPTimerHelper);
 }
 
 
