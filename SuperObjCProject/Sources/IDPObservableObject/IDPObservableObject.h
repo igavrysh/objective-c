@@ -15,7 +15,6 @@
 - (void)addObservers:(NSArray *)observers;
 - (void)addObserver:(id)observer;
 
-- (void)removeAllObservers;
 - (void)removeObservers:(NSArray *)observers;
 - (void)removeObserver:(id)observer;
 
@@ -23,5 +22,11 @@
 
 // This method is itended for subclassing
 - (SEL)selectorForState:(NSUInteger)state;
+
+- (void)setState:(NSUInteger)state;
+- (void)setState:(NSUInteger)state object:(id)object;
+
+- (void)notifyOfState:(NSUInteger)state;
+- (void)notifyOfState:(NSUInteger)state object:(id)object;
 
 @end

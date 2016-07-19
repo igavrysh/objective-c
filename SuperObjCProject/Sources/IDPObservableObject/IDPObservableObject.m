@@ -13,10 +13,7 @@
 @interface IDPObservableObject ()
 @property (nonatomic, retain) NSHashTable   *observers;
 
-- (void)setState:(NSUInteger)state object:(id)object;
-
 - (void)notifyOfStateChangeWithSelector:(SEL)selector;
-- (void)notifyOfState:(NSUInteger)state object:(id)object;
 - (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object;
 
 @end
@@ -53,9 +50,7 @@
 }
 
 - (void)setState:(NSUInteger)state {
-    @synchronized(self) {
-        [self setState:state object:nil];
-    }
+    [self setState:state object:nil];
 }
 
 - (void)setState:(NSUInteger)state object:(id)object {
@@ -82,12 +77,6 @@
 - (void)addObserver:(id)observer {
     @synchronized(self.observers) {
         [self.observers addObject:observer];
-    }
-}
-
-- (void)removeAllObservers {
-    @synchronized(self.observers) {
-        [self removeObservers:self.observers.setRepresentation.allObjects];
     }
 }
 
@@ -122,8 +111,12 @@
     [self notifyOfStateChangeWithSelector:selector object:nil];
 }
 
+- (void)notifyOfState:(NSUInteger)state {
+    [self notifyOfState:state object:nil];
+}
+
 - (void)notifyOfState:(NSUInteger)state object:(id)object {
-    [self notifyOfStateChangeWithSelector:[self selectorForState:state] object:nil];
+    [self notifyOfStateChangeWithSelector:[self selectorForState:state] object:object];
 }
 
 - (void)notifyOfStateChangeWithSelector:(SEL)selector object:(id)object {
