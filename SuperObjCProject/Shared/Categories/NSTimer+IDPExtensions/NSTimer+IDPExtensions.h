@@ -12,7 +12,7 @@
 
 @interface NSTimer (IDPExtensions)
 
-- (instancetype)scheduledTimerWithTimeInterval:(NSTimeInterval)delay
++ (instancetype)scheduledTimerWithTimeInterval:(NSTimeInterval)delay
                                          block:(IDPTimerExecutionBlock)block;
 
 @end
