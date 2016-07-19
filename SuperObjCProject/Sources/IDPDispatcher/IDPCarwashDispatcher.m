@@ -14,6 +14,7 @@
 
 #import "NSObject+IDPObject.h"
 #import "NSArray+IDPArrayEnumerator.h"
+#import "NSTimer+IDPExtensions.h"
 
 static const NSUInteger kIDPCarwashDispatcherCarsCount  = 25;
 static const NSUInteger kIDPCarsInBatch                 = 10;
@@ -95,10 +96,7 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
 
 - (void)start {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:kIDPCarsDeliveryWaitTime
-                                                  target:self
-                                                selector:@selector(onTimer:)
-                                                userInfo:nil
-                                                 repeats:YES];
+                                                   block:^ { [self deliverCar]; }];
 }
 
 - (void)stop {
