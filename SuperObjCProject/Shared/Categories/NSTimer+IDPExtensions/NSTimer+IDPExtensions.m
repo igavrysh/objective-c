@@ -62,10 +62,6 @@ typedef void(^IDPDeallocMethod)(id object, SEL selector);
 }
 
 #pragma mark -
-#pragma mark Initializations and Deallocations
-
-
-#pragma mark -
 #pragma mark Accessors
 
 - (void)setHelper:(IDPTimerHelper *)helper {
