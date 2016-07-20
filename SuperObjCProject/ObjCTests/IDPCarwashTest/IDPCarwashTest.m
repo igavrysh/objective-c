@@ -28,7 +28,7 @@
     
     [self.carwashDispatcher start];
     
-    [[NSRunLoop mainRunLoop] run];
+    [[NSRunLoop mainRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:4]];
 }
 
 @end

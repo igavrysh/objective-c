@@ -112,7 +112,7 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
 
 - (void)deliverCar {
     NSArray *cars = [self dirtyCars];
-    if (cars) {
+    if (cars && [cars count]) {
         [cars performBlockWithEachObject:^(IDPCar *car) {
             IDPAsyncPerformInBackgroundQueue(^{
                 [self.carwash processCar:car];
