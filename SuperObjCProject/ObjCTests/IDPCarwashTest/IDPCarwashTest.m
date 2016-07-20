@@ -26,7 +26,7 @@
 - (void)execute {
     self.carwashDispatcher = [IDPCarwashDispatcher dispatcherWithCarwash:[IDPCarwash object]];
     
-    [self.carwashDispatcher start];
+    [self.carwashDispatcher deliverCars];
     
     [[NSRunLoop mainRunLoop] run];
 }

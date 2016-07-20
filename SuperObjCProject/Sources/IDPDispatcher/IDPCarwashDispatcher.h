@@ -16,7 +16,6 @@
 + (instancetype)dispatcherWithCarwash:(IDPCarwash *)carwash;
 - (instancetype)initWithCarwash:(IDPCarwash *)carwash;
 
-- (void)start;
-- (void)stop;
+- (void)deliverCars;
 
 @end

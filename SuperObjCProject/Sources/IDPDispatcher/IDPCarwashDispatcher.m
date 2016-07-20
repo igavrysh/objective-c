@@ -24,13 +24,7 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
 @property (nonatomic, retain)   IDPCarwash      *carwash;
 @property (nonatomic, retain)   NSMutableArray  *cars;
 @property (nonatomic, readonly) NSUInteger      carsDelivered;
-@property (nonatomic, assign)   NSTimer         *timer;
 
-- (void)start;
-- (void)stop;
-- (void)onTimer:(NSTimer *)timer;
-
-- (void)deliverCar;
 - (NSArray *)dirtyCars;
 
 @end
@@ -54,8 +48,6 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
     self.carwash = nil;
     self.cars = nil;
     
-    [self stop];
-    
     [super dealloc];
 }
 
@@ -68,60 +60,31 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
     return self;
 }
 
-#pragma mark -
-#pragma mark Accessors
-
-- (void)setTimer:(NSTimer *)timer {
-    if (_timer == timer) {
-        return;
-    }
-    
-    if (_timer && [_timer isValid]) {
-        [_timer invalidate];
-    }
-    
-    _timer = timer;
-}
 
 - (NSUInteger)carsDelivered {
     return [self.cars count];
 }
 
-- (BOOL)isRunning {
-    return (BOOL)self.timer;
-}
-
 #pragma mark -
 #pragma mark Public Methods
 
-- (void)start {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:kIDPCarsDeliveryWaitTime
-                                                   block:^ { [self deliverCar]; }];
-}
-
-- (void)stop {
-    self.timer = nil;
-}
-
-#pragma mark -
-#pragma mark Private Methods
-
-- (void)onTimer:(NSTimer *)timer {
-    [self deliverCar];
-}
-
-- (void)deliverCar {
-    NSArray *cars = [self dirtyCars];
-    if (cars) {
-        [cars performBlockWithEachObject:^(IDPCar *car) {
-            IDPAsyncPerformInBackgroundQueue(^{
-                [self.carwash processCar:car];
-                [self.cars addObject:car];
-            });
-        }];
-    } else {
-        [self stop];
-    }
+- (void)deliverCars {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kIDPCarsDeliveryWaitTime * NSEC_PER_SEC)),dispatch_get_main_queue(), ^{
+        
+        NSArray *cars = [self dirtyCars];
+        if (cars) {
+            [cars performBlockWithEachObject:^(IDPCar *car) {
+                IDPAsyncPerformInBackgroundQueue(^{
+                    [self.carwash processCar:car];
+                    [self.cars addObject:car];
+                });
+            }];
+            
+            [self deliverCars];
+        } else {
+            return;
+        }
+    });
 }
 
 - (NSArray *)dirtyCars {
