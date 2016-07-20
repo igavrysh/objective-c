@@ -23,7 +23,6 @@
                                           selector:@selector(onTimer:)
                                           userInfo:nil
                                            repeats:YES];
-    
 }
 
 

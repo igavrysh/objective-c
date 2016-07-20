@@ -25,3 +25,5 @@ void IDPSyncPerformInQueue(IDPQueuePriorityType type, IDPGCDExecutionBlock block
 
 void IDPAsyncPerformInMainQueue(IDPGCDExecutionBlock block);
 void IDPSyncPerformInMainQueue(IDPGCDExecutionBlock block);
+
+dispatch_queue_t IDPGetGlobalQueueWithType(IDPQueuePriorityType type);

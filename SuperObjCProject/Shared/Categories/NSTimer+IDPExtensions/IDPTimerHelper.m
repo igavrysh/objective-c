@@ -26,9 +26,10 @@
 
 - (instancetype)initWithBlock:(IDPTimerExecutionBlock)block {
     self = [super init];
-    if (self) {
+    if (block) {
         self.block = block;
-        
+    } else {
+        self.block = ^{};
     }
     
     return self;
@@ -38,11 +39,7 @@
 #pragma mark Public Methods
 
 - (void)onTimer:(NSTimer *)timer {
-    IDPTimerExecutionBlock block = self.block;
-    
-    if (block) {
-        block();
-    }
+    self.block();
 }
 
 @end

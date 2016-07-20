@@ -17,11 +17,11 @@ void IDPSyncPerformInBackgoundQueue(IDPGCDExecutionBlock block) {
 }
 
 void IDPAsyncPerformInQueue(IDPQueuePriorityType type, IDPGCDExecutionBlock block) {
-    dispatch_async(dispatch_get_global_queue(type, 0), block);
+    dispatch_async(IDPGetGlobalQueueWithType(type), block);
 }
 
 void IDPSyncPerformInQueue(IDPQueuePriorityType type, IDPGCDExecutionBlock block) {
-    dispatch_sync(dispatch_get_global_queue(type, 0), block);
+    dispatch_sync(IDPGetGlobalQueueWithType(type), block);
 }
 
 void IDPAsyncPerformInMainQueue(IDPGCDExecutionBlock block) {
@@ -34,4 +34,8 @@ void IDPSyncPerformInMainQueue(IDPGCDExecutionBlock block) {
     } else {
         dispatch_sync(dispatch_get_main_queue(), block);
     }
+}
+
+dispatch_queue_t IDPGetGlobalQueueWithType(IDPQueuePriorityType type) {
+    return dispatch_get_global_queue(type, 0);
 }

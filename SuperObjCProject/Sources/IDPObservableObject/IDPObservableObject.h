@@ -23,7 +23,6 @@
 // This method is itended for subclassing
 - (SEL)selectorForState:(NSUInteger)state;
 
-- (void)setState:(NSUInteger)state;
 - (void)setState:(NSUInteger)state object:(id)object;
 
 - (void)notifyOfState:(NSUInteger)state;

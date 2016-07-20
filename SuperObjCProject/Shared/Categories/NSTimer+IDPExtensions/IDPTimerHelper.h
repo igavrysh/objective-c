@@ -11,6 +11,7 @@
 typedef void (^IDPTimerExecutionBlock)(void);
 
 @interface IDPTimerHelper : NSObject
+@property (nonatomic, copy, readonly) IDPTimerExecutionBlock block;
 
 - (instancetype)initWithBlock:(IDPTimerExecutionBlock)block;
 
