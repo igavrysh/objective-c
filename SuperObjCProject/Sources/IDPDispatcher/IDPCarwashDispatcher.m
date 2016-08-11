@@ -81,8 +81,6 @@ static const NSTimeInterval kIDPCarsDeliveryWaitTime    = 0.5;
             }];
             
             [self deliverCars];
-        } else {
-            return;
         }
     });
 }
